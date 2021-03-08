@@ -1,0 +1,86 @@
+@import '../../../containers/App/styles/colors.scss';
+
+#connected {
+  font-size: 18px;
+}
+
+.nav-tabs {
+  border-bottom: none;
+  margin-bottom: 20px;
+
+  #pool-tabs-tab-sushi-lp {
+    margin-left: 10px;
+  }
+
+  .nav-item {
+    color: $text-color;
+    border-radius: 5px;
+    background-color: $background;
+
+    &:hover {
+      border-color: lighten($background, 10%);
+      background-color: lighten($background, 10%);
+    }
+
+    &.active {
+      color: $text-color;
+      border-color: lighten($background, 20%);
+      background-color: lighten($background, 20%);
+    }
+  }
+}
+
+.card {
+  background-color: lighten($background, 10%);
+  text-align: center;
+  margin-bottom: 20px;
+
+  .card-header {
+    background-color: lighten($background, 20%);
+
+    small {
+      display: block;
+      color: #b5b5b5;
+    }
+  }
+
+  .list-group-item {
+    text-align: left;
+    background-color: lighten($background, 10%);
+    font-size: 16px;
+
+    span {
+      font-size: 18px;
+      float: right;
+    }
+  }
+
+  .card-title {
+    font-size: 28px;
+    margin-bottom: 0;
+
+    small {
+      font-size: 16px;
+    }
+  }
+}
+
+#not-connected {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #not-connected-content {
+    text-align: center;
+
+    .sunglasses {
+      display: inline-block;
+      font-size: 128px;
+      background-color: lighten($background, 15%);
+      border-radius: 10000px;
+      padding: 30px;
+      margin-bottom: 25px;
+    }
+  }
+}

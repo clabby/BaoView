@@ -1,0 +1,23 @@
+@import '../../../containers/App/styles/colors.scss';
+
+.footer, .push {
+  margin-top: 50px;
+  margin-bottom: 25px;
+  .nav {
+    .nav-item {
+      a {
+        color: $text-color;
+        transition: 200ms;
+      }
+
+      &:hover {
+        color: $brand;
+      }
+    }
+
+    .nav-item.right {
+      float: right;
+      align-items: flex-end;
+    }
+  }
+}

@@ -1,0 +1,903 @@
+@import '../../../containers/App/styles/colors.scss';
+
+.pool-icon {
+  width: 64px;
+  height: 64px;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  display: block;
+  margin: 15px auto;
+}
+
+.Almace {
+ background-image: url('../../../images/Almace.png');
+}
+
+.anchovy {
+ background-image: url('../../../images/anchovy.png');
+}
+
+.appetizer {
+ background-image: url('../../../images/appetizer.png');
+}
+
+.apple-chocolate {
+ background-image: url('../../../images/apple-chocolate.png');
+}
+
+.apple-jam {
+ background-image: url('../../../images/apple-jam.png');
+}
+
+.apricot {
+ background-image: url('../../../images/apricot.png');
+}
+
+.avocado {
+ background-image: url('../../../images/avocado.png');
+}
+
+.bacon {
+ background-image: url('../../../images/bacon.png');
+}
+
+.badger {
+ background-image: url('../../../images/badger.png');
+}
+
+.bao {
+ background-image: url('../../../images/bao.png');
+}
+
+.bao2 {
+ background-image: url('../../../images/bao2.png');
+}
+
+.baozi {
+ background-image: url('../../../images/baozi.png');
+}
+
+.beef-chow-fun {
+ background-image: url('../../../images/beef-chow-fun.png');
+}
+
+.beef {
+ background-image: url('../../../images/beef.png');
+}
+
+.bento {
+ background-image: url('../../../images/bento.png');
+}
+
+.bird-nest {
+ background-image: url('../../../images/bird-nest.png');
+}
+
+.black-egg {
+ background-image: url('../../../images/black-egg.png');
+}
+
+.black-sesame-soup {
+ background-image: url('../../../images/black-sesame-soup.png');
+}
+
+.blt {
+ background-image: url('../../../images/blt.png');
+}
+
+.boiled-egg {
+ background-image: url('../../../images/boiled-egg.png');
+}
+
+.boloubao {
+ background-image: url('../../../images/boloubao.png');
+}
+
+.bowl {
+ background-image: url('../../../images/bowl.png');
+}
+
+.brochette {
+ background-image: url('../../../images/brochette.png');
+}
+
+.brownie {
+ background-image: url('../../../images/brownie.png');
+}
+
+.brunch {
+ background-image: url('../../../images/brunch.png');
+}
+
+.bubble-tea {
+ background-image: url('../../../images/bubble-tea.png');
+}
+
+.bun {
+ background-image: url('../../../images/bun.png');
+}
+
+.buns {
+ background-image: url('../../../images/buns.png');
+}
+
+.butcher {
+ background-image: url('../../../images/butcher.png');
+}
+
+.cake {
+ background-image: url('../../../images/cake.png');
+}
+
+.cakey {
+ background-image: url('../../../images/cakey.png');
+}
+
+.caviar {
+ background-image: url('../../../images/caviar.png');
+}
+
+.cereals {
+ background-image: url('../../../images/cereals.png');
+}
+
+.char-siu {
+ background-image: url('../../../images/char-siu.png');
+}
+
+.chef {
+ background-image: url('../../../images/chef.png');
+}
+
+.chicken-dish {
+ background-image: url('../../../images/chicken-dish.png');
+}
+
+.chicken-rice {
+ background-image: url('../../../images/chicken-rice.png');
+}
+
+.chicken {
+ background-image: url('../../../images/chicken.png');
+}
+
+.chili-pepper {
+ background-image: url('../../../images/chili-pepper.png');
+}
+
+.chili {
+ background-image: url('../../../images/chili.png');
+}
+
+.chinese-food {
+ background-image: url('../../../images/chinese-food.png');
+}
+
+.chocolate {
+ background-image: url('../../../images/chocolate.png');
+}
+
+.churros {
+ background-image: url('../../../images/churros.png');
+}
+
+.cockles {
+ background-image: url('../../../images/cockles.png');
+}
+
+.cocktail {
+ background-image: url('../../../images/cocktail.png');
+}
+
+.coke {
+ background-image: url('../../../images/coke.png');
+}
+
+.congee {
+ background-image: url('../../../images/congee.png');
+}
+
+.cookie {
+ background-image: url('../../../images/cookie.png');
+}
+
+.crab {
+ background-image: url('../../../images/crab.png');
+}
+
+.cupcake {
+ background-image: url('../../../images/cupcake.png');
+}
+
+.curry {
+ background-image: url('../../../images/curry.png');
+}
+
+.custard {
+ background-image: url('../../../images/custard.png');
+}
+
+.dessert {
+ background-image: url('../../../images/dessert.png');
+}
+
+.dim-sum {
+ background-image: url('../../../images/dim-sum.png');
+}
+
+.djaleung {
+ background-image: url('../../../images/djaleung.png');
+}
+
+.donut {
+ background-image: url('../../../images/donut.png');
+}
+
+.dough {
+ background-image: url('../../../images/dough.png');
+}
+
+.dried-fruit {
+ background-image: url('../../../images/dried-fruit.png');
+}
+
+.drumstick {
+ background-image: url('../../../images/drumstick.png');
+}
+
+.dumpling {
+ background-image: url('../../../images/dumpling.png');
+}
+
+.dumplings {
+ background-image: url('../../../images/dumplings.png');
+}
+
+.eclair {
+ background-image: url('../../../images/eclair.png');
+}
+
+.egg-rolls {
+ background-image: url('../../../images/egg-rolls.png');
+}
+
+.egg-tart {
+ background-image: url('../../../images/egg-tart.png');
+}
+
+.egg {
+ background-image: url('../../../images/egg.png');
+}
+
+.eggplant {
+ background-image: url('../../../images/eggplant.png');
+}
+
+.eggs {
+ background-image: url('../../../images/eggs.png');
+}
+
+.eth {
+ background-image: url('../../../images/eth.png');
+}
+
+.fish {
+ background-image: url('../../../images/fish.png');
+}
+
+.flatbread {
+ background-image: url('../../../images/flatbread.png');
+}
+
+.fondue {
+ background-image: url('../../../images/fondue.png');
+}
+
+.fortune-cookie {
+ background-image: url('../../../images/fortune-cookie.png');
+}
+
+.fried-chicken {
+ background-image: url('../../../images/fried-chicken.png');
+}
+
+.fried-potatoes {
+ background-image: url('../../../images/fried-potatoes.png');
+}
+
+.fried-rice {
+ background-image: url('../../../images/fried-rice.png');
+}
+
+.frog-prince {
+ background-image: url('../../../images/frog-prince.png');
+}
+
+.fu-pi-juan {
+ background-image: url('../../../images/fu-pi-juan.png');
+}
+
+.gravy {
+ background-image: url('../../../images/gravy.png');
+}
+
+.groceries {
+ background-image: url('../../../images/groceries.png');
+}
+
+.gummy-bear {
+ background-image: url('../../../images/gummy-bear.png');
+}
+
+.hainanese-chicken {
+ background-image: url('../../../images/hainanese-chicken.png');
+}
+
+.ham {
+ background-image: url('../../../images/ham.png');
+}
+
+.harcheung {
+ background-image: url('../../../images/harcheung.png');
+}
+
+.haut {
+ background-image: url('../../../images/haut.png');
+}
+
+.herbal-tea {
+ background-image: url('../../../images/herbal-tea.png');
+}
+
+.hero {
+ background-image: url('../../../images/hero.png');
+}
+
+.hibiscus {
+ background-image: url('../../../images/hibiscus.png');
+}
+
+.hot-green-tea {
+ background-image: url('../../../images/hot-green-tea.png');
+}
+
+.hot-soup {
+ background-image: url('../../../images/hot-soup.png');
+}
+
+.hot {
+ background-image: url('../../../images/hot.png');
+}
+
+.hotsour {
+ background-image: url('../../../images/hotsour.png');
+}
+
+.ice-cream-cup {
+ background-image: url('../../../images/ice-cream-cup.png');
+}
+
+.ice-cream {
+ background-image: url('../../../images/ice-cream.png');
+}
+
+.ice-cube {
+ background-image: url('../../../images/ice-cube.png');
+}
+
+.index {
+ background-image: url('../../../images/index.html');
+}
+
+.injection {
+ background-image: url('../../../images/injection.png');
+}
+
+.instant-noodles {
+ background-image: url('../../../images/instant-noodles.png');
+}
+
+.japan-takeout {
+ background-image: url('../../../images/japan-takeout.png');
+}
+
+.jerk-chicken {
+ background-image: url('../../../images/jerk-chicken.png');
+}
+
+.jifan {
+ background-image: url('../../../images/jifan.png');
+}
+
+.kebab {
+ background-image: url('../../../images/kebab.png');
+}
+
+.krill {
+ background-image: url('../../../images/krill.png');
+}
+
+.kung-pao-chicken {
+ background-image: url('../../../images/kung-pao-chicken.png');
+}
+
+.kungpao {
+ background-image: url('../../../images/kungpao.png');
+}
+
+.lab-meat {
+ background-image: url('../../../images/lab-meat.png');
+}
+
+.lime {
+ background-image: url('../../../images/lime.png');
+}
+
+.logo192 {
+ background-image: url('../../../images/logo192.png');
+}
+
+.logo512 {
+ background-image: url('../../../images/logo512.png');
+}
+
+.lotus {
+ background-image: url('../../../images/lotus.png');
+}
+
+.luosifen {
+ background-image: url('../../../images/luosifen.png');
+}
+
+.maki {
+ background-image: url('../../../images/maki.png');
+}
+
+.mantou {
+ background-image: url('../../../images/mantou.png');
+}
+
+.maple-syrup {
+ background-image: url('../../../images/maple-syrup.png');
+}
+
+.mapo-tofu {
+ background-image: url('../../../images/mapo-tofu.png');
+}
+
+.marmalade {
+ background-image: url('../../../images/marmalade.png');
+}
+
+.matcha-tea {
+ background-image: url('../../../images/matcha-tea.png');
+}
+
+.meat-bun {
+ background-image: url('../../../images/meat-bun.png');
+}
+
+.meat {
+ background-image: url('../../../images/meat.png');
+}
+
+.meatball {
+ background-image: url('../../../images/meatball.png');
+}
+
+.meatballs {
+ background-image: url('../../../images/meatballs.png');
+}
+
+.meats {
+ background-image: url('../../../images/meats.png');
+}
+
+.Miantiao {
+ background-image: url('../../../images/Miantiao.png');
+}
+
+.moon-cake {
+ background-image: url('../../../images/moon-cake.png');
+}
+
+.moon-cakers {
+ background-image: url('../../../images/moon-cakers.png');
+}
+
+.mushroom {
+ background-image: url('../../../images/mushroom.png');
+}
+
+.mysterystew {
+ background-image: url('../../../images/mysterystew.png');
+}
+
+.nectar {
+ background-image: url('../../../images/nectar.png');
+}
+
+.noodles {
+ background-image: url('../../../images/noodles.png');
+}
+
+.noodlesoup {
+ background-image: url('../../../images/noodlesoup.png');
+}
+
+.nuggets {
+ background-image: url('../../../images/nuggets.png');
+}
+
+.octopus {
+ background-image: url('../../../images/octopus.png');
+}
+
+.oden {
+ background-image: url('../../../images/oden.png');
+}
+
+.okra {
+ background-image: url('../../../images/okra.png');
+}
+
+.orange-chicken {
+ background-image: url('../../../images/orange-chicken.png');
+}
+
+.oyster {
+ background-image: url('../../../images/oyster.png');
+}
+
+.pad-thai {
+ background-image: url('../../../images/pad-thai.png');
+}
+
+.panda {
+ background-image: url('../../../images/panda.png');
+}
+
+.picnic {
+ background-image: url('../../../images/picnic.png');
+}
+
+.pie {
+ background-image: url('../../../images/pie.png');
+}
+
+.pineapple {
+ background-image: url('../../../images/pineapple.png');
+}
+
+.pizza {
+ background-image: url('../../../images/pizza.png');
+}
+
+.plum {
+ background-image: url('../../../images/plum.png');
+}
+
+.poke {
+ background-image: url('../../../images/poke.png');
+}
+
+.pork {
+ background-image: url('../../../images/pork.png');
+}
+
+.potstickers {
+ background-image: url('../../../images/potstickers.png');
+}
+
+.profiterole {
+ background-image: url('../../../images/profiterole.png');
+}
+
+.pudding {
+ background-image: url('../../../images/pudding.png');
+}
+
+.radish-cake {
+ background-image: url('../../../images/radish-cake.png');
+}
+
+.ramennoodle {
+ background-image: url('../../../images/ramennoodle.png');
+}
+
+.ramune {
+ background-image: url('../../../images/ramune.png');
+}
+
+.rangoon {
+ background-image: url('../../../images/rangoon.png');
+}
+
+.ratatouille {
+ background-image: url('../../../images/ratatouille.png');
+}
+
+.red-bean-paste {
+ background-image: url('../../../images/red-bean-paste.png');
+}
+
+.rice-ball-with-seaweed {
+ background-image: url('../../../images/rice-ball-with-seaweed.png');
+}
+
+.rice-bowl {
+ background-image: url('../../../images/rice-bowl.png');
+}
+
+.rice {
+ background-image: url('../../../images/rice.png');
+}
+
+.roastchicken {
+ background-image: url('../../../images/roastchicken.png');
+}
+
+.roll-fish {
+ background-image: url('../../../images/roll-fish.png');
+}
+
+.rumcake {
+ background-image: url('../../../images/rumcake.png');
+}
+
+.salad-rolls {
+ background-image: url('../../../images/salad-rolls.png');
+}
+
+.salad {
+ background-image: url('../../../images/salad.png');
+}
+
+.salmon {
+ background-image: url('../../../images/salmon.png');
+}
+
+.sambar {
+ background-image: url('../../../images/sambar.png');
+}
+
+.sandwich {
+ background-image: url('../../../images/sandwich.png');
+}
+
+.sausage {
+ background-image: url('../../../images/sausage.png');
+}
+
+.scientist {
+ background-image: url('../../../images/scientist.png');
+}
+
+.sea-urchin {
+ background-image: url('../../../images/sea-urchin.png');
+}
+
+.sesame-ball {
+ background-image: url('../../../images/sesame-ball.png');
+}
+
+.sesame {
+ background-image: url('../../../images/sesame.png');
+}
+
+.shashimi {
+ background-image: url('../../../images/shashimi.png');
+}
+
+.shaved-ice {
+ background-image: url('../../../images/shaved-ice.png');
+}
+
+.sheep {
+ background-image: url('../../../images/sheep.png');
+}
+
+.shrimp {
+ background-image: url('../../../images/shrimp.png');
+}
+
+.simplysushi {
+ background-image: url('../../../images/simplysushi.png');
+}
+
+.Skull {
+ background-image: url('../../../images/Skull.png');
+}
+
+.snack {
+ background-image: url('../../../images/snack.png');
+}
+
+.snackers {
+ background-image: url('../../../images/snackers.png');
+}
+
+.snow-fungus-soup {
+ background-image: url('../../../images/snow-fungus-soup.png');
+}
+
+.socks {
+ background-image: url('../../../images/socks.png');
+}
+
+.soup {
+ background-image: url('../../../images/soup.png');
+}
+
+.soy-eggs {
+ background-image: url('../../../images/soy-eggs.png');
+}
+
+.soy-sauce {
+ background-image: url('../../../images/soy-sauce.png');
+}
+
+.soy {
+ background-image: url('../../../images/soy.png');
+}
+
+.soyegg {
+ background-image: url('../../../images/soyegg.png');
+}
+
+.spareribs {
+ background-image: url('../../../images/spareribs.png');
+}
+
+.spices {
+ background-image: url('../../../images/spices.png');
+}
+
+.spring-rolls {
+ background-image: url('../../../images/spring-rolls.png');
+}
+
+.starbugs {
+ background-image: url('../../../images/starbugs.png');
+}
+
+.steak {
+ background-image: url('../../../images/steak.png');
+}
+
+.stew {
+ background-image: url('../../../images/stew.png');
+}
+
+.stew2 {
+ background-image: url('../../../images/stew2.png');
+}
+
+.sticky-rice {
+ background-image: url('../../../images/sticky-rice.png');
+}
+
+.sugar-free {
+ background-image: url('../../../images/sugar-free.png');
+}
+
+.sundae {
+ background-image: url('../../../images/sundae.png');
+}
+
+.sushi {
+ background-image: url('../../../images/sushi.png');
+}
+
+.sweet-tofu {
+ background-image: url('../../../images/sweet-tofu.png');
+}
+
+.sweetpork {
+ background-image: url('../../../images/sweetpork.png');
+}
+
+.takeaway {
+ background-image: url('../../../images/takeaway.png');
+}
+
+.tangyuan {
+ background-image: url('../../../images/tangyuan.png');
+}
+
+.taro {
+ background-image: url('../../../images/taro.png');
+}
+
+.tea {
+ background-image: url('../../../images/tea.png');
+}
+
+.tempura {
+ background-image: url('../../../images/tempura.png');
+}
+
+.toaster {
+ background-image: url('../../../images/toaster.png');
+}
+
+.tofu {
+ background-image: url('../../../images/tofu.png');
+}
+
+.tuna {
+ background-image: url('../../../images/tuna.png');
+}
+
+.turtle {
+ background-image: url('../../../images/turtle.png');
+}
+
+.unagi {
+ background-image: url('../../../images/unagi.png');
+}
+
+.unicorncake {
+ background-image: url('../../../images/unicorncake.png');
+}
+
+.wg0_logo {
+ background-image: url('../../../images/wg0_logo.png');
+}
+
+.WOA_logo {
+ background-image: url('../../../images/WOA_logo.png');
+}
+
+.wonton-noodles {
+ background-image: url('../../../images/wonton-noodles.png');
+}
+
+.wonton {
+ background-image: url('../../../images/wonton.png');
+}
+
+.wrap-double {
+ background-image: url('../../../images/wrap-double.png');
+}
+
+.wrap {
+ background-image: url('../../../images/wrap.png');
+}
+
+.wvg0 {
+ background-image: url('../../../images/wvg0.png');
+}
+
+.xiao-long-bao {
+ background-image: url('../../../images/xiao-long-bao.png');
+}
+
+.xiao {
+ background-image: url('../../../images/xiao.png');
+}
+
+.yam {
+ background-image: url('../../../images/yam.png');
+}
+
+.yammaki {
+ background-image: url('../../../images/yammaki.png');
+}
+
+.yampudding {
+ background-image: url('../../../images/yampudding.png');
+}
+
+.yanpi {
+ background-image: url('../../../images/yanpi.png');
+}
+
+.zhaziji {
+ background-image: url('../../../images/zhaziji.png');
+}
+
+.zucchini {
+ background-image: url('../../../images/zucchini.png');
+}

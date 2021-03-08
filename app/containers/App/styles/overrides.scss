@@ -1,0 +1,18 @@
+@import 'colors.scss';
+
+body, html, #app {
+  background-color: $background !important;
+  
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, div, span, p, small {
+  color: $text-color;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 2px solid lighten($background, 10%) !important;
+}
