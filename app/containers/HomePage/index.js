@@ -5,22 +5,16 @@
  *
  */
 
-import React, { useState, useEffect, useRef } from 'react';
-import { FormattedMessage } from 'react-intl';
-
-import messages from './messages';
-import Connected from './components/Connected/Loadable.js';
-import NotConnected from './components/NotConnected/Loadable.js';
+import React from 'react';
 
 import useWallet from 'use-wallet';
-
-import Bootstrap from 'react-bootstrap';
-import NET from 'vanta/dist/vanta.net.min'
+import Connected from './components/Connected/Loadable';
+import NotConnected from './components/NotConnected/Loadable';
 
 import './styles/homepage.scss';
 
 export default function HomePage() {
   const wallet = useWallet();
 
-  return wallet.status === 'connected' ? (<Connected />) : (<NotConnected />);
+  return wallet.status === 'connected' ? <Connected /> : <NotConnected />;
 }

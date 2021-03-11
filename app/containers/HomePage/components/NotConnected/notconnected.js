@@ -1,7 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
-import messages from '../../messages';
 import '../../styles/homepage.scss';
 
 export default function NotConnected() {
@@ -13,9 +11,7 @@ export default function NotConnected() {
             😎🍱
           </span>
         </h1>
-        <h1>
-          <FormattedMessage {...messages.walletNotConnected} />
-        </h1>
+        <h1>Welcome to Staked Value!</h1>
         <hr />
         <small>
           Connect your{' '}

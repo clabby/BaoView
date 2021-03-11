@@ -1,6 +1,6 @@
-# Bao View
+# Staked Value
 
-Bao View is a web-facing application written in React that gives users a more in-depth view of their staked pools on [Bao Finance](https://bao.finance).
+Staked Value is a web-facing application written in React that gives users a more in-depth view of their staked pools on [Bao Finance](https://bao.finance).
 
 ## License
 

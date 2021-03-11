@@ -8,10 +8,15 @@
       a {
         color: $text-color;
         transition: 200ms;
-      }
+        text-decoration: none;
 
-      &:hover {
-        color: $brand;
+        &.link {
+          color: $brand;
+
+          &:hover {
+            color: darken($brand, 10%);
+          }
+        }
       }
     }
 

@@ -12,6 +12,7 @@ import { Switch, Route } from 'react-router-dom';
 import { UseWalletProvider } from 'use-wallet';
 
 import HomePage from 'containers/HomePage/Loadable';
+import AboutPage from 'containers/AboutPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { Container } from 'react-bootstrap';
@@ -28,6 +29,8 @@ import {
   faPlug,
   faChartLine,
   faHeart,
+  faFileAlt,
+  faLink,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -45,6 +48,8 @@ library.add(
   faGithub,
   faTwitter,
   faDiscord,
+  faFileAlt,
+  faLink,
 );
 
 export default function App() {
@@ -54,6 +59,7 @@ export default function App() {
         <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/about" component={AboutPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </Container>

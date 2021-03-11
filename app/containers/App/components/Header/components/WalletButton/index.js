@@ -3,9 +3,9 @@ import useWallet from 'use-wallet';
 
 import { Button, ButtonGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Identicon from './identicon';
+import Identicon from '../Identicon/Loadable';
 
-import '../styles/header.scss';
+import '../../styles/header.scss';
 
 function shortenWallet(wallet) {
   return `${wallet.substring(0, 4)}.....${wallet.substring(

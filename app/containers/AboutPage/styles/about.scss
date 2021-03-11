@@ -1,0 +1,16 @@
+#about {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #about-content {
+    text-align: center;
+    width: 40%;
+
+    .line-break {
+      display: block;
+      margin: 10px 0px;
+    }
+  }
+}

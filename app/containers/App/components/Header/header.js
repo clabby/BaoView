@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Logo from '../../../../images/logo.png';
 
-import WalletButton from './components/wallet-button';
+import WalletButton from './components/WalletButton/Loadable';
 
 import './styles/header.scss';
 
@@ -26,17 +26,21 @@ export default function Header() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="https://farms.baoswap.xyz/">
-            <FontAwesomeIcon icon={['fa', 'tractor']} /> Bao Farms
-          </Nav.Link>
+          <Nav.Link href="/about">About</Nav.Link>
           <NavDropdown title="Resources" id="basic-nav-dropdown">
+            <NavDropdown.Item href="https://farms.baoswap.xyz/">
+              <FontAwesomeIcon icon={['fa', 'tractor']} /> Bao Farms
+            </NavDropdown.Item>
             <NavDropdown.Item href="https://docs.bao.finance">
-              Bao Finance Docs
+              <FontAwesomeIcon icon={['fa', 'file-alt']} /> Bao Finance Docs
             </NavDropdown.Item>
             <NavDropdown.Item href="https://www.xdaichain.com">
-              xDai Chain
+              <FontAwesomeIcon icon={['fa', 'link']} /> xDai Chain
             </NavDropdown.Item>
             <NavDropdown.Divider />
+            <NavDropdown.Item href="https://twitter.com/stakedvalue">
+              <FontAwesomeIcon icon={['fab', 'twitter']} /> Staked Value
+            </NavDropdown.Item>
             <NavDropdown.Item href="https://twitter.com/thebaoman">
               <FontAwesomeIcon icon={['fab', 'twitter']} /> BaoMan
             </NavDropdown.Item>
