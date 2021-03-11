@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import '../../styles/homepage.scss';
 import '../../styles/poolicons.scss';
@@ -9,9 +9,8 @@ import { supportedPools } from '../../../../lib/constants';
 
 import FarmCard from '../FarmCard/Loadable';
 
-export default function FarmCards(props) {
-  const { account } = props;
-  const { bao } = props;
+export default function FarmCards(/* props */) {
+  // const { account } = props;
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -22,11 +21,11 @@ export default function FarmCards(props) {
       supportedPools.forEach(pool => {
         if (type === 'BAOLP' && !pool.poolType)
           poolElements.push(
-            <FarmCard key={pool.pid} pool={pool} account={account} bao={bao} />,
+            <FarmCard key={pool.pid} pool={pool} /* account={account} */ />,
           );
         if (type === 'SUSHILP' && pool.poolType)
           poolElements.push(
-            <FarmCard key={pool.pid} pool={pool} account={account} bao={bao} />,
+            <FarmCard key={pool.pid} pool={pool} /* account={account} */ />,
           );
       });
     } else {
@@ -39,11 +38,11 @@ export default function FarmCards(props) {
       filteredPools.forEach(pool => {
         if (type === 'BAOLP' && !pool.poolType)
           poolElements.push(
-            <FarmCard key={pool.pid} pool={pool} account={account} bao={bao} />,
+            <FarmCard key={pool.pid} pool={pool} /* account={account} */ />,
           );
         if (type === 'SUSHILP' && pool.poolType)
           poolElements.push(
-            <FarmCard key={pool.pid} pool={pool} account={account} bao={bao} />,
+            <FarmCard key={pool.pid} pool={pool} /* account={account} */ />,
           );
       });
     }
@@ -85,12 +84,10 @@ export default function FarmCards(props) {
   );
 }
 
-FarmCards.propTypes = {
+/* FarmCards.propTypes = {
   account: PropTypes.object,
-  bao: PropTypes.object,
-};
+}; */
 
-FarmCards.defaultProps = {
+/* FarmCards.defaultProps = {
   account: null,
-  bao: null,
-};
+}; */

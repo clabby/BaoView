@@ -14,11 +14,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function FarmCard(props) {
-  const { pool } = props.pool;
-  const { account } = props.account;
-  const { bao } = props.bao;
-
-  console.log(account, bao);
+  const { pool } = props;
 
   const [lpStaked /* , setLpStaked */] = useState(0);
   const [stakeValue /* , setStakeValue */] = useState(0);
@@ -70,13 +66,11 @@ export default function FarmCard(props) {
 }
 
 FarmCard.propTypes = {
-  account: PropTypes.object,
-  bao: PropTypes.object,
+  // account: PropTypes.object,
   pool: PropTypes.object,
 };
 
 FarmCard.defaultProps = {
-  account: null,
-  bao: null,
+  // account: null,
   pool: null,
 };
