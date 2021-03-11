@@ -1,16 +1,16 @@
 {
-  "name": "baoview",
+  "name": "stakedvalue",
   "version": "0.0.1",
-  "description": "Baoview is a web-facing interface to view more detailed data about your LP tokens staked on xDai.",
+  "description": "~",
   "repository": {
     "type": "git",
-    "url": "git://github.com/clabby/baoview.git"
+    "url": "~"
   },
   "engines": {
     "npm": ">=5",
     "node": ">=8.15.1"
   },
-  "author": "Ben Clabby",
+  "author": "~",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
