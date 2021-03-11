@@ -6,14 +6,19 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
-import messages from './messages';
+import { Container } from 'react-bootstrap';
+
+import './styles/notfound.scss';
 
 export default function NotFound() {
   return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-    </h1>
+    <Container id="not-found">
+      <div id="not-found-content">
+        <h1>404</h1>
+        <hr />
+        Page not found.
+      </div>
+    </Container>
   );
 }

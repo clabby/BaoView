@@ -1,4 +1,4 @@
-@import '../../../containers/App/styles/colors.scss';
+@import '../../../styles/colors.scss';
 
 #header {
   background-color: $background !important;
@@ -13,6 +13,14 @@
   .wallet-button {
     background-color: transparent;
     border: 2px solid lighten($background, 10%);
+
+    &.error {
+      border: 2px solid darken($error, 5%);
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
 
     &:hover {
       background-color: lighten($background, 10%);

@@ -1,36 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import messages from '../../messages';
 import '../../styles/homepage.scss';
 import '../../styles/poolicons.scss';
 
-import { Card, Button, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import {
+  Card,
+  Button,
+  ListGroup,
+  OverlayTrigger,
+  Tooltip,
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function FarmCard (props) {
-  const pool = props.pool;
+export default function FarmCard(props) {
+  const { pool } = props.pool;
+  const { account } = props.account;
+  const { bao } = props.bao;
 
-  const [lpStaked, setLpStaked] = useState(0);
-  const [stakeValue, setStakeValue] = useState(0);
-  const [roi, setRoi] = useState(0);
-  const [baoPerDay, setBaoPerDay] = useState(0);
+  console.log(account, bao);
+
+  const [lpStaked /* , setLpStaked */] = useState(0);
+  const [stakeValue /* , setStakeValue */] = useState(0);
+  const [roi /* , setRoi */] = useState(0);
+  const [baoPerDay /* , setBaoPerDay */] = useState(0);
 
   return (
     <div className="col-4">
       <Card style={{ width: '18rem' }}>
         <Card.Header>
-          <div variant="top" className={pool.iconClass + " pool-icon"}></div>
+          <div variant="top" className={`${pool.iconClass} pool-icon`} />
           <Card.Title>
             {pool.name}
-            <br/>
-            <small>{pool.symbol.split(' ')[0] + ' Pair'}</small>
+            <br />
+            <small>{`${pool.symbol.split(' ')[0]} Pair`}</small>
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>Coming Soon!</Tooltip>}
             >
               <div>
-                <Button variant="info" href="#" className="mt-2 disabled"><FontAwesomeIcon icon={['fa', 'chart-line']} /> Pool Metrics</Button>
+                <Button variant="info" href="#" className="mt-2 disabled">
+                  <FontAwesomeIcon icon={['fa', 'chart-line']} /> Pool Metrics
+                </Button>
               </div>
             </OverlayTrigger>
           </Card.Title>
@@ -57,3 +68,15 @@ export default function FarmCard (props) {
     </div>
   );
 }
+
+FarmCard.propTypes = {
+  account: PropTypes.object,
+  bao: PropTypes.object,
+  pool: PropTypes.object,
+};
+
+FarmCard.defaultProps = {
+  account: null,
+  bao: null,
+  pool: null,
+};
