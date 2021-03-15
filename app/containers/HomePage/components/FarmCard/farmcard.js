@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import BigNumber from 'bignumber.js';
+
 import '../../styles/homepage.scss';
 import '../../styles/poolicons.scss';
 
@@ -12,14 +14,14 @@ import {
   Tooltip,
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useStakedBalance from '../../../../hooks/useStakedBalance';
+import useEarnings from '../../../../hooks/useEarnings';
+import { getBalanceNumber } from '../../../../lib/formatBalance';
 
 export default function FarmCard(props) {
-  const { pool } = props;
-
-  const [lpStaked /* , setLpStaked */] = useState(0);
-  const [stakeValue /* , setStakeValue */] = useState(0);
-  const [roi /* , setRoi */] = useState(0);
-  const [baoPerDay /* , setBaoPerDay */] = useState(0);
+  const { pool, roi } = props;
+  const stakedBalance = useStakedBalance(pool.pid);
+  const pendingBao = useEarnings(pool.pid);
 
   return (
     <div className="col-4">
@@ -44,20 +46,57 @@ export default function FarmCard(props) {
         </Card.Header>
         <ListGroup variant="flush">
           <ListGroup.Item>
-            Total LP Tokens Staked
-            <span>{lpStaked}</span>
+            LP Staked
+            <span>
+              {stakedBalance.toNumber() === -1
+                ? 'Loading...'
+                : getBalanceNumber(stakedBalance)}
+            </span>
           </ListGroup.Item>
           <ListGroup.Item>
-            Stake Value (DAI/USD)
-            <span>{stakeValue}</span>
+            LP Value (USD)
+            <span>N/A</span>
           </ListGroup.Item>
           <ListGroup.Item>
-            ROI (day/week/month)
-            <span>{roi}</span>
+            Pending BAO
+            <span>
+              {pendingBao === null
+                ? 'Loading...'
+                : getBalanceNumber(pendingBao)}
+            </span>
           </ListGroup.Item>
-          <ListGroup.Item>
-            Bao.cx per Day
-            <span>{baoPerDay}</span>
+          <ListGroup.Item style={{ textAlign: 'center' }}>
+            ROI (week/month/year)
+            <br />
+            {roi ? (
+              <b>
+                {roi.apw === null ||
+                roi.apw.toNumber() === Number.POSITIVE_INFINITY
+                  ? '...'
+                  : `${roi.apw
+                      .times(new BigNumber(100))
+                      .toNumber()
+                      .toFixed(2)}%`}
+                {' / '}
+                {roi.apm === null ||
+                roi.apm.toNumber() === Number.POSITIVE_INFINITY
+                  ? '...'
+                  : `${roi.apm
+                      .times(new BigNumber(100))
+                      .toNumber()
+                      .toFixed(2)}%`}
+                {' / '}
+                {roi.apy === null ||
+                roi.apy.toNumber() === Number.POSITIVE_INFINITY
+                  ? '...'
+                  : `${roi.apy
+                      .times(new BigNumber(100))
+                      .toNumber()
+                    .toFixed(2)}%`}
+              </b>
+            ) : (
+              <b>Loading...</b>
+            )}
           </ListGroup.Item>
         </ListGroup>
       </Card>
@@ -66,11 +105,11 @@ export default function FarmCard(props) {
 }
 
 FarmCard.propTypes = {
-  // account: PropTypes.object,
   pool: PropTypes.object,
+  roi: PropTypes.object,
 };
 
 FarmCard.defaultProps = {
-  // account: null,
   pool: null,
+  roi: null,
 };

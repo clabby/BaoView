@@ -11,7 +11,7 @@ export default function NotConnected() {
             😎🍱
           </span>
         </h1>
-        <h1>Welcome to Staked Value!</h1>
+        <h1>Welcome to Bao View!</h1>
         <hr />
         <small>
           Connect your{' '}

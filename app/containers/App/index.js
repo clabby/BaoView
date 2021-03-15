@@ -9,7 +9,6 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { UseWalletProvider } from 'use-wallet';
 
 import HomePage from 'containers/HomePage/Loadable';
 import AboutPage from 'containers/AboutPage/Loadable';
@@ -31,6 +30,8 @@ import {
   faHeart,
   faFileAlt,
   faLink,
+  faFileInvoiceDollar,
+  faRocket,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -50,11 +51,13 @@ library.add(
   faDiscord,
   faFileAlt,
   faLink,
+  faFileInvoiceDollar,
+  faRocket,
 );
 
 export default function App() {
   return (
-    <UseWalletProvider chainId={100}>
+    <div>
       <Container style={{ marginBottom: '-50px' }}>
         <Header />
         <Switch>
@@ -64,6 +67,6 @@ export default function App() {
         </Switch>
       </Container>
       <Footer />
-    </UseWalletProvider>
+    </div>
   );
 }

@@ -17,14 +17,14 @@ export default function Footer() {
 
     return (
       <OverlayTrigger placement="top" overlay={toolTip}>
-        <a
+        <span
           className="link"
           onClick={() => {
             navigator.clipboard.writeText(props.discord);
           }}
         >
           {`@${props.tag}`}
-        </a>
+        </span>
       </OverlayTrigger>
     );
   }
@@ -49,8 +49,6 @@ export default function Footer() {
               style={{ color: '#d25b55' }}
             />
             {' by '}
-            <CopyOnClick discord="somethingElse#1655" tag="somethingElse" />
-            {' and '}
             <CopyOnClick discord="vex#9406" tag="vex" />
           </Nav.Link>
         </Nav.Item>

@@ -38,9 +38,6 @@ export default function Header() {
               <FontAwesomeIcon icon={['fa', 'link']} /> xDai Chain
             </NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="https://twitter.com/stakedvalue">
-              <FontAwesomeIcon icon={['fab', 'twitter']} /> Staked Value
-            </NavDropdown.Item>
             <NavDropdown.Item href="https://twitter.com/thebaoman">
               <FontAwesomeIcon icon={['fab', 'twitter']} /> BaoMan
             </NavDropdown.Item>

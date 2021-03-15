@@ -2,13 +2,44 @@
 
 #connected {
   font-size: 18px;
+
+  #overview {
+    background-color: lighten($background, 10%);
+    border: 3px solid lighten($background, 20%);
+    padding: 20px;
+    border-radius: 5px;
+
+    hr {
+      border-top-color: lighten($background, 20%) !important;
+    }
+
+    #overview-stats {
+
+      .col {
+        text-align: center;
+        padding: 10px;
+        font-size: 24px;
+
+        span {
+          display: block;
+          font-size: 16px;
+          color: #b5b5b5;
+
+          &.badge {
+            display: inline-block;
+            color: $text-color;
+          }
+        }
+      }
+    }
+  }
 }
 
 .nav-tabs {
   border-bottom: none;
   margin-bottom: 20px;
 
-  #pool-tabs-tab-sushi-lp {
+  #pool-tabs-tab-currently-staked, #pool-tabs-tab-sushi-lp {
     margin-left: 10px;
   }
 

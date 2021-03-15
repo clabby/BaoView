@@ -9,13 +9,13 @@
         color: $text-color;
         transition: 200ms;
         text-decoration: none;
+      }
 
-        &.link {
-          color: $brand;
+      .link {
+        color: $brand;
 
-          &:hover {
-            color: darken($brand, 10%);
-          }
+        &:hover {
+          color: darken($brand, 10%);
         }
       }
     }
