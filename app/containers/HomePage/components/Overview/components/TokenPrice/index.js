@@ -18,7 +18,7 @@ export default function Overview(props) {
           {priceChange === 'secondary'
             ? 'Loading...'
             : `${(parseFloat(priceChange) >= 0 ? 'Up ' : 'Down ') +
-                +(parseFloat(priceChange) * 100).toFixed(3)}% in the last 24h`
+                +(parseFloat(priceChange)).toFixed(3)}% in the last 24h`
           }
         </Tooltip>
       }
