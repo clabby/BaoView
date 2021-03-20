@@ -101,7 +101,7 @@ export default function FarmCards(/* props */) {
           pool.lpToken.toLowerCase().includes(query.toLowerCase()),
       );
 
-      farms.forEach(pool => {
+      filteredPools.forEach(pool => {
         if (type === 'BAOLP' && !pool.poolType)
           poolElements.push(
             <FarmCard
