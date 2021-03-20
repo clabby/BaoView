@@ -12,6 +12,8 @@ import {
   ListGroup,
   OverlayTrigger,
   Tooltip,
+  Popover,
+  Badge
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStakedBalance from '../../../../hooks/useStakedBalance';
@@ -19,19 +21,71 @@ import useEarnings from '../../../../hooks/useEarnings';
 import { getBalanceNumber } from '../../../../lib/formatBalance';
 
 export default function FarmCard(props) {
-  const { pool, roi } = props;
+  const { pool, roi, stakedValue } = props;
   const stakedBalance = useStakedBalance(pool.pid);
   const pendingBao = useEarnings(pool.pid);
+
+  let poolValue = -1;
+  let totalSupply = -1;
+  let lpValueUSD = -1;
+  if (stakedValue && stakedBalance) {
+    totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18))
+    lpValueUSD = (stakedBalance.div(new BigNumber(10).pow(18)))
+      .div(totalSupply)
+      .times(new BigNumber(stakedValue.totalWethValue));
+    poolValue = stakedValue.totalWethValue;
+  }
+
+  const popover = (
+    <Popover>
+      <Popover.Title as="h3">Pool Info ({pool.lpToken})</Popover.Title>
+      <Popover.Content>
+        Pool Value
+        <br/>
+        <Badge variant="success" pill>
+          {poolValue === -1
+            ? 'Loading...' :
+            '$' + getBalanceNumber(poolValue, 0)}
+        </Badge>
+        <hr/>
+        Supply
+        <br/>
+        <span>
+          {totalSupply === -1
+            ? 'Loading...' :
+            getBalanceNumber(totalSupply, 0) + ' LP'}
+        </span>
+        <hr/>
+        Your Share
+        <br/>
+        <span>
+          {totalSupply === -1
+            ? 'Loading...' :
+            stakedBalance.div(new BigNumber(10).pow(18)).div(totalSupply).times(100).toNumber().toFixed(6) + '%'}
+        </span>
+      </Popover.Content>
+    </Popover>
+  );
+
+  const PoolData = () => (
+    <OverlayTrigger trigger="click" placement="top" overlay={popover}>
+      <ListGroup.Item style={{textAlign: 'center'}}>
+        <a role="button">
+          Pool Info (Click)
+        </a>
+      </ListGroup.Item>
+    </OverlayTrigger>
+  );
 
   return (
     <div className="col-4">
       <Card style={{ width: '18rem' }}>
         <Card.Header>
-          <div variant="top" className={`${pool.iconClass} pool-icon`} />
+          <div variant="top" className={`${pool.icon.split('/')[1].split('.')[0]} pool-icon`} />
           <Card.Title>
             {pool.name}
             <br />
-            <small>{`${pool.symbol.split(' ')[0]} Pair`}</small>
+            <small>{pool.lpToken}</small>
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>Coming Soon!</Tooltip>}
@@ -54,8 +108,13 @@ export default function FarmCard(props) {
             </span>
           </ListGroup.Item>
           <ListGroup.Item>
-            LP Value (USD)
-            <span>N/A</span>
+            LP Value
+            <span>
+              {lpValueUSD === -1 ?
+                'Loading...' :
+                '$' + getBalanceNumber(lpValueUSD, 0)
+              }
+            </span>
           </ListGroup.Item>
           <ListGroup.Item>
             Pending BAO
@@ -65,6 +124,7 @@ export default function FarmCard(props) {
                 : getBalanceNumber(pendingBao)}
             </span>
           </ListGroup.Item>
+          <PoolData />
           <ListGroup.Item style={{ textAlign: 'center' }}>
             ROI (week/month/year)
             <br />

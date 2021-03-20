@@ -35,6 +35,41 @@
   }
 }
 
+.popover {
+  background-color: lighten($background, 10%);
+  border-color: lighten($background, 20%);
+  color: $text-color;
+  text-align: center;
+
+  hr {
+    border-top-color: lighten($background, 20%) !important;
+  }
+
+  .popover-header {
+    background-color: lighten($background, 30%);
+    border-bottom-color: lighten($background, 20%);
+  }
+
+  .arrow::after {
+    border-top-color: lighten($background, 20%);
+  }
+
+  .popover-body {
+    color: $text-color;
+  }
+}
+
+.list-group-item {
+  text-align: left;
+  background-color: lighten($background, 10%);
+  font-size: 16px;
+
+  span {
+    font-size: 18px;
+    float: right;
+  }
+}
+
 .nav-tabs {
   border-bottom: none;
   margin-bottom: 20px;
@@ -83,17 +118,6 @@
     small {
       display: block;
       color: #b5b5b5;
-    }
-  }
-
-  .list-group-item {
-    text-align: left;
-    background-color: lighten($background, 10%);
-    font-size: 16px;
-
-    span {
-      font-size: 18px;
-      float: right;
     }
   }
 

@@ -124,6 +124,7 @@ export const getTotalLPWethValue = async (
   return {
     tokenAmount,
     wethAmount,
+    totalSupply: totalSupply,
     totalWethValue: totalLpWethValue.div(new BigNumber(10).pow(18)),
     tokenPriceInWeth: wethAmount.div(tokenAmount),
     poolWeight,

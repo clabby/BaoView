@@ -11,6 +11,10 @@ export default function Connected() {
     <div id="connected" className="mt-4">
       <div id="connected-content">
         <Overview />
+        <div className="alert alert-warning">
+          <strong>Notice: </strong>
+          Non-xDai pairs seem to be bugged at the moment. Working on a fix!
+        </div>
         <FarmCards /* account={account} */ />
       </div>
     </div>

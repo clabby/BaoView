@@ -30,6 +30,7 @@ export default function Overview() {
     // https://api.nomics.com/v1/currencies/ticker?key=45298ab851ffac5e118fce2b805a2a3a&ids=BAO&convert=USD
     fetch(
       'https://api.nomics.com/v1/currencies/ticker?key=45298ab851ffac5e118fce2b805a2a3a&ids=BAO,ETH,DAI&convert=USD',
+      { 'Access-Control-Allow-Origin' : '*' }
     )
       .then(response => response.json())
       .then(data => {

@@ -6,7 +6,6 @@ import '../../styles/homepage.scss';
 import '../../styles/poolicons.scss';
 
 import { Tabs, Tab, Form } from 'react-bootstrap';
-import { supportedPools } from '../../../../lib/constants';
 
 import useAllStakedValue from '../../../../hooks/useAllStakedValue';
 import useAllStakedBalance from '../../../../hooks/useAllStakedBalance';
@@ -75,12 +74,13 @@ export default function FarmCards(/* props */) {
     const poolElements = [];
 
     if (query === undefined || query === '') {
-      supportedPools.forEach(pool => {
+      farms.forEach(pool => {
         if (type === 'BAOLP' && !pool.poolType)
           poolElements.push(
             <FarmCard
               key={pool.pid}
               pool={pool}
+              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
               roi={roi[pool.pid]} /* account={account} */
             />,
           );
@@ -89,23 +89,25 @@ export default function FarmCards(/* props */) {
             <FarmCard
               key={pool.pid}
               pool={pool}
+              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
               roi={roi[pool.pid]} /* account={account} */
             />,
           );
       });
     } else {
-      const filteredPools = supportedPools.filter(
+      const filteredPools = farms.filter(
         pool =>
           pool.name.toLowerCase().includes(query.toLowerCase()) ||
-          pool.symbol.toLowerCase().includes(query.toLowerCase()),
+          pool.lpToken.toLowerCase().includes(query.toLowerCase()),
       );
 
-      filteredPools.forEach(pool => {
+      farms.forEach(pool => {
         if (type === 'BAOLP' && !pool.poolType)
           poolElements.push(
             <FarmCard
               key={pool.pid}
               pool={pool}
+              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
               roi={roi[pool.pid]} /* account={account} */
             />,
           );
@@ -114,6 +116,7 @@ export default function FarmCards(/* props */) {
             <FarmCard
               key={pool.pid}
               pool={pool}
+              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
               roi={roi[pool.pid]} /* account={account} */
             />,
           );
