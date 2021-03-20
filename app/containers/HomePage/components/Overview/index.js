@@ -29,18 +29,18 @@ export default function Overview() {
   useEffect(() => {
     // https://api.nomics.com/v1/currencies/ticker?key=45298ab851ffac5e118fce2b805a2a3a&ids=BAO&convert=USD
     fetch(
-      'https://api.nomics.com/v1/currencies/ticker?key=45298ab851ffac5e118fce2b805a2a3a&ids=BAO,ETH,DAI&convert=USD',
-      { 'Access-Control-Allow-Origin' : '*' }
+      'https://api.coingecko.com/api/v3/simple/price?ids=bao-finance,ethereum,dai&vs_currencies=usd&include_24hr_change=true',
+      { 'Access-Control-Allow-Origin': '*' },
     )
       .then(response => response.json())
       .then(data => {
-        setEthPrice(data[0].price);
-        setDaiPrice(data[1].price);
-        setBaoPrice(data[2].price);
+        setEthPrice(data.ethereum.usd);
+        setDaiPrice(data.dai.usd);
+        setBaoPrice(data['bao-finance'].usd);
 
-        setEthPriceChange(data[0]['1d'].price_change_pct);
-        setDaiPriceChange(data[1]['1d'].price_change_pct);
-        setBaoPriceChange(data[2]['1d'].price_change_pct);
+        setEthPriceChange(data.ethereum.usd_24h_change);
+        setDaiPriceChange(data.dai.usd_24h_change);
+        setBaoPriceChange(data['bao-finance'].usd_24h_change);
       });
   }, []);
 
