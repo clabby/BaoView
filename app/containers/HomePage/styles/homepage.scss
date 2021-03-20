@@ -35,27 +35,28 @@
   }
 }
 
-.popover {
-  background-color: lighten($background, 10%);
-  border-color: lighten($background, 20%);
-  color: $text-color;
-  text-align: center;
-
-  hr {
-    border-top-color: lighten($background, 20%) !important;
-  }
-
-  .popover-header {
-    background-color: lighten($background, 30%);
-    border-bottom-color: lighten($background, 20%);
-  }
-
-  .arrow::after {
-    border-top-color: lighten($background, 20%);
-  }
-
-  .popover-body {
+.accordion {
+  .btn-link {
     color: $text-color;
+    transition: 200ms;
+
+    &:hover, &:focus {
+      color: darken(#eee, 10%);
+      text-decoration: none;
+      box-shadow: none;
+    }
+  }
+
+  .collapse, .collapsing {
+    font-size: 12px;
+
+    &.show {
+      display: block;
+    }
+
+    div > span {
+      font-size: 12px;
+    }
   }
 }
 

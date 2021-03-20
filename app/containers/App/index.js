@@ -32,6 +32,8 @@ import {
   faLink,
   faFileInvoiceDollar,
   faRocket,
+  faLongArrowAltUp,
+  faLongArrowAltDown
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -53,6 +55,8 @@ library.add(
   faLink,
   faFileInvoiceDollar,
   faRocket,
+  faLongArrowAltUp,
+  faLongArrowAltDown
 );
 
 export default function App() {

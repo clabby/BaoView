@@ -12,10 +12,12 @@ import {
   ListGroup,
   OverlayTrigger,
   Tooltip,
-  Popover,
-  Badge
+  Badge,
+  Accordion
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import useStakedBalance from '../../../../hooks/useStakedBalance';
 import useEarnings from '../../../../hooks/useEarnings';
 import { getBalanceNumber } from '../../../../lib/formatBalance';
@@ -36,45 +38,52 @@ export default function FarmCard(props) {
     poolValue = stakedValue.totalWethValue;
   }
 
-  const popover = (
-    <Popover>
-      <Popover.Title as="h3">Pool Info ({pool.lpToken})</Popover.Title>
-      <Popover.Content>
-        Pool Value
-        <br/>
-        <Badge variant="success" pill>
-          {poolValue === -1
-            ? 'Loading...' :
-            '$' + getBalanceNumber(poolValue, 0)}
-        </Badge>
-        <hr/>
-        Supply
-        <br/>
-        <span>
-          {totalSupply === -1
-            ? 'Loading...' :
-            getBalanceNumber(totalSupply, 0) + ' LP'}
-        </span>
-        <hr/>
-        Your Share
-        <br/>
-        <span>
-          {totalSupply === -1
-            ? 'Loading...' :
-            stakedBalance.div(new BigNumber(10).pow(18)).div(totalSupply).times(100).toNumber().toFixed(6) + '%'}
-        </span>
-      </Popover.Content>
-    </Popover>
-  );
+  const PoolDataToggle = ({ children, eventKey }) => {
+    const [poolDataExpanded, setPoolDataExpanded] = useState(false);
 
-  const PoolData = () => (
-    <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-      <ListGroup.Item style={{textAlign: 'center'}}>
-        <a role="button">
-          Pool Info (Click)
-        </a>
-      </ListGroup.Item>
-    </OverlayTrigger>
+    const onPoolDataClick = useAccordionToggle(eventKey, () =>
+      setPoolDataExpanded(!poolDataExpanded));
+
+    return (
+      <Button variant="link" onClick={onPoolDataClick}>
+        Pool Data
+        {' '}<FontAwesomeIcon icon={['fa', poolDataExpanded ? 'long-arrow-alt-up' : 'long-arrow-alt-down']} />
+      </Button>
+    )
+  }
+
+  const PoolData = ({ pid }) => (
+    <ListGroup.Item>
+      <Accordion>
+        <center>
+          <PoolDataToggle eventKey={pid.toString()} />
+        </center>
+        <Accordion.Collapse eventKey={pid.toString()}>
+          <div>
+            Pool Value
+            <Badge variant="success" pill>
+              {poolValue === -1
+                ? 'Loading...' :
+                '$' + getBalanceNumber(poolValue, 0)}
+            </Badge>
+            <br/>
+            Supply
+            <span>
+              {totalSupply === -1
+                ? 'Loading...' :
+                getBalanceNumber(totalSupply, 0) + ' LP'}
+            </span>
+            <br/>
+            Your Share
+            <span>
+              {totalSupply === -1
+                ? 'Loading...' :
+                stakedBalance.div(new BigNumber(10).pow(18)).div(totalSupply).times(100).toNumber().toFixed(6) + '%'}
+            </span>
+          </div>
+        </Accordion.Collapse>
+      </Accordion>
+    </ListGroup.Item>
   );
 
   return (
@@ -124,7 +133,7 @@ export default function FarmCard(props) {
                 : getBalanceNumber(pendingBao)}
             </span>
           </ListGroup.Item>
-          <PoolData />
+          <PoolData pid={pool.pid} />
           <ListGroup.Item style={{ textAlign: 'center' }}>
             ROI (week/month/year)
             <br />
