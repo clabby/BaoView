@@ -20,6 +20,15 @@
         padding: 10px;
         font-size: 24px;
 
+        .fa-question-circle {
+          vertical-align: middle;
+          color: #b5b5b5;
+
+          &:hover {
+            color: $text-color;
+          }
+        }
+
         span {
           display: block;
           font-size: 16px;

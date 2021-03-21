@@ -12,12 +12,15 @@ import '../../styles/homepage.scss';
 
 import useAllEarnings from '../../../../hooks/useAllEarnings';
 import useLockedEarnings from '../../../../hooks/useLockedEarnings';
+import useLPTotalUSDValue from '../../../../hooks/useLPTotalUSDValue';
 
 import { getDisplayBalance } from '../../../../lib/formatBalance';
 
 export default function Overview() {
   const earnings = useAllEarnings();
   const lockedEarnings = useLockedEarnings();
+
+  const lpTotalUSDValue = useLPTotalUSDValue();
 
   const [baoPrice, setBaoPrice] = useState(-1);
   const [ethPrice, setEthPrice] = useState(-1);
@@ -83,7 +86,17 @@ export default function Overview() {
           </span>
         </div>
         <div className="col">
-          Total Value of LP Staked <span>TODO</span>
+          Total Value of LP Staked
+          <br/>
+          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>{lpTotalUSDValue === -1 ? 'Loading...' : '$'
+            + getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
+          </Badge>{' '}
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Only xDai pairs calculated into total as of now.</Tooltip>}
+          >
+            <FontAwesomeIcon icon={['fas', 'question-circle']} style={{verticalAlign: 'none'}} />
+          </OverlayTrigger>
         </div>
         <div className="col">
           Pending Harvest{' '}

@@ -45,7 +45,7 @@ const useAllStakedValue = () => {
     if (account && masterChefContract && bao) {
       fetchAllStakedValue();
     }
-  }, [account, block, masterChefContract, setBalance, bao]);
+  }, [account, masterChefContract, setBalance, bao]);
 
   return balances;
 };

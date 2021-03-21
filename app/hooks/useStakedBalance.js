@@ -27,7 +27,7 @@ const useStakedBalance = pid => {
     if (account && bao) {
       fetchBalance();
     }
-  }, [account, pid, setBalance, block, bao]);
+  }, [account, pid, setBalance, bao]);
 
   return balance.decimalPlaces(18);
 };

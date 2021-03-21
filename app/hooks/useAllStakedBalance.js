@@ -28,7 +28,7 @@ const useAllStakedBalance = () => {
     if (account && bao) {
       fetchBalance();
     }
-  }, [account, setBalance, block, bao]);
+  }, [account, setBalance, bao]);
 
   return balance;
 };
