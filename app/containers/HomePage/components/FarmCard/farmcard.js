@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import _ from 'underscore';
 
 import BigNumber from 'bignumber.js';
 
@@ -20,22 +22,52 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import useStakedBalance from '../../../../hooks/useStakedBalance';
 import useEarnings from '../../../../hooks/useEarnings';
+import useFarmTotalValue from '../../../../hooks/useFarmTotalValue';
 import { getBalanceNumber } from '../../../../lib/formatBalance';
 
+const BLOCKS_PER_WEEK = new BigNumber(44923);
+const BLOCKS_PER_MONTH = new BigNumber(194667);
+const BLOCKS_PER_YEAR = new BigNumber(2336000);
+const BAO_BER_BLOCK = new BigNumber(256000);
+
 export default function FarmCard(props) {
-  const { pool, roi, stakedValue } = props;
+  const { pool, stakedValue, priceData, baoPrice } = props;
   const stakedBalance = useStakedBalance(pool.pid);
   const pendingBao = useEarnings(pool.pid);
+
+  const totalFarmValue = useFarmTotalValue(pool, priceData);
 
   let poolValue = -1;
   let totalSupply = -1;
   let lpValueUSD = -1;
-  if (stakedValue && stakedBalance) {
-    totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18))
+  let roi = {
+    apw: -1,
+    apm: -1,
+    apy: -1
+  };
+  
+  if (stakedValue && stakedBalance && totalFarmValue >= 0) {
+    totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18));
+    poolValue = new BigNumber(totalFarmValue);
     lpValueUSD = (stakedBalance.div(new BigNumber(10).pow(18)))
       .div(totalSupply)
-      .times(new BigNumber(stakedValue.totalWethValue));
-    poolValue = stakedValue.totalWethValue;
+      .times(poolValue);
+
+    roi.apw = baoPrice
+      .times(BAO_BER_BLOCK)
+      .times(BLOCKS_PER_WEEK)
+      .times(stakedValue.poolWeight)
+      .div(poolValue);
+    roi.apm = baoPrice
+      .times(BAO_BER_BLOCK)
+      .times(BLOCKS_PER_MONTH)
+      .times(stakedValue.poolWeight)
+      .div(poolValue);
+    roi.apy = baoPrice
+      .times(BAO_BER_BLOCK)
+      .times(BLOCKS_PER_YEAR)
+      .times(stakedValue.poolWeight)
+      .div(poolValue);
   }
 
   const PoolDataToggle = ({ children, eventKey }) => {
@@ -139,7 +171,7 @@ export default function FarmCard(props) {
             <br />
             {roi ? (
               <b>
-                {roi.apw === null ||
+                {roi.apw === -1 ||
                 roi.apw.toNumber() === Number.POSITIVE_INFINITY
                   ? '...'
                   : `${roi.apw
@@ -147,7 +179,7 @@ export default function FarmCard(props) {
                       .toNumber()
                       .toFixed(2)}%`}
                 {' / '}
-                {roi.apm === null ||
+                {roi.apm === -1 ||
                 roi.apm.toNumber() === Number.POSITIVE_INFINITY
                   ? '...'
                   : `${roi.apm
@@ -155,7 +187,7 @@ export default function FarmCard(props) {
                       .toNumber()
                       .toFixed(2)}%`}
                 {' / '}
-                {roi.apy === null ||
+                {roi.apy === -1 ||
                 roi.apy.toNumber() === Number.POSITIVE_INFINITY
                   ? '...'
                   : `${roi.apy

@@ -90,13 +90,7 @@ export default function Overview() {
           <br/>
           <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>{lpTotalUSDValue === -1 ? 'Loading...' : '$'
             + getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
-          </Badge>{' '}
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip>Only xDai pairs calculated into total as of now.</Tooltip>}
-          >
-            <FontAwesomeIcon icon={['fas', 'question-circle']} style={{verticalAlign: 'none'}} />
-          </OverlayTrigger>
+          </Badge>
         </div>
         <div className="col">
           Pending Harvest{' '}

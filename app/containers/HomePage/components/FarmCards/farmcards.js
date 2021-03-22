@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import BigNumber from 'bignumber.js';
 
@@ -9,6 +9,7 @@ import { Tabs, Tab, Form } from 'react-bootstrap';
 
 import useAllStakedValue from '../../../../hooks/useAllStakedValue';
 import useAllStakedBalance from '../../../../hooks/useAllStakedBalance';
+import usePriceData from '../../../../hooks/usePriceData';
 import useBao from '../../../../hooks/useBao';
 import { getFarms } from '../../../../lib/bao/utils';
 
@@ -21,6 +22,7 @@ export default function FarmCards(/* props */) {
   const [searchQuery, setSearchQuery] = useState('');
   const bao = useBao();
   const farms = getFarms(bao);
+  const priceData = usePriceData(farms);
 
   const baoIndex = farms.findIndex(({ tokenSymbol }) => tokenSymbol === 'BAO');
   const baoPrice =
@@ -28,43 +30,9 @@ export default function FarmCards(/* props */) {
       ? stakedValue[baoIndex].tokenPriceInWeth
       : new BigNumber(0);
 
-  const BLOCKS_PER_WEEK = new BigNumber(44923);
-  const BLOCKS_PER_MONTH = new BigNumber(194667);
-  const BLOCKS_PER_YEAR = new BigNumber(2336000);
-  const BAO_BER_BLOCK = new BigNumber(256000);
-
-  const roi = [];
-  const wEthValue = [];
-
   const stakedPools = [];
 
   farms.forEach((farm, i) => {
-    // Total wEth value shows up as blank sometimes, causes some pools to show
-    // no ROI
-    roi[farm.pid] = {
-      apw: stakedValue[i]
-        ? baoPrice
-            .times(BAO_BER_BLOCK)
-          .times(BLOCKS_PER_WEEK)
-          .times(stakedValue[i].poolWeight)
-          .div(stakedValue[i].totalWethValue)
-        : null,
-      apm: stakedValue[i]
-        ? baoPrice
-          .times(BAO_BER_BLOCK)
-            .times(BLOCKS_PER_MONTH)
-          .times(stakedValue[i].poolWeight)
-          .div(stakedValue[i].totalWethValue)
-        : null,
-      apy: stakedValue[i]
-        ? baoPrice
-          .times(BAO_BER_BLOCK)
-          .times(BLOCKS_PER_YEAR)
-            .times(stakedValue[i].poolWeight)
-          .div(stakedValue[i].totalWethValue)
-        : null,
-    };
-
     if (stakedValue[i] && stakedBalances[i] > 0) {
       stakedPools.push(farm.pid);
     }
@@ -74,26 +42,29 @@ export default function FarmCards(/* props */) {
     const poolElements = [];
 
     if (query === undefined || query === '') {
-      farms.forEach(pool => {
-        if (type === 'BAOLP' && !pool.poolType)
-          poolElements.push(
-            <FarmCard
-              key={pool.pid}
-              pool={pool}
-              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-              roi={roi[pool.pid]} /* account={account} */
-            />,
-          );
-        if (type === 'STAKED' && stakedPools.includes(pool.pid))
-          poolElements.push(
-            <FarmCard
-              key={pool.pid}
-              pool={pool}
-              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-              roi={roi[pool.pid]} /* account={account} */
-            />,
-          );
-      });
+      if (stakedValue.length > 0)
+        farms.forEach(pool => {
+          if (type === 'BAOLP' && !pool.poolType && stakedValue.length > 0)
+            poolElements.push(
+              <FarmCard
+                key={pool.pid}
+                pool={pool}
+                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
+                priceData={priceData}
+                baoPrice={baoPrice}
+              />,
+            );
+          if (type === 'STAKED' && stakedPools.includes(pool.pid))
+            poolElements.push(
+              <FarmCard
+                key={pool.pid}
+                pool={pool}
+                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
+                priceData={priceData}
+                baoPrice={baoPrice}
+              />,
+            );
+        });
     } else {
       const filteredPools = farms.filter(
         pool =>
@@ -101,26 +72,31 @@ export default function FarmCards(/* props */) {
           pool.lpToken.toLowerCase().includes(query.toLowerCase()),
       );
 
-      filteredPools.forEach(pool => {
-        if (type === 'BAOLP' && !pool.poolType)
-          poolElements.push(
-            <FarmCard
-              key={pool.pid}
-              pool={pool}
-              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-              roi={roi[pool.pid]} /* account={account} */
-            />,
-          );
-        if (type === 'STAKED' && stakedPools.includes(pool.pid))
-          poolElements.push(
-            <FarmCard
-              key={pool.pid}
-              pool={pool}
-              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-              roi={roi[pool.pid]} /* account={account} */
-            />,
-          );
-      });
+      if (stakedValue.length > 0)
+        filteredPools.forEach(pool => {
+          if (type === 'BAOLP' && !pool.poolType)
+            poolElements.push(
+              <FarmCard
+                key={pool.pid}
+                pool={pool}
+                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
+                priceData={priceData}
+                baoPrice={baoPrice}
+              />,
+            );
+          if (type === 'STAKED' && stakedPools.includes(pool.pid))
+            poolElements.push(
+              <FarmCard
+                key={pool.pid}
+                pool={pool}
+                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
+                priceData={priceData}
+                baoPrice={baoPrice}
+              />,
+            );
+        });
+
+      if (poolElements.length === 0) poolElements[0] = 'empty';
     }
 
     return type === 'SUSHILP' ? (
@@ -128,6 +104,10 @@ export default function FarmCards(/* props */) {
         <h1 style={{ textAlign: 'center' }}>Sushi LP Support coming soon (:</h1>
       </div>
     ) : poolElements.length === 0 ? (
+      <div className="col-12">
+        <h1 style={{ textAlign: 'center' }}>Loading...</h1>
+      </div>
+    ) : poolElements[0] === 'empty' ? (
       <div className="col-12">
         <h1 style={{ textAlign: 'center' }}>No Pools Found</h1>
       </div>

@@ -2,6 +2,8 @@ import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
 import { supportedPools } from './lib/constants';
 
+import _ from 'underscore';
+
 import { getBalanceNumber } from '../formatBalance';
 
 BigNumber.config({
@@ -88,12 +90,14 @@ export const getLockedEarned = async (baoContract, account) =>
   baoContract.methods.lockOf(account).call();
 
 export const getTotalLPWethValue = async (
+  bao,
   masterChefContract,
   wethContract,
   lpContract,
   tokenContract,
   tokenDecimals,
   pid,
+  account
 ) => {
   const [
     tokenAmountWholeLP,
@@ -101,12 +105,16 @@ export const getTotalLPWethValue = async (
     totalSupply,
     lpContractWeth,
     poolWeight,
+    farms,
+    staked
   ] = await Promise.all([
     tokenContract.methods.balanceOf(lpContract.options.address).call(),
     lpContract.methods.balanceOf(masterChefContract.options.address).call(),
     lpContract.methods.totalSupply().call(),
     wethContract.methods.balanceOf(lpContract.options.address).call(),
     getPoolWeight(masterChefContract, pid),
+    getFarms(bao),
+    masterChefContract.methods.userInfo(pid, account).call()
   ]);
 
   // Return p1 * w1 * 2
@@ -120,13 +128,45 @@ export const getTotalLPWethValue = async (
 
   const wethAmount = new BigNumber(lpContractWeth)
     .times(portionLp)
-    .div(new BigNumber(10).pow(18));
+  .div(new BigNumber(10).pow(18));
+
+  /* if (pid === 1) {
+    lpContract.methods.getReserves().call().then(reserves => {
+      const token1 = reserves['_reserve0'] / (10 ** 18);
+      const token2 = reserves['_reserve1'] / (10 ** 18);
+
+      const farm = _.findWhere(farms, { pid: pid });
+      const lpTokenStr = farm.lpToken.split(' ')[0].split('-');
+      const token1Str = lpTokenStr[0];
+      const token2Str = lpTokenStr[1];
+
+      fetch('https://api.coingecko.com/api/v3/coins/list')
+        .then(response => response.json())
+        .then(data => {
+          const token1Id = _.findWhere(data, { symbol: token1Str.toLowerCase() }).id;
+          const token2Id = _.findWhere(data, { symbol: token2Str.toLowerCase() }).id;
+
+          fetch(
+            'https://api.coingecko.com/api/v3/simple/price?ids=' + token1Id + ','
+            + token2Id + '&vs_currencies=usd&include_24hr_change=true',
+          )
+            .then(response => response.json())
+            .then(priceData => {
+              const total = priceData[token1Id].usd * token2 + priceData[token2Id].usd * token1;
+              console.log(total);
+            });
+        });
+    })
+  } */
+
   return {
     tokenAmount,
     wethAmount,
+    pid: pid,
     totalSupply: totalSupply,
     totalWethValue: totalLpWethValue.div(new BigNumber(10).pow(18)),
     tokenPriceInWeth: wethAmount.div(tokenAmount),
+    staked: staked,
     poolWeight,
   };
 };

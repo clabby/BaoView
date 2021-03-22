@@ -13,7 +13,7 @@ export default function Connected() {
         <Overview />
         <div className="alert alert-warning">
           <strong>Notice: </strong>
-          Non-xDai pairs seem to be bugged at the moment. Working on a fix!
+          ROI and LP Value (USD) may take up to <b>30 seconds</b> to load.
         </div>
         <FarmCards /* account={account} */ />
       </div>

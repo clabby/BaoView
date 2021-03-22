@@ -28,12 +28,14 @@ const useAllStakedValue = () => {
     const balances = await Promise.all(
       farms.map(({ pid, lpContract, tokenContract, tokenDecimals }) =>
         getTotalLPWethValue(
+          bao,
           masterChefContract,
           wethContract,
           lpContract,
           tokenContract,
           tokenDecimals,
           pid,
+          account
         ),
       ),
     );
