@@ -42,13 +42,14 @@ export default function AboutPage() {
       <div id="about-content">
         <h1>About Bao View</h1>
         <hr />
-        We{' '}
+        I {' '}
         <FontAwesomeIcon
           icon={['fa', 'heart']}
           style={{ color: '#d25b55' }}
-        />{' '}
-        Bao Finance! This tool is provided to help you keep track of the value
-        you have invested into the liquidity pools you are currently staked in.
+        /> Bao Finance!
+        <br/>
+        This tool was created to help users keep track of the
+        value they have staked in Bao Finance pools on xDai.
         <hr />
         <Badge variant="warning">Disclaimers</Badge>
         <span className="line-break" />
@@ -60,7 +61,7 @@ export default function AboutPage() {
         <hr />
         <Badge variant="success">Donate</Badge>
         <span className="line-break" />
-        If you enjoy the project, consider donating to the creator! Donations
+        If you enjoy the project, consider buying me a beer! Donations
         are accepted on both Mainnet and xDai (:
         <span className="line-break" />
         vex: <br />

@@ -10,6 +10,10 @@
     height: 35px;
   }
 
+  .navbar-toggler-icon {
+    filter: invert(100%);
+  }
+
   .wallet-button {
     background-color: transparent;
     border: 2px solid lighten($background, 10%);

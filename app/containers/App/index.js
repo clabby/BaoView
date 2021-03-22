@@ -34,7 +34,8 @@ import {
   faRocket,
   faLongArrowAltUp,
   faLongArrowAltDown,
-  faQuestionCircle
+  faQuestionCircle,
+  faVideo
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -58,7 +59,8 @@ library.add(
   faRocket,
   faLongArrowAltUp,
   faLongArrowAltDown,
-  faQuestionCircle
+  faQuestionCircle,
+  faVideo
 );
 
 export default function App() {

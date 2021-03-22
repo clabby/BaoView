@@ -27,7 +27,21 @@ export default function Header() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/about">About</Nav.Link>
-          <NavDropdown title="Resources" id="basic-nav-dropdown">
+          <NavDropdown title="Help" id="help-dd">
+            <NavDropdown.Item href="https://docs.bao.finance/faq/bao-related-questions">
+              <FontAwesomeIcon icon={['fa', 'question-circle']} /> Bao Related Questions
+            </NavDropdown.Item>
+            <NavDropdown.Item href="https://docs.bao.finance/faq/technical-questions">
+              <FontAwesomeIcon icon={['fa', 'question-circle']} /> Technical Questions
+            </NavDropdown.Item>
+            <NavDropdown.Item href="https://docs.bao.finance/faq/defi-questions">
+              <FontAwesomeIcon icon={['fa', 'question-circle']} /> DeFi Questions
+            </NavDropdown.Item>
+            <NavDropdown.Item href="https://docs.bao.finance/faq/videos-resources">
+              <FontAwesomeIcon icon={['fa', 'video']} /> Videos
+            </NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Resources" id="resources-dd">
             <NavDropdown.Item href="https://farms.baoswap.xyz/">
               <FontAwesomeIcon icon={['fa', 'tractor']} /> Bao Farms
             </NavDropdown.Item>

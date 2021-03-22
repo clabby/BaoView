@@ -13,7 +13,8 @@ export default function Connected() {
         <Overview />
         <div className="alert alert-warning">
           <strong>Notice: </strong>
-          ROI and LP Value (USD) may take up to <b>30 seconds</b> to load.
+          ROI and LP Value (USD) may take up to <b>30 seconds</b> to load depending
+          on your connection.
         </div>
         <FarmCards /* account={account} */ />
       </div>
