@@ -25,11 +25,19 @@ export default function WalletButton() {
           wallet.connect();
         }}
       >
-        No{' '}
-        <span role="img" aria-label="Fox Emoji">
-          🦊
-        </span>{' '}
-        MetaMask Wallet Detected
+        {typeof web3 === 'undefined' ? (
+          <span>
+            No{' '}
+            <span role="img" aria-label="Fox Emoji">
+              🦊
+            </span>{' '}
+            MetaMask Wallet Detected
+          </span>
+        ) : (
+          <span>
+            <FontAwesomeIcon icon={['fas', 'wifi']} /> Wrong Network
+          </span>
+        )}
       </Button>
     );
   }
