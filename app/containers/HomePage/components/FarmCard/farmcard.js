@@ -45,7 +45,7 @@ export default function FarmCard(props) {
     apm: -1,
     apy: -1
   };
-  
+
   if (stakedValue && stakedBalance && totalFarmValue >= 0) {
     totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18));
     poolValue = new BigNumber(totalFarmValue);
@@ -127,16 +127,9 @@ export default function FarmCard(props) {
             {pool.name}
             <br />
             <small>{pool.lpToken}</small>
-            <OverlayTrigger
-              placement="top"
-              overlay={<Tooltip>Coming Soon!</Tooltip>}
-            >
-              <div>
-                <Button variant="info" href="#" className="mt-2 disabled">
-                  <FontAwesomeIcon icon={['fa', 'chart-line']} /> Pool Metrics
-                </Button>
-              </div>
-            </OverlayTrigger>
+            <Button variant="info" href={'/pool-metrics/' + pool.pid} className="mt-2">
+              <FontAwesomeIcon icon={['fa', 'chart-line']} /> Pool Metrics
+            </Button>
           </Card.Title>
         </Card.Header>
         <ListGroup variant="flush">

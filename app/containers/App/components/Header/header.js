@@ -55,7 +55,7 @@ export default function Header() {
             <NavDropdown.Item href="https://twitter.com/thebaoman">
               <FontAwesomeIcon icon={['fab', 'twitter']} /> BaoMan
             </NavDropdown.Item>
-            <NavDropdown.Item href="#">
+            <NavDropdown.Item href="https://discord.gg/vuYHdgyryg">
               <FontAwesomeIcon icon={['fab', 'discord']} /> Bao Finance Discord
             </NavDropdown.Item>
           </NavDropdown>

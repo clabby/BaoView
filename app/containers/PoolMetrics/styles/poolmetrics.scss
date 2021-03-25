@@ -1,0 +1,21 @@
+#pool-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  #pool-metrics-content {
+    display: block;
+    width: 100%;
+    padding: 50px;
+    text-align: center;
+
+    .line-break {
+      display: block;
+      margin: 10px 0px;
+    }
+
+    .chart > h1, p, div, span {
+      color: #000 !important;
+    }
+  }
+}
