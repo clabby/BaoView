@@ -36,7 +36,8 @@ export default function App (props) {
       labels: {
         formatter: function(val) {
           var date = new Date(val);
-          return date.toLocaleDateString("en-US");
+          return date.toLocaleDateString("en-US") + ' ' + date.getHours() + ':' +
+            date.getMinutes();
         },
         color: '#fff'
       }
@@ -49,9 +50,9 @@ export default function App (props) {
   };
 
   useEffect(() => {
-    const API_LINK = props.title === 'Pool APY' ?
-      'http://localhost:3001/api/v1/pool-metrics/apy?pid=' :
-      'http://localhost:3001/api/v1/pool-metrics/pool-value?pid=';
+    const API_LINK = props.title === 'Pool APY (%)' ?
+      'https://api.baoview.xyz/api/v1/pool-metrics/apy?pid=' :
+      'https://api.baoview.xyz/api/v1/pool-metrics/pool-value?pid=';
 
     fetch(API_LINK + props.pid)
       .then(response => response.json())

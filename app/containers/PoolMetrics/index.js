@@ -19,7 +19,6 @@ import { getFarms } from '../../lib/bao/utils';
 import './styles/poolmetrics.scss';
 
 export default function PoolMetrics(_params) {
-  console.log(_params);
   const params = _params.match.params;
   const { pid } = params;
 
@@ -41,15 +40,11 @@ export default function PoolMetrics(_params) {
           window.location.href = '/404'
         ) : (
           <div>
-            <div className="alert alert-warning">
-              <b>Notice: </b>
-              Pool Metrics have not yet been implemented. The data displayed in charts is placeholder data.
-            </div>
             <h1>{farm.name} Pool Metrics</h1>
             <hr />
-            <CandleStickChart title="Pool APY" pid={pid} />
+            <CandleStickChart title="Pool APY (%)" pid={pid} />
             <hr />
-            <CandleStickChart title="Total Pool Value" pid={pid} />
+            <CandleStickChart title="Total Pool Value (USD)" pid={pid} />
           </div>
         )}
       </div>
