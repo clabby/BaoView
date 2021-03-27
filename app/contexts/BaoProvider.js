@@ -21,7 +21,6 @@ const BaoProvider = ({ children }) => {
   useEffect(() => {
     if (ethereum) {
       const chainId = Number(ethereum.chainId);
-      console.log(chainId);
       const baoLib = new Bao(ethereum, chainId, false, {
         defaultAccount: ethereum.selectedAddress,
         defaultConfirmations: 1,
@@ -32,7 +31,6 @@ const BaoProvider = ({ children }) => {
         accounts: [],
         ethereumNodeTimeout: 10000,
       });
-      console.log(baoLib);
       setBao(baoLib);
       window.baosauce = baoLib;
     }

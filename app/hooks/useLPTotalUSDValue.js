@@ -28,7 +28,7 @@ const fetchPoolTotalValue = async (farm, priceData, cb) => {
                 token1Contract.methods.decimals().call().then(decimals1 => {
                   const tokens = [
                     {
-                      balance: reserves["_reserve0"] / (10 ** 18),
+                      balance: reserves["_reserve0"] / (10 ** parseInt(decimals0)),
                       decimals: decimals0,
                       symbol: symbol0,
                       id: symbol0.toLowerCase() === 'bao.cx' ?
@@ -36,7 +36,7 @@ const fetchPoolTotalValue = async (farm, priceData, cb) => {
                         _.findWhere(cgList, { symbol: symbol0.toLowerCase() }).id
                     },
                     {
-                      balance: reserves["_reserve1"] / (10 ** 18),
+                      balance: reserves["_reserve1"] / (10 ** parseInt(decimals0)),
                       decimals: decimals1,
                       symbol: symbol1,
                       id: symbol1.toLowerCase() === 'bao.cx' ?

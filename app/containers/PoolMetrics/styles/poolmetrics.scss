@@ -1,3 +1,5 @@
+@import "../../App/styles/colors.scss";
+
 #pool-metrics {
   display: flex;
   align-items: center;
@@ -14,8 +16,31 @@
       margin: 10px 0px;
     }
 
+    .form-control {
+      background: lighten($background, 10%);
+      border: 2px solid lighten($background, 20%);
+
+      &:focus {
+        box-shadow: none;
+        border-color: $brand;
+      }
+    }
+
+    .input-group-text {
+      background-color: lighten($background, 20%);
+      border-color: lighten($background, 20%);
+    }
+
     .chart > h1, p, div, span {
       color: #000 !important;
+    }
+
+    .alert-warning {
+      color: #856404 !important;
+    }
+
+    .alert-info {
+      color: #0c5460 !important;
     }
   }
 }

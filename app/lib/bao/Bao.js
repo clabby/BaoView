@@ -41,7 +41,6 @@ export class Bao {
     this.wethAddress = contractAddresses.weth[100];
     this.wethPriceAddress = contractAddresses.wethPrice[100];
     this.baoPriceAddress = contractAddresses.baoPrice[100];
-    console.log(`network Id: ${networkId}`, contractAddresses);
   }
 
   async resetEVM() {

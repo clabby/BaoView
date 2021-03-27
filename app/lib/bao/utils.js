@@ -176,32 +176,6 @@ export const approve = async (lpContract, masterChefContract, account) =>
     .approve(masterChefContract.options.address, ethers.constants.MaxUint256)
     .send({ from: account });
 
-export const stake = async (masterChefContract, pid, amount, account, ref) =>
-  masterChefContract.methods
-    .deposit(pid, ethers.utils.parseUnits(amount, 18), ref)
-    .send({ from: account })
-    .on('transactionHash', tx => {
-      console.log(tx);
-      return tx.transactionHash;
-    });
-
-export const unstake = async (masterChefContract, pid, amount, account, ref) =>
-  masterChefContract.methods
-    .withdraw(pid, ethers.utils.parseUnits(amount, 18), ref)
-    .send({ from: account })
-    .on('transactionHash', tx => {
-      console.log(tx);
-      return tx.transactionHash;
-    });
-export const harvest = async (masterChefContract, pid, account) =>
-  masterChefContract.methods
-    .claimReward(pid)
-    .send({ from: account })
-    .on('transactionHash', tx => {
-      console.log(tx);
-      return tx.transactionHash;
-    });
-
 export const getStaked = async (masterChefContract, pid, account) => {
   try {
     const { amount } = await masterChefContract.methods
@@ -214,7 +188,6 @@ export const getStaked = async (masterChefContract, pid, account) => {
 };
 
 export const getWethPrice = async bao => {
-  console.log(bao);
   const amount = await bao.contracts.wethPrice.methods.latestAnswer().call();
   return new BigNumber(amount);
 };
@@ -232,17 +205,6 @@ export const getBaoSupply = async bao =>
 
 export const getReferrals = async (masterChefContract, account) =>
   await masterChefContract.methods.getGlobalRefAmount(account).call();
-
-export function getRefUrl() {
-  let refer = '0x0000000000000000000000000000000000000000';
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('ref')) {
-    refer = urlParams.get('ref');
-  }
-  console.log(refer);
-
-  return refer;
-}
 
 export const redeem = async (masterChefContract, account) => {
   const now = new Date().getTime() / 1000;

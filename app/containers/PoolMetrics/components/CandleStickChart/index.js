@@ -1,11 +1,15 @@
 import React, { Component, useState, useEffect } from 'react';
 import _ from 'underscore';
 
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import Chart from 'react-apexcharts';;
 
 export default function App (props) {
   const [seriesData, setSeriesData] = useState([]);
+  const [candleInput, setCandleInput] = useState(50);
+  const [totalCandles, setTotalCandles] = useState(-1);
 
+  const poolType = props.title === 'Pool APY (%)';
   const series = [{
     name: 'candle',
     data: seriesData
@@ -50,7 +54,7 @@ export default function App (props) {
   };
 
   useEffect(() => {
-    const API_LINK = props.title === 'Pool APY (%)' ?
+    const API_LINK = poolType ?
       'https://api.baoview.xyz/api/v1/pool-metrics/apy?pid=' :
       'https://api.baoview.xyz/api/v1/pool-metrics/pool-value?pid=';
 
@@ -66,13 +70,41 @@ export default function App (props) {
           });
         });
 
-        setSeriesData(candleData);
+        const candleDataLength = candleData.length;
+        setTotalCandles(candleData.length);
+        if (candleInput > candleDataLength) setCandleInput(candleDataLength);
+
+        return setSeriesData(candleData.slice(-candleInput));
       });
-  }, []);
+  }, [candleInput]);
+
+  function handleCandleInputClick (e) {
+    var str = e.target.value;
+
+    if (str === '') setCandleInput(50);
+    if (!isNaN(str) && !isNaN(parseFloat(str))) setCandleInput(parseInt(str));
+  }
 
   return (
     <div className="chart">
       <Chart options={options} series={series} type="candlestick" height={350} />
+      <center>
+        <InputGroup>
+          <FormControl
+            placeholder="# of candles (default=50)"
+            aria-label="# of candles"
+            onChange={handleCandleInputClick}
+            style={{width: '35%'}}
+          />
+          <InputGroup.Append>
+            <InputGroup.Text id="basic-addon2">
+              <span class="badge badge-info" style={{color: '#fff'}}>
+                {totalCandles === -1 ? 'Loading...' : totalCandles + ' 1h Candles'}
+              </span>
+            </InputGroup.Text>
+          </InputGroup.Append>
+        </InputGroup>
+      </center>
     </div>
   );
 }

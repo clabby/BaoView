@@ -8,7 +8,7 @@ import Identicon from '../Identicon/Loadable';
 import '../../styles/header.scss';
 
 function shortenWallet(wallet) {
-  return `${wallet.substring(0, 4)}.....${wallet.substring(
+  return `${wallet.substring(0, 6)}.....${wallet.substring(
     wallet.length - 4,
     wallet.length,
   )}`;
