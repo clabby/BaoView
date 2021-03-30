@@ -25,3 +25,35 @@ hr {
   border: 0;
   border-top: 2px solid lighten($background, 10%) !important;
 }
+
+$selection-color: #f530b2;
+$selection-color-bg: #f4f112;
+
+::selection {
+  background-color: transparent;
+  font-weight: bold;
+  color: $selection-color;
+}
+
+/*** Mozilla based browsers ***/
+::-moz-selection {
+  background-color: $selection-color-bg;
+  color: $selection-color;
+}
+
+/***For Other Browsers ***/
+::-o-selection {
+  background-color: $selection-color-bg;
+  color: $selection-color;
+}
+
+::-ms-selection {
+  background-color: $selection-color-bg;
+  color: $selection-color;
+}
+
+/*** For Webkit ***/
+::-webkit-selection {
+  background-color: $selection-color-bg;
+  color: $selection-color;
+}

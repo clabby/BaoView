@@ -91,6 +91,8 @@
     "react": "16.8.6",
     "react-apexcharts": "^1.3.7",
     "react-bootstrap": "^1.5.1",
+    "react-datepicker": "^3.6.0",
+    "react-device-detect": "^1.17.0",
     "react-dom": "16.8.6",
     "react-helmet": "6.0.0-beta",
     "react-intl": "2.8.0",

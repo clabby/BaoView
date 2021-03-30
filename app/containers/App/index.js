@@ -37,7 +37,9 @@ import {
   faLongArrowAltDown,
   faQuestionCircle,
   faVideo,
-  faWifi
+  faWifi,
+  faStar,
+  faCalendarAlt
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -63,7 +65,9 @@ library.add(
   faLongArrowAltDown,
   faQuestionCircle,
   faVideo,
-  faWifi
+  faWifi,
+  faStar,
+  faCalendarAlt
 );
 
 export default function App() {

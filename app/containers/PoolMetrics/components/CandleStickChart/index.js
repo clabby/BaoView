@@ -1,13 +1,23 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, forwardRef } from 'react';
 import _ from 'underscore';
 
-import { InputGroup, FormControl, Button } from 'react-bootstrap';
-import Chart from 'react-apexcharts';;
+import DatePicker from 'react-datepicker';
+import Chart from 'react-apexcharts';
+
+import { InputGroup, FormControl, Button, Badge } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function App (props) {
   const [seriesData, setSeriesData] = useState([]);
-  const [candleInput, setCandleInput] = useState(50);
   const [totalCandles, setTotalCandles] = useState(-1);
+
+  const now = new Date();
+
+  const [minDate, setMinDate] = useState(now);
+  const [startDate, setStartDate] = useState(now - (1000 * 60 * 60 * 48));
+  const [endDate, setEndDate] = useState(now);
 
   const poolType = props.title === 'Pool APY (%)';
   const series = [{
@@ -70,40 +80,44 @@ export default function App (props) {
           });
         });
 
-        const candleDataLength = candleData.length;
-        setTotalCandles(candleData.length);
-        if (candleInput > candleDataLength) setCandleInput(candleDataLength);
+        var newSeriesData = [];
+        _.each(candleData, (dp) => {
+          if (dp.x >= startDate && dp.x <= endDate) newSeriesData.push(dp);
+        });
 
-        return setSeriesData(candleData.slice(-candleInput));
+        return setSeriesData(newSeriesData);
       });
-  }, [candleInput]);
+  }, [startDate, endDate]);
 
-  function handleCandleInputClick (e) {
-    var str = e.target.value;
-
-    if (str === '') setCandleInput(50);
-    if (!isNaN(str) && !isNaN(parseFloat(str))) setCandleInput(parseInt(str));
-  }
+  const CustomDateInput = forwardRef(
+    ({ value, onClick }, ref) => (
+      <Button variant="success" onClick={onClick} ref={ref}>
+        <FontAwesomeIcon
+          icon={['fas', 'calendar-alt']}
+        /> {value}
+      </Button>
+    ),
+  );
 
   return (
     <div className="chart">
       <Chart options={options} series={series} type="candlestick" height={350} />
       <center>
-        <InputGroup>
-          <FormControl
-            placeholder="# of candles (default=50)"
-            aria-label="# of candles"
-            onChange={handleCandleInputClick}
-            style={{width: '35%'}}
-          />
-          <InputGroup.Append>
-            <InputGroup.Text id="basic-addon2">
-              <span class="badge badge-info" style={{color: '#fff'}}>
-                {totalCandles === -1 ? 'Loading...' : totalCandles + ' 1h Candles'}
-              </span>
-            </InputGroup.Text>
-          </InputGroup.Append>
-        </InputGroup>
+          <div style={{display: 'inline-block'}}>
+            <h5>Start Date:</h5>
+            <DatePicker selected={startDate} onChange={date => { date.setHours(0,0,0,0); setStartDate(date) }}
+              selectsStart startDate={startDate} endDate={endDate}
+              customInput={<CustomDateInput />} />
+          </div>
+          <div style={{display: 'inline-block'}} className='ml-2'>
+            <Badge variant="warning">{seriesData.length} 1h candles displaying</Badge>
+          </div>
+          <div style={{display: 'inline-block'}} className='ml-2'>
+            <h5>End Date:</h5>
+            <DatePicker selected={endDate} onChange={date => setEndDate(date)}
+              selectsStart startDate={startDate} endDate={endDate} minDate={startDate}
+              maxDate={new Date()} className="mt-2" customInput={<CustomDateInput />} />
+          </div>
       </center>
     </div>
   );

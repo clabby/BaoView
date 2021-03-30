@@ -2,6 +2,8 @@ import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
 import { supportedPools } from './lib/constants';
 
+import erc20Abi from './lib/abi/erc20.json';
+
 import _ from 'underscore';
 
 import { getBalanceNumber } from '../formatBalance';
@@ -116,6 +118,23 @@ export const getTotalLPWethValue = async (
     getFarms(bao),
     masterChefContract.methods.userInfo(pid, account).call()
   ]);
+
+  /*const reserves = await lpContract.methods.getReserves().call();
+  const tokenAddress0 = await lpContract.methods.token0().call();
+  const tokenAddress1 = await lpContract.methods.token1().call();
+
+  console.log(tokenAddress0);
+
+  const token0Contract = new bao.web3.eth.Contract(erc20Abi, tokenAddress0);
+  const token1Contract = new bao.web3.eth.Contract(erc20Abi, tokenAddress1);
+  const token0Decimals = await token0Contract.methods.decimals().call();
+  const token1Decimals = await token1Contract.methods.decimals().call();
+  const token0Symbol = await token0Contract.methods.symbol().call();
+  const token1Symbol = await token1Contract.methods.symbol().call();
+
+  console.log("BALANCES: (" + token0Symbol + " - " + (reserves['_reserve0'] /
+    (10 ** parseInt(token0Decimals))) + ")" + " / (" + token1Symbol + " - "
+    (reserves['_reserve1'] / (10 ** parseInt(token1Decimals))) + ")");*/
 
   // Return p1 * w1 * 2
   const portionLp = new BigNumber(balance).div(new BigNumber(totalSupply));

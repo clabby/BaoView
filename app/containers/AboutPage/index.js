@@ -47,17 +47,20 @@ export default function AboutPage() {
           icon={['fa', 'heart']}
           style={{ color: '#d25b55' }}
         /> Bao Finance!
-        <br/>
+        <span className="line-break" />
         This tool was created to help users keep track of the
         value they have staked in Bao Finance pools on xDai.
         <hr />
         <Badge variant="warning">Disclaimers</Badge>
         <span className="line-break" />
-        Bao View is not affliated with{' '}
+        Bao View is not affiliated with{' '}
         <a href="https://bao.finance/">Bao Finance</a>.
         <span className="line-break" />
-        Data is provided as an educational resource and not intended to be taken
-        as financial advise.
+        Data is provided as an educational resource, and it is not intended to be
+        interpreted as financial advise.
+        <span className="line-break" />
+        BaoView and its creator are not liable for any financial decisions made
+        based on the information provided by this tool.
         <hr />
         <Badge variant="success">Donate</Badge>
         <span className="line-break" />
