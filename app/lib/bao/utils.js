@@ -108,7 +108,10 @@ export const getTotalLPWethValue = async (
     lpContractWeth,
     poolWeight,
     farms,
-    staked
+    staked,
+    reserves,
+    token0,
+    token1
   ] = await Promise.all([
     tokenContract.methods.balanceOf(lpContract.options.address).call(),
     lpContract.methods.balanceOf(masterChefContract.options.address).call(),
@@ -118,23 +121,6 @@ export const getTotalLPWethValue = async (
     getFarms(bao),
     masterChefContract.methods.userInfo(pid, account).call()
   ]);
-
-  /*const reserves = await lpContract.methods.getReserves().call();
-  const tokenAddress0 = await lpContract.methods.token0().call();
-  const tokenAddress1 = await lpContract.methods.token1().call();
-
-  console.log(tokenAddress0);
-
-  const token0Contract = new bao.web3.eth.Contract(erc20Abi, tokenAddress0);
-  const token1Contract = new bao.web3.eth.Contract(erc20Abi, tokenAddress1);
-  const token0Decimals = await token0Contract.methods.decimals().call();
-  const token1Decimals = await token1Contract.methods.decimals().call();
-  const token0Symbol = await token0Contract.methods.symbol().call();
-  const token1Symbol = await token1Contract.methods.symbol().call();
-
-  console.log("BALANCES: (" + token0Symbol + " - " + (reserves['_reserve0'] /
-    (10 ** parseInt(token0Decimals))) + ")" + " / (" + token1Symbol + " - "
-    (reserves['_reserve1'] / (10 ** parseInt(token1Decimals))) + ")");*/
 
   // Return p1 * w1 * 2
   const portionLp = new BigNumber(balance).div(new BigNumber(totalSupply));
@@ -148,35 +134,6 @@ export const getTotalLPWethValue = async (
   const wethAmount = new BigNumber(lpContractWeth)
     .times(portionLp)
   .div(new BigNumber(10).pow(18));
-
-  /* if (pid === 1) {
-    lpContract.methods.getReserves().call().then(reserves => {
-      const token1 = reserves['_reserve0'] / (10 ** 18);
-      const token2 = reserves['_reserve1'] / (10 ** 18);
-
-      const farm = _.findWhere(farms, { pid: pid });
-      const lpTokenStr = farm.lpToken.split(' ')[0].split('-');
-      const token1Str = lpTokenStr[0];
-      const token2Str = lpTokenStr[1];
-
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-        .then(response => response.json())
-        .then(data => {
-          const token1Id = _.findWhere(data, { symbol: token1Str.toLowerCase() }).id;
-          const token2Id = _.findWhere(data, { symbol: token2Str.toLowerCase() }).id;
-
-          fetch(
-            'https://api.coingecko.com/api/v3/simple/price?ids=' + token1Id + ','
-            + token2Id + '&vs_currencies=usd&include_24hr_change=true',
-          )
-            .then(response => response.json())
-            .then(priceData => {
-              const total = priceData[token1Id].usd * token2 + priceData[token2Id].usd * token1;
-              console.log(total);
-            });
-        });
-    })
-  } */
 
   return {
     tokenAmount,

@@ -39,7 +39,8 @@ import {
   faVideo,
   faWifi,
   faStar,
-  faCalendarAlt
+  faCalendarAlt,
+  faCodeBranch
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -67,7 +68,8 @@ library.add(
   faVideo,
   faWifi,
   faStar,
-  faCalendarAlt
+  faCalendarAlt,
+  faCodeBranch
 );
 
 export default function App() {

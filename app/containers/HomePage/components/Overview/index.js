@@ -27,7 +27,6 @@ export default function Overview() {
   const [daiPrice, setDaiPrice] = useState(-1);
   const [baoPriceChange, setBaoPriceChange] = useState('secondary');
   const [ethPriceChange, setEthPriceChange] = useState('secondary');
-  const [daiPriceChange, setDaiPriceChange] = useState('secondary');
 
   useEffect(() => {
     // https://api.nomics.com/v1/currencies/ticker?key=45298ab851ffac5e118fce2b805a2a3a&ids=BAO&convert=USD
@@ -42,7 +41,6 @@ export default function Overview() {
         setBaoPrice(data['bao-finance'].usd);
 
         setEthPriceChange(data.ethereum.usd_24h_change);
-        setDaiPriceChange(data.dai.usd_24h_change);
         setBaoPriceChange(data['bao-finance'].usd_24h_change);
       });
   }, []);
@@ -88,8 +86,13 @@ export default function Overview() {
         <div className="col">
           Total Value of LP Staked
           <br/>
-          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>{lpTotalUSDValue === -1 ? 'Loading...' : '$'
-            + getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
+          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>{lpTotalUSDValue === -1 ? 'Loading...' : (
+            <>
+              ${getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
+              {' | '}
+              {getDisplayBalance(new BigNumber(lpTotalUSDValue).div(daiPrice), 0)} DAI
+            </>
+          )}
           </Badge>
         </div>
         <div className="col">
@@ -116,14 +119,34 @@ export default function Overview() {
           <TokenPrice price={baoPrice} priceChange={baoPriceChange} rocket />
         </div>
         <div className="col">
+          Total Value{' '}
+          <OverlayTrigger placement="top" overlay={<Tooltip>Locked BAO + Pending Harvest + Value of LP Staked</Tooltip>}>
+            <FontAwesomeIcon icon={['fas', 'question-circle']} className='mb-1' />
+          </OverlayTrigger>
+          <br/>
+          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
+            {lpTotalUSDValue === -1 ? 'Loading...' : (
+              <>
+                ${getDisplayBalance(
+                  new BigNumber(
+                    lpTotalUSDValue + (baoPrice * sumEarning) +
+                    (baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)))
+                  ), 0
+                )}{' | '}
+                {getDisplayBalance(
+                  new BigNumber(
+                    lpTotalUSDValue + (baoPrice * sumEarning) +
+                    (baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)))
+                  ).div(new BigNumber(daiPrice)), 0
+                )} DAI
+              </>
+            )}
+          </Badge>
+        </div>
+        <div className="col">
           ETH Price
           <br />
           <TokenPrice price={ethPrice} priceChange={ethPriceChange} />
-        </div>
-        <div className="col">
-          Dai Price
-          <br />
-          <TokenPrice price={daiPrice} priceChange={daiPriceChange} />
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ import { getBalanceNumber } from '../../../../lib/formatBalance';
 const BLOCKS_PER_WEEK = new BigNumber(44923);
 const BLOCKS_PER_MONTH = new BigNumber(194667);
 const BLOCKS_PER_YEAR = new BigNumber(2336000);
-const BAO_BER_BLOCK = new BigNumber(256000);
+const BAO_BER_BLOCK = new BigNumber(256000); // 256000 -> 128000 (halvening)
 
 export default function FarmCard(props) {
   const { pool, stakedValue, priceData, baoPrice } = props;
@@ -46,9 +46,9 @@ export default function FarmCard(props) {
     apy: -1
   };
 
-  if (stakedValue && stakedBalance && totalFarmValue >= 0) {
+  if (stakedValue && stakedBalance && totalFarmValue.total >= 0) {
     totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18));
-    poolValue = new BigNumber(totalFarmValue);
+    poolValue = new BigNumber(totalFarmValue.total);
     lpValueUSD = (stakedBalance.div(new BigNumber(10).pow(18)))
       .div(totalSupply)
       .times(poolValue);
@@ -112,6 +112,23 @@ export default function FarmCard(props) {
                 ? 'Loading...' :
                 stakedBalance.div(new BigNumber(10).pow(18)).div(totalSupply).times(100).toNumber().toFixed(6) + '%'}
             </span>
+            <br/>
+            <b style={{textAlign: 'center', display: 'block'}}>Tokens in Pool</b>
+            <>
+              {totalFarmValue === -1 ? 'Loading...' : (
+                <>
+                  {totalFarmValue.tokens[0].symbol}
+                  <span>
+                    {getBalanceNumber(new BigNumber(totalFarmValue.tokens[0].balance), 0)}
+                  </span>
+                  <br/>
+                  {totalFarmValue.tokens[1].symbol}
+                  <span>
+                    {getBalanceNumber(new BigNumber(totalFarmValue.tokens[1].balance), 0)}
+                  </span>
+                </>
+              )}
+            </>
           </div>
         </Accordion.Collapse>
       </Accordion>

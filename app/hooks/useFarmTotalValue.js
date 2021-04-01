@@ -44,7 +44,10 @@ const useFarmTotalValue = (farm, priceData) => {
                     ]
 
                     const total = priceData[tokens[0].id].usd * tokens[0].balance + priceData[tokens[1].id].usd * tokens[1].balance;
-                    setTotalValue(total);
+                    setTotalValue({
+                      total: total,
+                      tokens: tokens
+                    });
                   })
                 })
               })
