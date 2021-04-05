@@ -21,7 +21,7 @@ export default function Footer() {
     return (
       <OverlayTrigger placement="top" overlay={toolTip}>
         <span
-          className="link"
+          className="link blue"
           onClick={() => {
             navigator.clipboard.writeText(props.discord);
           }}
@@ -46,10 +46,24 @@ export default function Footer() {
       <Nav className="justify-content-center" activeKey="/home">
         <Nav.Item>
           <Nav.Link eventKey="link-gh" href="#">
-            Built with{' '}
+            Buit with{' '}
             <HeartIcon />
             {' by '}
             <CopyOnClick discord="vex#9406" tag="vex" />
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link-gh-repo"
+            href="https://github.com/clabby/BaoView"
+            className="link"
+          >
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Source Code</Tooltip>}
+            >
+              <FontAwesomeIcon icon={['fab', 'github']} />
+            </OverlayTrigger>
           </Nav.Link>
         </Nav.Item>
       </Nav>
@@ -58,19 +72,6 @@ export default function Footer() {
 
   /*
   Unused GitHub link
-  <Nav.Item>
-    <Nav.Link
-      eventKey="link-gh-repo"
-      href="#"
-      className="link"
-    >
-      <OverlayTrigger
-        placement="top"
-        overlay={<Tooltip>Source Code</Tooltip>}
-      >
-        <FontAwesomeIcon icon={['fab', 'github']} />
-      </OverlayTrigger>
-    </Nav.Link>
-  </Nav.Item>
+
   */
 }

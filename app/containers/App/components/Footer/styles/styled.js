@@ -20,7 +20,9 @@ export const FooterContainer = styled(Container)`
       }
 
       .link {
-        color: ${Colors.brand};
+        &.blue {
+          color: ${Colors.brand};
+        }
 
         &:hover {
           color: ${darken(0.1, Colors.brand)};
