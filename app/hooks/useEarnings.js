@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { provider } from 'web3-core';
 
 import BigNumber from 'bignumber.js';
@@ -9,7 +9,7 @@ import useBao from './useBao';
 import useBlock from './useBlock';
 
 const useEarnings = pid => {
-  const [balance, setBalance] = useState(new BigNumber(0));
+  const [balance, setBalance] = useState(-1);
   const ethereum = useWallet();
   const { account } = ethereum;
   const bao = useBao();
@@ -21,7 +21,7 @@ const useEarnings = pid => {
     setBalance(new BigNumber(balance));
   }, [account, masterChefContract, bao]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (account && masterChefContract && bao) {
       fetchBalance();
     }

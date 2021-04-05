@@ -5,20 +5,21 @@
  *
  */
 
-import React from 'react';
+import React from 'react'
 
-import { Container } from 'react-bootstrap';
-
-import './styles/notfound.scss';
+import {
+  NotFoundContainer,
+  NotFoundContent
+} from './styles/styled'
 
 export default function NotFound() {
   return (
-    <Container id="not-found">
-      <div id="not-found-content">
+    <NotFoundContainer>
+      <NotFoundContent>
         <h1>404</h1>
         <hr />
         Page not found.
-      </div>
-    </Container>
+      </NotFoundContent>
+    </NotFoundContainer>
   );
 }

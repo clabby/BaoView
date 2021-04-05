@@ -15,7 +15,8 @@ import {
   OverlayTrigger,
   Tooltip,
   Badge,
-  Accordion
+  Accordion,
+  Spinner
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -25,9 +26,13 @@ import useEarnings from '../../../../hooks/useEarnings';
 import useFarmTotalValue from '../../../../hooks/useFarmTotalValue';
 import { getBalanceNumber } from '../../../../lib/formatBalance';
 
-const BLOCKS_PER_WEEK = new BigNumber(44923);
-const BLOCKS_PER_MONTH = new BigNumber(194667);
-const BLOCKS_PER_YEAR = new BigNumber(2336000);
+import useROI from '../../../../hooks/useROI';
+
+import useStakedTVL from '../../../../hooks/useStakedTVL';
+
+const BLOCKS_PER_WEEK = new BigNumber(118914);
+const BLOCKS_PER_MONTH = new BigNumber(515294);
+const BLOCKS_PER_YEAR = new BigNumber(6183529); // 2336000 on mainnet
 const BAO_BER_BLOCK = new BigNumber(256000); // 256000 -> 128000 (halvening)
 
 export default function FarmCard(props) {
@@ -36,15 +41,12 @@ export default function FarmCard(props) {
   const pendingBao = useEarnings(pool.pid);
 
   const totalFarmValue = useFarmTotalValue(pool, priceData);
+  const tvl = useStakedTVL(pool.pid)
 
   let poolValue = -1;
   let totalSupply = -1;
   let lpValueUSD = -1;
-  let roi = {
-    apw: -1,
-    apm: -1,
-    apy: -1
-  };
+  let isLoading = true;
 
   if (stakedValue && stakedBalance && totalFarmValue.total >= 0) {
     totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18));
@@ -52,23 +54,36 @@ export default function FarmCard(props) {
     lpValueUSD = (stakedBalance.div(new BigNumber(10).pow(18)))
       .div(totalSupply)
       .times(poolValue);
+    isLoading = false;
 
-    roi.apw = baoPrice
+    /* roi.apw = baoPrice
       .times(BAO_BER_BLOCK)
       .times(BLOCKS_PER_WEEK)
       .times(stakedValue.poolWeight)
-      .div(poolValue);
+      .div(poolValue)
+      .times(100);
     roi.apm = baoPrice
       .times(BAO_BER_BLOCK)
       .times(BLOCKS_PER_MONTH)
       .times(stakedValue.poolWeight)
-      .div(poolValue);
+      .div(poolValue)
+      .times(100);
     roi.apy = baoPrice
       .times(BAO_BER_BLOCK)
       .times(BLOCKS_PER_YEAR)
       .times(stakedValue.poolWeight)
-      .div(poolValue);
+      .div(poolValue)
+      .times(100); */
   }
+
+  const roi = useROI(
+    pool.pid,
+    baoPrice,
+    tvl === -1 || poolValue === -1 ?
+      -1 :
+      poolValue.times(tvl.div(totalSupply)),
+    isLoading
+  );
 
   const PoolDataToggle = ({ children, eventKey }) => {
     const [poolDataExpanded, setPoolDataExpanded] = useState(false);
@@ -84,6 +99,12 @@ export default function FarmCard(props) {
     )
   }
 
+  const Loading = () => {
+    return (
+      <Spinner animation="border" size="sm" />
+    )
+  }
+
   const PoolData = ({ pid }) => (
     <ListGroup.Item>
       <Accordion>
@@ -92,39 +113,60 @@ export default function FarmCard(props) {
         </center>
         <Accordion.Collapse eventKey={pid.toString()}>
           <div>
-            Pool Value
-            <Badge variant="success" pill>
+            Supply Value
+            <span>
               {poolValue === -1
                 ? 'Loading...' :
                 '$' + getBalanceNumber(poolValue, 0)}
-            </Badge>
+            </span>
             <br/>
-            Supply
+            TVL (USD)
+            <span>
+              {tvl === -1 || poolValue === -1
+                ? 'Loading...' :
+                '$' + getBalanceNumber(poolValue.times(tvl.div(totalSupply)), 0)}
+            </span>
+            <br/>
+            LP Supply
             <span>
               {totalSupply === -1
                 ? 'Loading...' :
                 getBalanceNumber(totalSupply, 0) + ' LP'}
             </span>
             <br/>
+            TVL (LP)
+            <span>
+              {tvl === -1
+                ? 'Loading...' :
+                getBalanceNumber(tvl, 0) + ' LP'}
+            </span>
+            <br/>
+            % LP Staked
+            <span>
+              {tvl === -1 || totalSupply === -1
+                ? 'Loading...' :
+                getBalanceNumber(tvl.div(totalSupply).times(100), 0) + '%'}
+            </span>
+            <br/>
             Your Share
             <span>
-              {totalSupply === -1
+              {tvl === -1
                 ? 'Loading...' :
-                stakedBalance.div(new BigNumber(10).pow(18)).div(totalSupply).times(100).toNumber().toFixed(6) + '%'}
+                stakedBalance.div(new BigNumber(10).pow(18)).div(tvl).times(100).toNumber().toFixed(6) + '%'}
             </span>
             <br/>
             <b style={{textAlign: 'center', display: 'block'}}>Tokens in Pool</b>
             <>
-              {totalFarmValue === -1 ? 'Loading...' : (
+              {totalFarmValue === -1 || tvl === -1 || totalSupply === -1 ? 'Loading...' : (
                 <>
                   {totalFarmValue.tokens[0].symbol}
                   <span>
-                    {getBalanceNumber(new BigNumber(totalFarmValue.tokens[0].balance), 0)}
+                    {getBalanceNumber(new BigNumber(totalFarmValue.tokens[0].balance)/*.times(tvl.div(totalSupply))*/, 0)}
                   </span>
                   <br/>
                   {totalFarmValue.tokens[1].symbol}
                   <span>
-                    {getBalanceNumber(new BigNumber(totalFarmValue.tokens[1].balance), 0)}
+                    {getBalanceNumber(new BigNumber(totalFarmValue.tokens[1].balance)/*.times(tvl.div(totalSupply))*/, 0)}
                   </span>
                 </>
               )}
@@ -154,7 +196,7 @@ export default function FarmCard(props) {
             LP Staked
             <span>
               {stakedBalance.toNumber() === -1
-                ? 'Loading...'
+                ? <Loading />
                 : getBalanceNumber(stakedBalance)}
             </span>
           </ListGroup.Item>
@@ -162,7 +204,7 @@ export default function FarmCard(props) {
             LP Value
             <span>
               {lpValueUSD === -1 ?
-                'Loading...' :
+                <Loading /> :
                 '$' + getBalanceNumber(lpValueUSD, 0)
               }
             </span>
@@ -170,8 +212,8 @@ export default function FarmCard(props) {
           <ListGroup.Item>
             Pending BAO
             <span>
-              {pendingBao === null
-                ? 'Loading...'
+              {pendingBao === -1
+                ? <Loading />
                 : getBalanceNumber(pendingBao)}
             </span>
           </ListGroup.Item>
@@ -179,34 +221,22 @@ export default function FarmCard(props) {
           <ListGroup.Item style={{ textAlign: 'center' }}>
             ROI (week/month/year)
             <br />
-            {roi ? (
+            {roi !== -1 ? (
               <b>
-                {roi.apw === -1 ||
-                roi.apw.toNumber() === Number.POSITIVE_INFINITY
+                {roi.apy === -1
                   ? '...'
-                  : `${roi.apw
-                      .times(new BigNumber(100))
-                      .toNumber()
-                      .toFixed(2)}%`}
+                  : `${roi.apw.toNumber().toFixed(2)}%`}
                 {' / '}
-                {roi.apm === -1 ||
-                roi.apm.toNumber() === Number.POSITIVE_INFINITY
+                {roi.apm === -1
                   ? '...'
-                  : `${roi.apm
-                      .times(new BigNumber(100))
-                      .toNumber()
-                      .toFixed(2)}%`}
+                  : `${roi.apm.toNumber().toFixed(2)}%`}
                 {' / '}
-                {roi.apy === -1 ||
-                roi.apy.toNumber() === Number.POSITIVE_INFINITY
+                {roi.apw === -1
                   ? '...'
-                  : `${roi.apy
-                      .times(new BigNumber(100))
-                      .toNumber()
-                    .toFixed(2)}%`}
+                  : `${roi.apy.toNumber().toFixed(2)}%`}
               </b>
             ) : (
-              <b>Loading...</b>
+              <Loading />
             )}
           </ListGroup.Item>
         </ListGroup>

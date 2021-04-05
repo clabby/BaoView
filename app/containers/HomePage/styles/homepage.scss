@@ -1,49 +1,5 @@
 @import '../../../containers/App/styles/colors.scss';
 
-#connected {
-  font-size: 18px;
-
-  #overview {
-    background-color: lighten($background, 10%);
-    border: 3px solid lighten($background, 20%);
-    padding: 20px;
-    border-radius: 5px;
-
-    hr {
-      border-top-color: lighten($background, 20%) !important;
-    }
-
-    #overview-stats {
-
-      .col {
-        text-align: center;
-        padding: 10px;
-        font-size: 24px;
-
-        .fa-question-circle {
-          vertical-align: middle;
-          color: #b5b5b5;
-
-          &:hover {
-            color: $text-color;
-          }
-        }
-
-        span {
-          display: block;
-          font-size: 16px;
-          color: #b5b5b5;
-
-          &.badge {
-            display: inline-block;
-            color: $text-color;
-          }
-        }
-      }
-    }
-  }
-}
-
 .accordion {
   .btn-link {
     color: $text-color;
@@ -137,23 +93,6 @@
 
     small {
       font-size: 16px;
-    }
-  }
-}
-
-#not-connected {
-  height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  #not-connected-content {
-    text-align: center;
-
-    .sunglasses {
-      display: inline-block;
-      font-size: 128px;
-      margin-bottom: 25px;
     }
   }
 }

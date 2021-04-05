@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import '../../styles/homepage.scss';
 import '../../styles/poolicons.scss';
 
-import { Tabs, Tab, Form } from 'react-bootstrap';
+import { Tabs, Tab, Form, Spinner } from 'react-bootstrap';
 
 import useAllStakedValue from '../../../../hooks/useAllStakedValue';
 import useAllStakedBalance from '../../../../hooks/useAllStakedBalance';
@@ -41,60 +41,31 @@ export default function FarmCards(/* props */) {
   function renderLPPools(type, query) {
     const poolElements = [];
 
-    if (query === undefined || query === '') {
-      if (stakedValue.length > 0)
-        farms.forEach(pool => {
-          if (type === 'BAOLP' && !pool.poolType && stakedValue.length > 0)
-            poolElements.push(
-              <FarmCard
-                key={pool.pid}
-                pool={pool}
-                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-                priceData={priceData}
-                baoPrice={baoPrice}
-              />,
-            );
-          if (type === 'STAKED' && stakedPools.includes(pool.pid))
-            poolElements.push(
-              <FarmCard
-                key={pool.pid}
-                pool={pool}
-                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-                priceData={priceData}
-                baoPrice={baoPrice}
-              />,
-            );
-        });
-    } else {
-      const filteredPools = farms.filter(
-        pool =>
-          pool.name.toLowerCase().includes(query.toLowerCase()) ||
-          pool.lpToken.toLowerCase().includes(query.toLowerCase()),
-      );
+    if (stakedValue.length > 0) {
+      let filteredPools = [];
+      if (query === undefined || query === '') {
+        filteredPools = farms;
+      } else {
+        filteredPools = farms.filter(
+          pool =>
+            pool.name.toLowerCase().includes(query.toLowerCase()) ||
+            pool.lpToken.toLowerCase().includes(query.toLowerCase()),
+        );
+      }
 
-      if (stakedValue.length > 0)
-        filteredPools.forEach(pool => {
-          if (type === 'BAOLP' && !pool.poolType)
-            poolElements.push(
-              <FarmCard
-                key={pool.pid}
-                pool={pool}
-                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-                priceData={priceData}
-                baoPrice={baoPrice}
-              />,
-            );
-          if (type === 'STAKED' && stakedPools.includes(pool.pid))
-            poolElements.push(
-              <FarmCard
-                key={pool.pid}
-                pool={pool}
-                stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
-                priceData={priceData}
-                baoPrice={baoPrice}
-              />,
-            );
-        });
+      filteredPools.forEach(pool => {
+        if ((type === 'BAOLP' && !pool.poolType)
+            || (type === 'STAKED' && stakedPools.includes(pool.pid)))
+          poolElements.push(
+            <FarmCard
+              key={pool.pid}
+              pool={pool}
+              stakedValue={stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]}
+              priceData={priceData}
+              baoPrice={baoPrice}
+            />,
+          );
+      });
 
       if (poolElements.length === 0) poolElements[0] = 'empty';
     }
@@ -105,7 +76,7 @@ export default function FarmCards(/* props */) {
       </div>
     ) : poolElements.length === 0 ? (
       <div className="col-12">
-        <h1 style={{ textAlign: 'center' }}>Loading...</h1>
+        <Spinner animation="grow" variant="info"/>
       </div>
     ) : poolElements[0] === 'empty' ? (
       <div className="col-12">

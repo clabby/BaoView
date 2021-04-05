@@ -9,7 +9,7 @@ import useBao from './useBao';
 import useBlock from './useBlock';
 
 const useLockedEarnings = () => {
-  const [balance, setBalance] = useState(new BigNumber(0));
+  const [balance, setBalance] = useState(new BigNumber(-1));
   const ethereum = useWallet();
   const { account } = ethereum;
   const bao = useBao();

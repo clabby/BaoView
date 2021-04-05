@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 
 import { BigNumber } from 'bignumber.js';
 import { useWallet } from 'use-wallet';
@@ -24,7 +24,7 @@ const useAllStakedBalance = () => {
     setBalance(balances);
   }, [account, bao]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (account && bao) {
       fetchBalance();
     }

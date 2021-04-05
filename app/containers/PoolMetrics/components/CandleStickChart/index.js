@@ -1,29 +1,35 @@
-import React, { Component, useState, useEffect, forwardRef } from 'react';
-import _ from 'underscore';
+import React, { Component, useState, useEffect, forwardRef } from 'react'
+import _ from 'underscore'
 
-import DatePicker from 'react-datepicker';
-import Chart from 'react-apexcharts';
+import DatePicker from 'react-datepicker'
+import Chart from 'react-apexcharts'
 
-import { InputGroup, FormControl, Button, Badge } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { InputGroup, FormControl, Button, Badge } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import 'react-datepicker/dist/react-datepicker.css';
+import {
+  ChartContainer,
+  InlineDiv
+} from './styles/styled'
+
+// Date Picker styles
+import 'react-datepicker/dist/react-datepicker.css'
 
 export default function App (props) {
-  const [seriesData, setSeriesData] = useState([]);
-  const [totalCandles, setTotalCandles] = useState(-1);
+  const [seriesData, setSeriesData] = useState([])
+  const [totalCandles, setTotalCandles] = useState(-1)
 
-  const now = new Date();
+  const now = new Date()
 
-  const [minDate, setMinDate] = useState(now);
-  const [startDate, setStartDate] = useState(now - (1000 * 60 * 60 * 48));
-  const [endDate, setEndDate] = useState(now);
+  const [minDate, setMinDate] = useState(now)
+  const [startDate, setStartDate] = useState(now - (1000 * 60 * 60 * 48))
+  const [endDate, setEndDate] = useState(now)
 
-  const poolType = props.title === 'Pool APY (%)';
+  const poolType = props.title === 'Pool APY (%)'
   const series = [{
     name: 'candle',
     data: seriesData
-  }];
+  }]
   const options = {
     chart: {
       height: 350,
@@ -40,7 +46,23 @@ export default function App (props) {
       }
     },
     annotations: {
-      // ...
+      xaxis: [
+        {
+          x: "3/31/2021 5:49",
+          borderColor: '#ffc107',
+          label: {
+            borderColor: '#ffc107',
+            style: {
+              fontSize: '12px',
+              color: '#fff',
+              background: '#ffc107'
+            },
+            orientation: 'horizontal',
+            offsetY: 7,
+            text: '10h gap in candles'
+          }
+        }
+      ]
     },
     tooltip: {
       enabled: true,
@@ -49,9 +71,9 @@ export default function App (props) {
       type: 'category',
       labels: {
         formatter: function(val) {
-          var date = new Date(val);
+          var date = new Date(val)
           return date.toLocaleDateString("en-US") + ' ' + date.getHours() + ':' +
-            date.getMinutes();
+            date.getMinutes()
         },
         color: '#fff'
       }
@@ -61,33 +83,33 @@ export default function App (props) {
         enabled: true
       }
     }
-  };
+  }
 
   useEffect(() => {
     const API_LINK = poolType ?
       'https://api.baoview.xyz/api/v1/pool-metrics/apy?pid=' :
-      'https://api.baoview.xyz/api/v1/pool-metrics/pool-value?pid=';
+      'https://api.baoview.xyz/api/v1/pool-metrics/pool-value?pid='
 
     fetch(API_LINK + props.pid)
       .then(response => response.json())
       .then((res) => {
-        const candleData = [];
+        const candleData = []
 
         _.each(res.data, (candle) => {
           candleData.push({
             x: new Date(candle.date),
             y: [candle.o, candle.h, candle.l, candle.c]
-          });
-        });
+          })
+        })
 
-        var newSeriesData = [];
+        var newSeriesData = []
         _.each(candleData, (dp) => {
-          if (dp.x >= startDate && dp.x <= endDate) newSeriesData.push(dp);
-        });
+          if (dp.x >= startDate && dp.x <= endDate) newSeriesData.push(dp)
+        })
 
-        return setSeriesData(newSeriesData);
-      });
-  }, [startDate, endDate]);
+        return setSeriesData(newSeriesData)
+      })
+  }, [startDate, endDate])
 
   const CustomDateInput = forwardRef(
     ({ value, onClick }, ref) => (
@@ -97,28 +119,28 @@ export default function App (props) {
         /> {value}
       </Button>
     ),
-  );
+  )
 
   return (
-    <div className="chart">
+    <ChartContainer>
       <Chart options={options} series={series} type="candlestick" height={350} />
       <center>
-          <div style={{display: 'inline-block'}}>
+          <InlineDiv>
             <h5>Start Date:</h5>
             <DatePicker selected={startDate} onChange={date => { date.setHours(0,0,0,0); setStartDate(date) }}
               selectsStart startDate={startDate} endDate={endDate}
               customInput={<CustomDateInput />} />
-          </div>
-          <div style={{display: 'inline-block'}} className='ml-2'>
+          </InlineDiv>
+          <InlineDiv className='ml-2'>
             <Badge variant="warning">{seriesData.length} 1h candles displaying</Badge>
-          </div>
-          <div style={{display: 'inline-block'}} className='ml-2'>
+          </InlineDiv>
+          <InlineDiv className='ml-2'>
             <h5>End Date:</h5>
             <DatePicker selected={endDate} onChange={date => setEndDate(date)}
               selectsStart startDate={startDate} endDate={endDate} minDate={startDate}
               maxDate={new Date()} className="mt-2" customInput={<CustomDateInput />} />
-          </div>
+          </InlineDiv>
       </center>
-    </div>
-  );
+    </ChartContainer>
+  )
 }

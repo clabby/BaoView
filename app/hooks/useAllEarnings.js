@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 
 import BigNumber from 'bignumber.js';
 import { useWallet } from 'use-wallet';
@@ -23,7 +23,7 @@ const useAllEarnings = () => {
     setBalance(balances);
   }, [account, masterChefContract, bao]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (account && masterChefContract && bao) {
       fetchAllBalances();
     }

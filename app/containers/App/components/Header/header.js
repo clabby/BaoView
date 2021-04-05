@@ -11,18 +11,22 @@ import { isMobile } from 'react-device-detect';
 
 import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import WalletButton from './components/WalletButton/Loadable'
+import {
+  HeaderBar,
+  HeaderLogo,
+  CommunityToolsHeader
+} from './styles/styled'
 
-import Logo from '../../../../images/logo.png';
+import Logo from '../../../../images/logo.png'
 
-import WalletButton from './components/WalletButton/Loadable';
-
-import './styles/header.scss';
+//import './styles/header.scss'
 
 export default function Header() {
   return (
-    <Navbar bg="dark" expand="lg" id="header" className="mt-4">
+    <HeaderBar>
       <Navbar.Brand href="/">
-        <img src={Logo} alt="LOGO" className="logo" />
+        <HeaderLogo src={Logo} alt="LOGO" className="logo" />
       </Navbar.Brand>
       {!isMobile && <Navbar.Toggle aria-controls="basic-navbar-nav" />}
       {!isMobile && (
@@ -61,7 +65,7 @@ export default function Header() {
                 <FontAwesomeIcon icon={['fab', 'discord']} /> Bao Finance Discord
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <span style={{textAlign: 'center', display: 'block'}}>Other great community<br/>built tools</span>
+              <CommunityToolsHeader>Other great community<br/>built tools</CommunityToolsHeader>
               <NavDropdown.Item href="https://stakedvalue.com/">
                 <FontAwesomeIcon icon={['fas', 'star']} /> Staked Value
               </NavDropdown.Item>
@@ -80,6 +84,6 @@ export default function Header() {
           <WalletButton />
         </Navbar.Collapse>
       )}
-    </Navbar>
+    </HeaderBar>
   );
 }

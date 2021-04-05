@@ -2,7 +2,7 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Badge, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap';
 
 import { getDisplayBalance } from '../../../../../../lib/formatBalance';
 
@@ -10,13 +10,19 @@ export default function Overview(props) {
   const { price } = props;
   const { priceChange } = props;
 
+  const Loading = () => {
+    return (
+      <Spinner animation="border" size="sm" />
+    )
+  }
+
   return (
     <OverlayTrigger
       placement="top"
       overlay={
         <Tooltip>
           {priceChange === 'secondary'
-            ? 'Loading...'
+            ? <Loading />
             : `${(parseFloat(priceChange) >= 0 ? 'Up ' : 'Down ') +
                 +(parseFloat(priceChange)).toFixed(3)}% in the last 24h`
           }
@@ -40,7 +46,7 @@ export default function Overview(props) {
           ''
         )}
         {price === -1
-          ? 'Loading...'
+          ? <Loading />
           : `$${getDisplayBalance(new BigNumber(price), 0)}`}
       </Badge>
     </OverlayTrigger>

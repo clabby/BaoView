@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { Container, Nav, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import './styles/footer.scss';
+import {
+  FooterContainer,
+  HeartIcon
+} from './styles/styled';
 
 export default function Footer() {
   function CopyOnClick(props) {
@@ -39,21 +42,18 @@ export default function Footer() {
   };
 
   return (
-    <Container className="footer">
+    <FooterContainer>
       <Nav className="justify-content-center" activeKey="/home">
         <Nav.Item>
           <Nav.Link eventKey="link-gh" href="#">
             Built with{' '}
-            <FontAwesomeIcon
-              icon={['fa', 'heart']}
-              style={{ color: '#d25b55' }}
-            />
+            <HeartIcon />
             {' by '}
             <CopyOnClick discord="vex#9406" tag="vex" />
           </Nav.Link>
         </Nav.Item>
       </Nav>
-    </Container>
+    </FooterContainer>
   );
 
   /*

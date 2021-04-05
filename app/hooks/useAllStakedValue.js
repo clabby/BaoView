@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { provider } from 'web3-core';
 
 import BigNumber from 'bignumber.js';
@@ -43,7 +43,7 @@ const useAllStakedValue = () => {
     setBalance(balances);
   }, [account, masterChefContract, bao]);
 
-  useEffect(() => {
+  useMemo(() => {
     if (account && masterChefContract && bao) {
       fetchAllStakedValue();
     }

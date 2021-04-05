@@ -1,12 +1,15 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
 
-import '../../styles/homepage.scss';
+import {
+  NotConnectedContainer,
+  NotConnectedContent
+} from './styles/styled'
 
 export default function NotConnected() {
   return (
-    <div id="not-connected" className="mt-4">
-      <div id="not-connected-content">
+    <NotConnectedContainer>
+      <NotConnectedContent>
         <h1 className="sunglasses">
           <span role="img" aria-label="BaoBoi">
             😎🍱
@@ -27,7 +30,7 @@ export default function NotConnected() {
             MetaMask wallet to view personalized pool data and pool metrics.
           </small>
         )}
-      </div>
-    </div>
+      </NotConnectedContent>
+    </NotConnectedContainer>
   );
 }

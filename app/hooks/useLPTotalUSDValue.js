@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { BigNumber } from 'bignumber.js';
 
 import _ from 'underscore';
@@ -102,7 +102,7 @@ const useLPTotalUSDValue = () => {
     }
   }, [stakedBalances, stakedValues, priceData]);
 
-  useEffect(() => {
+  useMemo(() => {
     fetchLPValue();
   }, [stakedValues, stakedBalances, priceData]);
 

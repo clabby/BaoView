@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import BigNumber from 'bignumber.js';
+import React, { useEffect, useState } from 'react'
+import BigNumber from 'bignumber.js'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Badge, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap'
 
-import TokenPrice from './components/TokenPrice/Loadable';
+import {
+  OverviewContainer,
+  OverviewStats,
+  OverviewHeading,
+  OverviewCol,
+  QuestionIcon
+} from './styles/styled'
+import TokenPrice from './components/TokenPrice/Loadable'
 
-import '../../styles/homepage.scss';
+import useAllEarnings from '../../../../hooks/useAllEarnings'
+import useLockedEarnings from '../../../../hooks/useLockedEarnings'
+import useLPTotalUSDValue from '../../../../hooks/useLPTotalUSDValue'
 
-// import { useWallet } from 'use-wallet';
-
-import useAllEarnings from '../../../../hooks/useAllEarnings';
-import useLockedEarnings from '../../../../hooks/useLockedEarnings';
-import useLPTotalUSDValue from '../../../../hooks/useLPTotalUSDValue';
-
-import { getDisplayBalance } from '../../../../lib/formatBalance';
+import { getDisplayBalance } from '../../../../lib/formatBalance'
 
 export default function Overview() {
   const earnings = useAllEarnings();
@@ -52,19 +55,33 @@ export default function Overview() {
       .toNumber();
   }
 
+  const Loading = () => {
+    return (
+      <Spinner animation="border" size="sm" />
+    )
+  }
+
+  const isLoaded = () => {
+    return lpTotalUSDValue !== -1 &&
+      baoPrice >= 0 &&
+      lpTotalUSDValue !== 1 &&
+      sumEarning !== -1 &&
+      lockedEarnings !== -1;
+  }
+
   return (
-    <div id="overview" className="mb-4">
-      <h1>
-        <FontAwesomeIcon icon={['fas', 'file-invoice-dollar']} /> Overview
-      </h1>
-      <hr />
-      <div id="overview-stats" className="row row-cols-3">
-        <div className="col">
-          Total Locked Bao{' '}
-          <span>
-            {`${getDisplayBalance(lockedEarnings)} BaoCx`}
-            <br />
-            {baoPrice >= 0 && (
+    <OverviewContainer>
+    <OverviewHeading />
+      <OverviewStats>
+        <OverviewCol>
+          Total Locked Bao<br/>
+          {lockedEarnings <= 0 ? (
+            <Badge variant="secondary"><Loading /></Badge>
+          ) : (
+            <span>
+
+              {`${getDisplayBalance(lockedEarnings)} BaoCx`}
+              <br/>
               <Badge variant="success">
                 $
                 {getDisplayBalance(
@@ -80,13 +97,13 @@ export default function Overview() {
                   0,
                 )} DAI`}
               </Badge>
-            )}
-          </span>
-        </div>
-        <div className="col">
+            </span>
+          )}
+        </OverviewCol>
+        <OverviewCol>
           Total Value of LP Staked
           <br/>
-          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>{lpTotalUSDValue === -1 ? 'Loading...' : (
+          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>{lpTotalUSDValue === -1 ? <Loading /> : (
             <>
               ${getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
               {' | '}
@@ -94,12 +111,12 @@ export default function Overview() {
             </>
           )}
           </Badge>
-        </div>
-        <div className="col">
+        </OverviewCol>
+        <OverviewCol>
           Pending Harvest{' '}
           <span>
             {sumEarning === -1
-              ? 'Loading...'
+              ? (<Badge variant="secondary"><Loading /></Badge>)
               : `${getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx`}
             <br />
             {baoPrice >= 0 && sumEarning >= 0 && (
@@ -112,20 +129,18 @@ export default function Overview() {
               </Badge>
             )}
           </span>
-        </div>
-        <div className="col">
+        </OverviewCol>
+        <OverviewCol>
           BAO Price
           <br />
           <TokenPrice price={baoPrice} priceChange={baoPriceChange} rocket />
-        </div>
-        <div className="col">
+        </OverviewCol>
+        <OverviewCol>
           Total Value{' '}
-          <OverlayTrigger placement="top" overlay={<Tooltip>Locked BAO + Pending Harvest + Value of LP Staked</Tooltip>}>
-            <FontAwesomeIcon icon={['fas', 'question-circle']} className='mb-1' />
-          </OverlayTrigger>
+          <QuestionIcon title="Locked BAO + Pending Harvest + Value of LP Staked" />
           <br/>
           <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
-            {lpTotalUSDValue === -1 ? 'Loading...' : (
+            {lpTotalUSDValue === -1 ? <Loading /> : (
               <>
                 ${getDisplayBalance(
                   new BigNumber(
@@ -142,13 +157,13 @@ export default function Overview() {
               </>
             )}
           </Badge>
-        </div>
-        <div className="col">
+        </OverviewCol>
+        <OverviewCol>
           ETH Price
           <br />
           <TokenPrice price={ethPrice} priceChange={ethPriceChange} />
-        </div>
-      </div>
-    </div>
+        </OverviewCol>
+      </OverviewStats>
+    </OverviewContainer>
   );
 }

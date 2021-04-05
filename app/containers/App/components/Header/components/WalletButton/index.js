@@ -5,7 +5,7 @@ import { Button, ButtonGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Identicon from '../Identicon/Loadable';
 
-import '../../styles/header.scss';
+import { WButton } from './styles/styled'
 
 function shortenWallet(wallet) {
   return `${wallet.substring(0, 6)}.....${wallet.substring(
@@ -19,8 +19,8 @@ export default function WalletButton() {
 
   if (wallet.status === 'error') {
     return (
-      <Button
-        className="wallet-button error"
+      <WButton
+        className="error"
         onClick={() => {
           wallet.connect();
         }}
@@ -38,7 +38,7 @@ export default function WalletButton() {
             <FontAwesomeIcon icon={['fas', 'wifi']} /> Wrong Network
           </span>
         )}
-      </Button>
+      </WButton>
     );
   }
   if (wallet.status === 'connected') {
@@ -48,35 +48,30 @@ export default function WalletButton() {
           placement="left"
           overlay={<Tooltip>{wallet.account}</Tooltip>}
         >
-          <Button className="wallet-button">
+          <WButton>
             <span>
               <Identicon style={{ display: 'inline' }} />
-              <span className="ml-2" id="wallet-shorthand">
+              <span className="ml-2">
                 {shortenWallet(wallet.account)}
               </span>
             </span>
-          </Button>
+          </WButton>
         </OverlayTrigger>
-        <Button
+        <WButton
           className="wallet-button disc"
           onClick={() => {
             wallet.reset();
           }}
         >
           <FontAwesomeIcon icon={['fas', 'times-circle']} />
-        </Button>
+        </WButton>
       </ButtonGroup>
     );
   }
   return (
-    <Button
-      className="wallet-button"
-      onClick={() => {
-        wallet.connect();
-      }}
-    >
+    <WButton onClick={() => wallet.connect()}>
       <FontAwesomeIcon icon={['fa', 'plug']} />
       {wallet.status === 'connecting' ? ' Connecting...' : ' Connect Wallet'}
-    </Button>
+    </WButton>
   );
 }
