@@ -20,16 +20,16 @@ import useLPTotalUSDValue from '../../../../hooks/useLPTotalUSDValue'
 import { getDisplayBalance } from '../../../../lib/formatBalance'
 
 export default function Overview() {
-  const earnings = useAllEarnings();
-  const lockedEarnings = useLockedEarnings();
+  const earnings = useAllEarnings()
+  const lockedEarnings = useLockedEarnings()
 
-  const lpTotalUSDValue = useLPTotalUSDValue();
+  const lpTotalUSDValue = useLPTotalUSDValue()
 
-  const [baoPrice, setBaoPrice] = useState(-1);
-  const [ethPrice, setEthPrice] = useState(-1);
-  const [daiPrice, setDaiPrice] = useState(-1);
-  const [baoPriceChange, setBaoPriceChange] = useState('secondary');
-  const [ethPriceChange, setEthPriceChange] = useState('secondary');
+  const [baoPrice, setBaoPrice] = useState(-1)
+  const [ethPrice, setEthPrice] = useState(-1)
+  const [daiPrice, setDaiPrice] = useState(-1)
+  const [baoPriceChange, setBaoPriceChange] = useState('secondary')
+  const [ethPriceChange, setEthPriceChange] = useState('secondary')
 
   useEffect(() => {
     // https://api.nomics.com/v1/currencies/ticker?key=45298ab851ffac5e118fce2b805a2a3a&ids=BAO&convert=USD
@@ -39,20 +39,20 @@ export default function Overview() {
     )
       .then(response => response.json())
       .then(data => {
-        setEthPrice(data.ethereum.usd);
-        setDaiPrice(data.dai.usd);
-        setBaoPrice(data['bao-finance'].usd);
+        setEthPrice(data.ethereum.usd)
+        setDaiPrice(data.dai.usd)
+        setBaoPrice(data['bao-finance'].usd)
 
-        setEthPriceChange(data.ethereum.usd_24h_change);
-        setBaoPriceChange(data['bao-finance'].usd_24h_change);
-      });
-  }, []);
+        setEthPriceChange(data.ethereum.usd_24h_change)
+        setBaoPriceChange(data['bao-finance'].usd_24h_change)
+      })
+  }, [])
 
-  let sumEarning = -1;
+  let sumEarning = -1
   for (const earning of earnings) {
     sumEarning += new BigNumber(earning)
       .div(new BigNumber(10).pow(18))
-      .toNumber();
+      .toNumber()
   }
 
   const Loading = () => {
@@ -61,21 +61,14 @@ export default function Overview() {
     )
   }
 
-  const isLoaded = () => {
-    return lpTotalUSDValue !== -1 &&
-      baoPrice >= 0 &&
-      lpTotalUSDValue !== 1 &&
-      sumEarning !== -1 &&
-      lockedEarnings !== -1;
-  }
-
   return (
     <OverviewContainer>
     <OverviewHeading />
       <OverviewStats>
         <OverviewCol>
-          Total Locked Bao<br/>
-          {lockedEarnings <= 0 ? (
+          Total Locked Bao
+          <br/>
+          {(lockedEarnings <= 0 || baoPrice === -1 || daiPrice === -1) ? (
             <Badge variant="secondary"><Loading /></Badge>
           ) : (
             <span>
@@ -103,23 +96,24 @@ export default function Overview() {
         <OverviewCol>
           Total Value of LP Staked
           <br/>
-          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>{lpTotalUSDValue === -1 ? <Loading /> : (
-            <>
-              ${getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
-              {' | '}
-              {getDisplayBalance(new BigNumber(lpTotalUSDValue).div(daiPrice), 0)} DAI
-            </>
-          )}
+          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
+            {(lpTotalUSDValue === -1 || daiPrice === -1) ? <Loading /> : (
+              <>
+                ${getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
+                {' | '}
+                {getDisplayBalance(new BigNumber(lpTotalUSDValue).div(daiPrice), 0)} DAI
+              </>
+            )}
           </Badge>
         </OverviewCol>
         <OverviewCol>
-          Pending Harvest{' '}
-          <span>
-            {sumEarning === -1
-              ? (<Badge variant="secondary"><Loading /></Badge>)
-              : `${getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx`}
-            <br />
-            {baoPrice >= 0 && sumEarning >= 0 && (
+          Pending Harvest
+          <br />
+          {(sumEarning === -1 || baoPrice === -1) && (<Badge variant="secondary"><Loading /></Badge>)}
+          {baoPrice !== -1 && sumEarning >= 0 && (
+            <span>
+              ${getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx
+              <br />
               <Badge variant="success">
                 ${getDisplayBalance(new BigNumber(baoPrice * sumEarning), 0)} |{' '}
                 {`${getDisplayBalance(
@@ -127,8 +121,8 @@ export default function Overview() {
                   0,
                 )} DAI`}
               </Badge>
-            )}
-          </span>
+            </span>
+          )}
         </OverviewCol>
         <OverviewCol>
           BAO Price
@@ -140,7 +134,8 @@ export default function Overview() {
           <QuestionIcon title="Locked BAO + Pending Harvest + Value of LP Staked" />
           <br/>
           <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
-            {lpTotalUSDValue === -1 ? <Loading /> : (
+            {(lpTotalUSDValue === -1 || baoPrice === -1 || lockedEarnings <= 0)
+            ? <Loading /> : (
               <>
                 ${getDisplayBalance(
                   new BigNumber(

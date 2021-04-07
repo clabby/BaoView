@@ -69,8 +69,8 @@ export default function Header() {
               <NavDropdown.Item href="https://stakedvalue.com/">
                 <FontAwesomeIcon icon={['fas', 'star']} /> Staked Value
               </NavDropdown.Item>
-              <NavDropdown.Item href="https://baostats.pythonanywhere.com/">
-                <FontAwesomeIcon icon={['fas', 'star']} /> Bao Stats
+              <NavDropdown.Item href="http://bao.live/">
+                <FontAwesomeIcon icon={['fas', 'star']} /> bao.live (BaoStats)
               </NavDropdown.Item>
               <NavDropdown.Item href="https://baoboard.com/">
                 <FontAwesomeIcon icon={['fas', 'star']} /> Bao Board
