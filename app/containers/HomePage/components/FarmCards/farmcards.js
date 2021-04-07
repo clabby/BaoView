@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import '../../styles/homepage.scss';
 import '../../styles/poolicons.scss';
 
-import { Tabs, Tab, Form, Spinner } from 'react-bootstrap';
+import { Tabs, Tab, Form, Badge, Spinner } from 'react-bootstrap';
 
 import useAllStakedValue from '../../../../hooks/useAllStakedValue';
 import useAllStakedBalance from '../../../../hooks/useAllStakedBalance';
@@ -111,7 +111,13 @@ export default function FarmCards(/* props */) {
           <Tab eventKey="sushi-lp" title="All Sushi LP">
             <div className="row">{renderLPPools('SUSHILP', searchQuery)}</div>
           </Tab>
-          <Tab eventKey="currently-staked" title="Currently Staked">
+          <Tab eventKey="currently-staked"
+            title={(
+              <>
+                Currently Staked <Badge variant="info">{stakedPools.length}</Badge>
+              </>
+            )}
+          >
             <div className="row">{renderLPPools('STAKED', searchQuery)}</div>
           </Tab>
         </Tabs>
