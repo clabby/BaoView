@@ -112,7 +112,7 @@ export default function Overview() {
           {(sumEarning === -1 || baoPrice === -1) && (<Badge variant="secondary"><Loading /></Badge>)}
           {baoPrice !== -1 && sumEarning >= 0 && (
             <span>
-              ${getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx
+              {getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx
               <br />
               <Badge variant="success">
                 ${getDisplayBalance(new BigNumber(baoPrice * sumEarning), 0)} |{' '}

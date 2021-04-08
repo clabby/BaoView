@@ -20,6 +20,7 @@ OR, if you prefer to use yarn:
 
 `yarn start`
 
+Finally, add your Infura API key to the `env.json` file in the root directory. (`env.sample.json` is available for reference)
 
 ### Pull Requests
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Container } from 'react-bootstrap'
+import { Container, Alert } from 'react-bootstrap'
 
 export const PoolMetricsContainer = styled(Container)`
   display: flex;
@@ -14,4 +14,12 @@ export const PoolMetricsContent = styled.div`
   width: 100%;
   padding: 50px;
   text-align: center;
+`
+
+export const AlertInfo = styled(Alert).attrs({
+  variant: 'info'
+})`
+  hr {
+    border-top-color: #abdde5 !important;
+  }
 `

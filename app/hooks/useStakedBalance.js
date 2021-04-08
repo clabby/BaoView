@@ -30,6 +30,6 @@ const useStakedBalance = pid => {
   }, [account, pid, setBalance, bao])
 
   return balance.decimalPlaces(18)
-};
+}
 
 export default useStakedBalance

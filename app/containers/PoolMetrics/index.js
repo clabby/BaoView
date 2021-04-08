@@ -18,7 +18,8 @@ import { getFarms } from '../../lib/bao/utils'
 
 import {
   PoolMetricsContainer,
-  PoolMetricsContent
+  PoolMetricsContent,
+  AlertInfo
 } from './styles/styled'
 
 export default function PoolMetrics(_params) {
@@ -43,13 +44,17 @@ export default function PoolMetrics(_params) {
           This resource is for educational purposes only.
           Please do not use this data for financial decisions as there may be discrepancies.
         </Alert>
-        <Alert variant="info">
+        <AlertInfo>
           <Badge variant="info">INFO</Badge>
           <br/>
           Total Pool Value is provided by BlockScout, while APY is calculated using the following formula:
           <br/>
           <b>((bao_price_usd * bao_per_block * blocks_per_year * pool_weight) / (total_pool_value_usd)) * 100.0</b>
-        </Alert>
+          <hr/>
+          <b>NOTICE:</b>
+          <br/>
+          The timeseries data collection program is miscalculating APY at the moment. Please refer to the cards on the homepage for a more precise ROI estimation. Apologies, a fix is on the way!
+        </AlertInfo>
         {ethereum.status !== 'connected' ? (
           <h1>Please connect your wallet to view Pool Metrics.</h1>
         ) : farms.length === 0 ? (

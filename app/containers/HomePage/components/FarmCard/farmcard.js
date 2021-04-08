@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
-import _ from 'underscore';
+import _ from 'underscore'
 
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js'
 
-import '../../styles/homepage.scss';
-import '../../styles/poolicons.scss';
+import '../../styles/homepage.scss'
+import '../../styles/poolicons.scss'
 
 import {
   Card,
@@ -17,63 +17,38 @@ import {
   Badge,
   Accordion,
   Spinner
-} from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+} from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
-import useStakedBalance from '../../../../hooks/useStakedBalance';
-import useEarnings from '../../../../hooks/useEarnings';
-import useFarmTotalValue from '../../../../hooks/useFarmTotalValue';
-import { getBalanceNumber } from '../../../../lib/formatBalance';
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle'
+import useStakedBalance from '../../../../hooks/useStakedBalance'
+import useEarnings from '../../../../hooks/useEarnings'
+import useFarmTotalValue from '../../../../hooks/useFarmTotalValue'
+import { getBalanceNumber } from '../../../../lib/formatBalance'
 
-import useROI from '../../../../hooks/useROI';
+import useROI from '../../../../hooks/useROI'
 
-import useStakedTVL from '../../../../hooks/useStakedTVL';
-
-const BLOCKS_PER_WEEK = new BigNumber(118914);
-const BLOCKS_PER_MONTH = new BigNumber(515294);
-const BLOCKS_PER_YEAR = new BigNumber(6183529); // 2336000 on mainnet
-const BAO_BER_BLOCK = new BigNumber(256000); // 256000 -> 128000 (halvening)
+import useStakedTVL from '../../../../hooks/useStakedTVL'
 
 export default function FarmCard(props) {
-  const { pool, stakedValue, priceData, baoPrice } = props;
-  const stakedBalance = useStakedBalance(pool.pid);
-  const pendingBao = useEarnings(pool.pid);
+  const { pool, stakedValue, priceData, baoPrice } = props
+  const stakedBalance = useStakedBalance(pool.pid)
+  const pendingBao = useEarnings(pool.pid)
 
-  const totalFarmValue = useFarmTotalValue(pool, priceData);
+  const totalFarmValue = useFarmTotalValue(pool, priceData)
   const tvl = useStakedTVL(pool.pid)
+  const isSushi = pool.poolType && pool.poolType === 'sushi'
 
-  let poolValue = -1;
-  let totalSupply = -1;
-  let lpValueUSD = -1;
-  let isLoading = true;
+  let poolValue = -1
+  let totalSupply = -1
+  let lpValueUSD = -1
 
   if (stakedValue && stakedBalance && totalFarmValue.total >= 0) {
-    totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18));
-    poolValue = new BigNumber(totalFarmValue.total);
+    totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18))
+    poolValue = new BigNumber(totalFarmValue.total)
     lpValueUSD = (stakedBalance.div(new BigNumber(10).pow(18)))
       .div(totalSupply)
-      .times(poolValue);
-    isLoading = false;
-
-    /* roi.apw = baoPrice
-      .times(BAO_BER_BLOCK)
-      .times(BLOCKS_PER_WEEK)
-      .times(stakedValue.poolWeight)
-      .div(poolValue)
-      .times(100);
-    roi.apm = baoPrice
-      .times(BAO_BER_BLOCK)
-      .times(BLOCKS_PER_MONTH)
-      .times(stakedValue.poolWeight)
-      .div(poolValue)
-      .times(100);
-    roi.apy = baoPrice
-      .times(BAO_BER_BLOCK)
-      .times(BLOCKS_PER_YEAR)
-      .times(stakedValue.poolWeight)
-      .div(poolValue)
-      .times(100); */
+      .times(poolValue)
   }
 
   const roi = useROI(
@@ -82,14 +57,14 @@ export default function FarmCard(props) {
     tvl === -1 || poolValue === -1 ?
       -1 :
       poolValue.times(tvl.div(totalSupply)),
-    isLoading
-  );
+    !(stakedValue && stakedBalance && totalFarmValue.total >= 0)
+  )
 
   const PoolDataToggle = ({ children, eventKey }) => {
-    const [poolDataExpanded, setPoolDataExpanded] = useState(false);
+    const [poolDataExpanded, setPoolDataExpanded] = useState(false)
 
     const onPoolDataClick = useAccordionToggle(eventKey, () =>
-      setPoolDataExpanded(!poolDataExpanded));
+      setPoolDataExpanded(!poolDataExpanded))
 
     return (
       <Button variant="link" onClick={onPoolDataClick}>
@@ -113,6 +88,29 @@ export default function FarmCard(props) {
         </center>
         <Accordion.Collapse eventKey={pid.toString()}>
           <div>
+            {isSushi && (
+              <>
+                <center>
+                  <b>Mainnet</b>
+                </center>
+                Supply Value
+                <span>
+                  {totalFarmValue === -1 ? 'Loading...' : (
+                    '$' + getBalanceNumber(new BigNumber(totalFarmValue.mainnetTotal), 0)
+                  )}
+                </span>
+                <br />
+                LP Supply
+                <span>
+                  {totalFarmValue === -1 ? 'Loading...' : (
+                    getBalanceNumber(totalFarmValue.mainnetSupply, 0) + ' LP'
+                  )}
+                </span>
+                <center>
+                  <b>xDai</b>
+                </center>
+              </>
+            )}
             Supply Value
             <span>
               {poolValue === -1
@@ -175,7 +173,7 @@ export default function FarmCard(props) {
         </Accordion.Collapse>
       </Accordion>
     </ListGroup.Item>
-  );
+  )
 
   return (
     <div className="col-4">
@@ -242,15 +240,15 @@ export default function FarmCard(props) {
         </ListGroup>
       </Card>
     </div>
-  );
+  )
 }
 
 FarmCard.propTypes = {
   pool: PropTypes.object,
   roi: PropTypes.object,
-};
+}
 
 FarmCard.defaultProps = {
   pool: null,
   roi: null,
-};
+}

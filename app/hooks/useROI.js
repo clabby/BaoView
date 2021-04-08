@@ -28,7 +28,7 @@ const useROI = (pid, baoPrice, tvlUsd, isLoading) => {
     /* testing:
     if (pid === 41 || pid === 1) {
       console.log('-------------------------')
-      console.log(masterChef);
+      console.log(masterChef)
       console.log('block: ' + block)
       console.log('pid: ' + pid)
       console.log('weight: ' + poolWeight.toNumber())
@@ -73,10 +73,10 @@ const useROI = (pid, baoPrice, tvlUsd, isLoading) => {
   }, [isLoading, block])
 
   useMemo(() => {
-    fetchPriceData();
+    fetchPriceData()
   }, [isLoading, block])
 
   return roi
-};
+}
 
 export default useROI

@@ -11,7 +11,8 @@ import {
   HeartIcon,
   AboutContainer,
   AboutContent,
-  LineBreak
+  LineBreak,
+  BaoGif
 } from './styles/styled'
 
 export default function AboutPage() {
@@ -61,6 +62,8 @@ export default function AboutPage() {
         <LineBreak />
         vex: <br />
         <CopyOnClick address="0xe18d60bD57B5D626dAcf5C959534f28aE5e272C9" />
+        <hr />
+        <BaoGif />
       </AboutContent>
     </AboutContainer>
   )

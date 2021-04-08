@@ -35,6 +35,6 @@ const useStakedTVL = (pid) => {
   }, [account, masterChefContract, block, setStaked, bao])
 
   return staked
-};
+}
 
 export default useStakedTVL

@@ -186,6 +186,7 @@ export const supportedPools = [
 	{
 		pid: 2,
 		lpAddresses: {
+			1: '0x0eee7f7319013df1f24f5eaf83004fcf9cf49245',
 			100: '0x3D1d2B236ad8ef3FD7C6C1625845fB59dFFaCCa1',
 		},
 		tokenAddresses: {
@@ -217,6 +218,7 @@ export const supportedPools = [
 	{
 		pid: 4,
 		lpAddresses: {
+			1: '0x072b999fc3d82f9ea08b8adbb9d63a980ff2b14d',
 			100: '0xFEeC1B8Acd23068fa29Bf01759e0DA1C7cede4F4',
 		},
 		tokenAddresses: {
@@ -233,6 +235,7 @@ export const supportedPools = [
 	{
 		pid: 5,
 		lpAddresses: {
+			1: '0x3442801e0ddb9a6d06bc232d51725a658c8bfe10',
 			100: '0xcf076d7663cc16109f3879b3C60A60CdD2ef31DB',
 		},
 		tokenAddresses: {
@@ -249,6 +252,7 @@ export const supportedPools = [
 	{
 		pid: 6,
 		lpAddresses: {
+			1: '0xc599f66e20a8420894d980624671937d5d7e4ea5',
 			100: '0xF768945410933cA301C347FB6C945EC6E9B4c497',
 		},
 		tokenAddresses: {
@@ -265,6 +269,7 @@ export const supportedPools = [
 	{
 		pid: 7,
 		lpAddresses: {
+			1: '0x28bfcf4385c8d32566d8a89a64b7c1e079cb81e6',
 			100: '0xd83ce865aBcE674Ec61116c4aBDA281f0184cff7',
 		},
 		tokenAddresses: {
@@ -281,6 +286,7 @@ export const supportedPools = [
 	{
 		pid: 107,
 		lpAddresses: {
+			1: '0x795065dcc9f64b5614c407a6efdc400da6221fb0',
 			100: '0xf2F9Ff5Cb8E2B21117715B2E3B5C6285349da498',
 		},
 		tokenAddresses: {
@@ -288,15 +294,16 @@ export const supportedPools = [
 		},
 		tokenDecimals: 18,
 		name: 'Sushi Eth',
-		symbol: 'SUSH-ETH SUSHILP',
+		symbol: 'SUSHI-ETH SUSHILP',
 		tokenSymbol: 'SUSHI',
 		poolType: 'sushi',
-		icon: '/unagi.png',
+		icon: '/simplysushi.png',
 		refUrl: 'https://ftx.com/trade/SUSHI/USD#a=createtrade',
 	},
 	{
 		pid: 8,
 		lpAddresses: {
+			1: '0x321198908bd33b066252d63d363667e3f7094a34',
 			100: '0x1987399C0C023869ea00a51750667721BA009be6',
 		},
 		tokenAddresses: {
@@ -313,6 +320,7 @@ export const supportedPools = [
 	{
 		pid: 9,
 		lpAddresses: {
+			1: '0x36e2fcccc59e5747ff63a03ea2e5c0c2c14911e7',
 			100: '0xfE536fE3c3E870675083f66441dF0F8ed3273650',
 		},
 		tokenAddresses: {
@@ -1055,6 +1063,7 @@ export const supportedPools = [
 	{
 		pid: 57,
 		lpAddresses: {
+			1: '0x9fc5b87b74b9bd239879491056752eb90188106d',
 			100: '0x3CFd76aF96be1491dc58c76458791763D354f275',
 		},
 		tokenAddresses: {
@@ -1071,6 +1080,7 @@ export const supportedPools = [
 	{
 		pid: 58,
 		lpAddresses: {
+			1: '0xa30911e072a0c88d55b5d0a0984b66b0d04569d0',
 			100: '0x7cC121D777C4322fb1DaaB5d511236e682d83512',
 		},
 		tokenAddresses: {
@@ -1742,6 +1752,7 @@ export const supportedPools = [
 	{
 		pid: 102,
 		lpAddresses: {
+			1: '0x088ee5007c98a9677165d78dd2109ae4a3d04d0c',
 			100: '0x4b2c191198ACd5F1C941fa1ba0C870b38470F331',
 		},
 		tokenAddresses: {
@@ -1758,6 +1769,7 @@ export const supportedPools = [
 	{
 		pid: 103,
 		lpAddresses: {
+			1: '0xdafd66636e2561b0284edde37e42d192f2844d40',
 			100: '0x43BC76493dEa7c82116A38e9C012B9a03127132c',
 		},
 		tokenAddresses: {
@@ -1770,5 +1782,605 @@ export const supportedPools = [
 		poolType: 'sushi',
 		icon: '/unagi.png',
 		refUrl: 'https://ftx.com/trade/UNI/USD#a=createtrade',
+	},
+	{
+		pid: 108,
+		lpAddresses: {
+			1: '0x397ff1542f962076d0bfe58ea045ffa2d347aca0',
+			100: '0x110961C70E6C745cCEdA58FfAF9Ab09f53b5aF14',
+		},
+		tokenAddresses: {
+			100: '0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83',
+		},
+		tokenDecimals: 18,
+		name: 'USDC Crunch',
+		symbol: 'USDC-ETH SUSHILP',
+		tokenSymbol: 'USDC',
+		poolType: 'sushi',
+		icon: '/cereals.png',
+		refUrl: 'https://www.binance.com/en/register?ref=NFBFR4AC',
+	},
+	{
+		pid: 109,
+		lpAddresses: {
+			1: '0x760166fa4f227da29ecac3bec348f5fa853a1f3c',
+			100: '0x11a79faa23B045af86B5a319ae33d82FF38379b5',
+		},
+		tokenAddresses: {
+			100: '0xB714654e905eDad1CA1940b7790A8239ece5A9ff',
+		},
+		tokenDecimals: 18,
+		name: 'TUSD Tea Egg',
+		symbol: 'TUSD-ETH SUSHILP',
+		tokenSymbol: 'TUSD',
+		poolType: 'sushi',
+		icon: '/boiled-egg.png',
+		refUrl: 'https://www.digifinex.com/en-ww/from/v7D3UM?channelCode=ljaUPp',
+	},
+	{
+		pid: 110,
+		lpAddresses: {
+			1: '0xf13eef1c6485348b9c9fa0d5df2d89accc5b0147',
+			100: '0x743335D8EC69b176AC5AF20B523258254e1D686a',
+		},
+		tokenAddresses: {
+			100: '0x03959Ac65e621e8C95d5E0f75EA96E5C03A15009',
+		},
+		tokenDecimals: 18,
+		name: 'Rook Rice Noodle Roll',
+		symbol: 'ROOK-ETH SUSHILP',
+		tokenSymbol: 'ROOK',
+		poolType: 'sushi',
+		icon: '/roll-fish.png',
+		refUrl: 'https://www.hotbit.io/register?ref=669143',
+	},
+	{
+		pid: 111,
+		lpAddresses: {
+			1: '0x7b504a15ef05f4eed1c07208c5815c49022a0c19',
+			100: '0x3802C6e89cFe9a30B11557a13BeFD7e5849Ea1e2',
+		},
+		tokenAddresses: {
+			100: '0xFAdc59D012Ba3c110B08A15B7755A5cb7Cbe77D7',
+		},
+		tokenDecimals: 18,
+		name: 'GRT Gummies',
+		symbol: 'GRT-ETH SUSHILP',
+		tokenSymbol: 'GRT',
+		poolType: 'sushi',
+		icon: '/gummy-bear.png',
+		refUrl: 'https://ftx.com/trade/GRT/USD#a=getbao',
+	},
+	{
+		pid: 112,
+		lpAddresses: {
+			1: '0xceff51756c56ceffca006cd410b03ffc46dd3a58',
+			100: '0xdEE4e0b8f9A0d3AA253EAC11E4C5C7AcBFb466aE',
+		},
+		tokenAddresses: {
+			100: '0x8e5bBbb09Ed1ebdE8674Cda39A0c169401db4252',
+		},
+		tokenDecimals: 18,
+		name: 'wBTC Wraps',
+		symbol: 'wBTC-ETH SUSHILP',
+		tokenSymbol: 'wBTC',
+		poolType: 'sushi',
+		icon: '/wrap.png',
+		refUrl: 'https://www.binance.com/en/register?ref=NFBFR4AC',
+	},
+	{
+		pid: 113,
+		lpAddresses: {
+			1: '0x53aabccae8c1713a6a150d9981d2ee867d0720e8',
+			100: '0xB656d7B1632c713c5F3C3B6ABd71B94022Dc0f62',
+		},
+		tokenAddresses: {
+			100: '0x4bE85ACC1cd711F403dC7BdE9e6caDfC5A94744b',
+		},
+		tokenDecimals: 18,
+		name: 'Rari Riceballs',
+		symbol: 'RARI-ETH SUSHILP',
+		tokenSymbol: 'RARI',
+		poolType: 'sushi',
+		icon: '/rice-ball-with-seaweed.png',
+		refUrl: 'https://www.mxc.ai/auth/signup?inviteCode=13z4G',
+	},
+	{
+		pid: 114,
+		lpAddresses: {
+			1: '0x20c009ac5ce819652f2332c9c62f27f41b8de320',
+			100: '0x10cF0409A5F11073ccDF8Df6f94B9df324445603',
+		},
+		tokenAddresses: {
+			100: '0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1',
+		},
+		tokenDecimals: 18,
+		name: 'Leverj Gluon Lucky Cookie',
+		symbol: 'L2-ETH SUSHILP',
+		tokenSymbol: 'L2',
+		poolType: 'sushi',
+		icon: '/fortune-cookie.png',
+		refUrl:
+			'https://1inch.exchange/#/r/0x3bC3c8aF8CFe3dFC9bA1A57c7C3b653e3f6d6951/L2/ETH',
+	},
+	{
+		pid: 115,
+		lpAddresses: {
+			1: '0xc40d16476380e4037e6b1a2594caf6a6cc8da967',
+			100: '0x5D83eA923D62066f2547DFAd7ff662e41FB961b4',
+		},
+		tokenAddresses: {
+			100: '0xE2e73A1c69ecF83F464EFCE6A5be353a37cA09b2',
+		},
+		tokenDecimals: 18,
+		name: 'Link Lunch',
+		symbol: 'LINK-ETH SUSHILP',
+		tokenSymbol: 'LINK',
+		poolType: 'sushi',
+		icon: '/sandwich.png',
+		refUrl: 'https://ftx.com/trade/LINK/USD#a=getbao',
+	},
+	{
+		pid: 116,
+		lpAddresses: {
+			1: '0x6f58a1aa0248a9f794d13dc78e74fc75140956d7',
+			100: '0xc4265D14Eff50179771D65345f0814B3d852CCfC',
+		},
+		tokenAddresses: {
+			100: '0x5A87eaC5642BfEd4e354Ee8738DACd298E07D1Af',
+		},
+		tokenDecimals: 18,
+		name: 'Reserve Ragout',
+		symbol: 'RSR-ETH SUSHILP',
+		tokenSymbol: 'RSR',
+		poolType: 'sushi',
+		icon: '/stew.png',
+		refUrl: 'https://bilaxy.com/user/register?intro=1428882',
+	},
+	{
+		pid: 117,
+		lpAddresses: {
+			1: '0x35a0d9579b1e886702375364fe9c540f97e4517b',
+			100: '0xde9f126eb737f2aa480527992d18266f5261e0a5',
+		},
+		tokenAddresses: {
+			100: '0xBDE011911128F6bD4ABb1d18F39fdc3614Ca2cfe',
+		},
+		tokenDecimals: 18,
+		name: 'AXS Ahi Tuna',
+		symbol: 'AXS-ETH SUSHILP',
+		tokenSymbol: 'AXS',
+		poolType: 'sushi',
+		icon: '/salmon.png',
+		refUrl: 'https://bilaxy.com/user/register?intro=1428882',
+	},
+	{
+		pid: 118,
+		lpAddresses: {
+			1: '0x7825de5586e4d2fd04459091bbe783fa243e1bf3',
+			100: '0x8c60b82dd2861F06B7E49E37A990edCa94044470',
+		},
+		tokenAddresses: {
+			100: '0x75886F00c1a20Ec1511111Fb4Ec3C51de65B1fe7',
+		},
+		tokenDecimals: 18,
+		name: 'FTX Fried Tofu (Vege!)',
+		symbol: 'FTT-ETH SUSHILP',
+		tokenSymbol: 'FTT',
+		poolType: 'sushi',
+		icon: '/tofu.png',
+		refUrl: 'https://ftx.com/trade/FTT/USD#a=createtrade',
+	},
+	{
+		pid: 119,
+		lpAddresses: {
+			1: '0x117d4288b3635021a3d612fe05a3cbf5c717fef2',
+			100: '0x9411991Cd3Ec8745597658434C49970Fa2654480',
+		},
+		tokenAddresses: {
+			100: '0x3AE8c08cD61d05ad6e22973E4b675A92D412EE3C',
+		},
+		tokenDecimals: 18,
+		name: 'SRM Spring Rolls (Vegan)',
+		symbol: 'SRM-ETH SUSHILP',
+		tokenSymbol: 'SRM',
+		poolType: 'sushi',
+		icon: '/spring-rolls.png',
+		refUrl: 'https://ftx.com/trade/SRM/USD#a=createtrade',
+	},
+	{
+		pid: 120,
+		lpAddresses: {
+			1: '0xcc39592f5cb193a70f262aa301f54db1d600e6da',
+			100: '0x71a25ca8f3554ee518474d9ab1f2c9380ec04c90',
+		},
+		tokenAddresses: {
+			100: '0x4c68041898bfEfbfCc4253fbE8eD30830E6eb767',
+		},
+		tokenDecimals: 18,
+		name: 'Rune Ramen',
+		symbol: 'RUNE-ETH SUSHILP',
+		tokenSymbol: 'RUNE',
+		poolType: 'sushi',
+		icon: '/ramennoodle.png',
+		refUrl:
+			'https://1inch.exchange/#/r/0x3bC3c8aF8CFe3dFC9bA1A57c7C3b653e3f6d6951/ETH/RUNE',
+	},
+	{
+		pid: 121,
+		lpAddresses: {
+			1: '0x382c4a5147fd4090f7be3a9ff398f95638f5d39e',
+			100: '0x58D145532d4faA53A3a21ea5b262cE0F29afdd42',
+		},
+		tokenAddresses: {
+			100: '0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1',
+		},
+		tokenDecimals: 18,
+		name: 'yVault Youtiao',
+		symbol: 'yUSD-ETH SUSHILP',
+		tokenSymbol: 'yUSD',
+		poolType: 'sushi',
+		icon: '/churros.png',
+		refUrl:
+			'https://1inch.exchange/#/r/0x3bC3c8aF8CFe3dFC9bA1A57c7C3b653e3f6d6951/ETH/yyCurve',
+	},
+	{
+		pid: 122,
+		lpAddresses: {
+			1: '0x31d64f9403e82243e71c2af9d8f56c7dbe10c178',
+			100: '0xab68e00e5d402005fad284c8e0d48766650ddd2b',
+		},
+		tokenAddresses: {
+			100: '0x8e1A12dA00BBF9DB10d48bd66Ff818bE933964d5',
+		},
+		tokenDecimals: 18,
+		name: 'NFTX Nuggets',
+		symbol: 'NFTX-ETH SUSHILP',
+		tokenSymbol: 'NFTX',
+		poolType: 'sushi',
+		icon: '/nuggets.png',
+		refUrl:
+			'https://1inch.exchange/#/r/0x3bC3c8aF8CFe3dFC9bA1A57c7C3b653e3f6d6951/ETH/NFTX',
+	},
+	{
+		pid: 123,
+		lpAddresses: {
+			1: '0xb670373863ce64f040b7c10bee79c40ce12cacba',
+			100: '0x5ADDec6b4F6a79a13EaCAeE24F08b317d6EA99A0',
+		},
+		tokenAddresses: {
+			100: '0x8e1A12dA00BBF9DB10d48bd66Ff818bE933964d5',
+		},
+		tokenDecimals: 18,
+		name: 'QSP Quail Eggs',
+		symbol: 'QSP-ETH SUSHILP',
+		tokenSymbol: 'QSP',
+		poolType: 'sushi',
+		icon: '/eggs.png',
+		refUrl: 'https://www.huobi.com/en-us/topic/invited/?invite_code=pfr33',
+	},
+	{
+		pid: 124,
+		lpAddresses: {
+			1: '0x86f518368e0d49d5916e2bd9eb162e9952b7b04d',
+			100: '0x4e52D29d591E64DDE67977078ed3182f1aC8A8C3',
+		},
+		tokenAddresses: {
+			100: '0x7f7440C5098462f833E123B44B8A03E1d9785BAb',
+		},
+		tokenDecimals: 18,
+		name: '1INCH Nibbles',
+		symbol: '1INCH-ETH SUSHILP',
+		tokenSymbol: '1INCH',
+		poolType: 'sushi',
+		icon: '/moon-cakers.png',
+		refUrl:
+			'https://1inch.exchange/#/r/0x3bC3c8aF8CFe3dFC9bA1A57c7C3b653e3f6d6951/ETH/1INCH',
+	},
+	{
+		pid: 125,
+		lpAddresses: {
+			1: '0x364248b2f1f57c5402d244b2d469a35b4c0e9dab',
+			100: '0xA700Cf3775C747762426C223A293C9C505a71D44',
+		},
+		tokenAddresses: {
+			100: '0xD27E1ECC4748F42e052331BeA917D89bEB883fc3',
+		},
+		tokenDecimals: 18,
+		name: 'AKRO Amygdalota',
+		symbol: 'AKRO-ETH SUSHILP',
+		tokenSymbol: 'AKRO',
+		poolType: 'sushi',
+		icon: '/cookie.png',
+		refUrl: 'https://ftx.com/trade/AKRO/USD#a=createtrade',
+	},
+	{
+		pid: 126,
+		lpAddresses: {
+			1: '0x2007815bd299786a117dda62566d6dbaa416926c',
+			100: '0x614d04630faf994187b7AA19C7B5d2E6BC3336E7',
+		},
+		tokenAddresses: {
+			100: '0x8e1A12dA00BBF9DB10d48bd66Ff818bE933964d5',
+		},
+		tokenDecimals: 18,
+		name: 'cUNI Clams',
+		symbol: 'cUNI-ETH SUSHILP',
+		tokenSymbol: 'cUNI',
+		poolType: 'sushi',
+		icon: '/cockles.png',
+		refUrl: 'https://app.compound.finance/',
+	},
+	{
+		pid: 127,
+		lpAddresses: {
+			1: '0x34b13f8cd184f55d0bd4dd1fe6c07d46f245c7ed',
+			100: '0x54f10fd56a4990c96735c5dd8ca746538be97199',
+		},
+		tokenAddresses: {
+			100: '0xD3D47d5578e55C880505dC40648F7F9307C3e7A8',
+		},
+		tokenDecimals: 18,
+		name: 'DPI Deep Fried Shrimp',
+		symbol: 'DPI-ETH SUSHILP',
+		tokenSymbol: 'DPI',
+		poolType: 'sushi',
+		icon: '/tempura.png',
+		refUrl: 'https://bilaxy.com/user/register?intro=1428882',
+	},
+	{
+		pid: 128,
+		lpAddresses: {
+			1: '0x998bf04788c1c631c0e02bd1eed3d945308bf0a3',
+			100: '0x60bd77d5988c0676d4644ee7f0dd07f42ff2edc7',
+		},
+		tokenAddresses: {
+			100: '0xC6cC63f4AA25BBD4453eB5F3a0DfE546feF9b2f3',
+		},
+		tokenDecimals: 18,
+		name: 'Brave Braised Pork',
+		symbol: 'BAT-ETH SUSHILP',
+		tokenSymbol: 'BAT',
+		poolType: 'sushi',
+		icon: '/beef.png',
+		refUrl: 'https://www.decoin.io/?ref=56336',
+	},
+	{
+		pid: 129,
+		lpAddresses: {
+			1: '0x9323161faf56dd09cb32ace72c20dbd96b96d386',
+			100: '0xDD11aEc1FF78b06F73528D7Ce0216F1890D7b45c',
+		},
+		tokenAddresses: {
+			100: '0x8e1A12dA00BBF9DB10d48bd66Ff818bE933964d5',
+		},
+		tokenDecimals: 18,
+		name: 'Aave ETH Aperitif',
+		symbol: 'aETH-ETH SUSHILP',
+		tokenSymbol: 'aETH',
+		poolType: 'sushi',
+		icon: '/cocktail.png',
+		refUrl: 'https://app.aave.com/?referral=108',
+	},
+	{
+		pid: 130,
+		lpAddresses: {
+			1: '0xaf988aff99d3d0cb870812c325c588d8d8cb7de8',
+			100: '0xb7E7FE460b00d8Bc3ceB728F72652B82f433322B',
+		},
+		tokenAddresses: {
+			100: '0x5B449Ea0e550C143074146abc89A6328D9E70798',
+		},
+		tokenDecimals: 18,
+		name: 'KP3R Kebab',
+		symbol: 'KP3R-ETH SUSHILP',
+		tokenSymbol: 'KP3R',
+		poolType: 'sushi',
+		icon: '/kebab.png',
+		refUrl: 'https://www.mxc.ai/auth/signup?inviteCode=13z4G',
+	},
+	{
+		pid: 131,
+		lpAddresses: {
+			1: '0xb2c29e311916a346304f83aa44527092d5bd4f0f',
+			100: '0xaBc2E2b87fEC5d79b8143F82f4c4ac1Dcecfe7ef',
+		},
+		tokenAddresses: {
+			100: '0xA088D78e9c9CBccAD3a0153341385633B1B1125d',
+		},
+		tokenDecimals: 18,
+		name: '88MPH Chilis',
+		symbol: 'MPH-ETH SUSHILP',
+		tokenSymbol: 'MPH',
+		poolType: 'sushi',
+		icon: '/chili.png',
+		refUrl: 'https://bilaxy.com/user/register?intro=1428882',
+	},
+	{
+		pid: 132,
+		lpAddresses: {
+			1: '0x033ecd066376afec5e6383bc9f1f15be4c62dc89',
+			100: '0xBdb9B0D78854db895b5D28F67Aed04EF761D2780',
+		},
+		tokenAddresses: {
+			100: '0x8e1A12dA00BBF9DB10d48bd66Ff818bE933964d5',
+		},
+		tokenDecimals: 18,
+		name: 'YAX Yellowfin',
+		symbol: 'YAX-ETH SUSHILP',
+		tokenSymbol: 'YAX',
+		poolType: 'sushi',
+		icon: '/tuna.png',
+		refUrl: 'https://bilaxy.com/user/register?intro=1428882',
+	},
+	{
+		pid: 133,
+		lpAddresses: {
+			1: '0x7f47f6f695ddf8316f368a8a99122a081e118bd0',
+			100: '0xe8E8937b92259adb26d510aa2f6aD6cA65243d9e',
+		},
+		tokenAddresses: {
+			100: '0x8F365b41B98Fe84aCB287540b4B4AB633e07EDb2',
+		},
+		tokenDecimals: 18,
+		name: 'sETH/ETH',
+		symbol: 'sETH-ETH SUSHILP',
+		tokenSymbol: 'sETH',
+		poolType: 'sushi',
+		icon: '/eth.png',
+		refUrl:
+			'https://1inch.exchange/#/r/0x3bC3c8aF8CFe3dFC9bA1A57c7C3b653e3f6d6951/ETH/sETH',
+	},
+	{
+		pid: 134,
+		lpAddresses: {
+			1: '0xf55c33d94150d93c2cfb833bcca30be388b14964',
+			100: '0x89920B17e1753ad2c51a567d6f4e1f3ebB29fEDe',
+		},
+		tokenAddresses: {
+			100: '0x8e1A12dA00BBF9DB10d48bd66Ff818bE933964d5',
+		},
+		tokenDecimals: 18,
+		name: 'Alpha Apple Pie',
+		symbol: 'ALPHA-ETH SUSHILP',
+		tokenSymbol: 'ALPHA',
+		poolType: 'sushi',
+		icon: '/pie.png',
+		refUrl: 'https://www.hotbit.io/register?ref=669143',
+	},
+	{
+		pid: 135,
+		lpAddresses: {
+			1: '0x7f8f7dd53d1f3ac1052565e3ff451d7fe666a311',
+			100: '0xb2129038a6Ef37945306b0d1194Cc4b8952E55E8',
+		},
+		tokenAddresses: {
+			100: '0x7122d7661c4564b7C6Cd4878B06766489a6028A2',
+		},
+		tokenDecimals: 18,
+		name: 'Matic Mandarin Fish',
+		symbol: 'MATIC-ETH SUSHILP',
+		tokenSymbol: 'MATIC',
+		poolType: 'sushi',
+		icon: '/fish.png',
+		refUrl: 'https://ftx.com/trade/MATIC-PERP#a=createtrade',
+	},
+	{
+		pid: 136,
+		lpAddresses: {
+			1: '0xba13afecda9beb75de5c56bbaf696b880a5a50dd',
+			100: '0x40fD32644304577da2f70b7135F9573163B7702D',
+		},
+		tokenAddresses: {
+			100: '0x5fd896D248fbfa54d26855C267859eb1b4DAEe72',
+		},
+		tokenDecimals: 18,
+		name: 'Maker Mooncake',
+		symbol: 'MKR-ETH SUSHILP',
+		tokenSymbol: 'MKR',
+		poolType: 'sushi',
+		icon: '/moon-cake.png',
+		refUrl: 'https://ftx.com/trade/MKR-PERP#a=createtrade',
+	},
+	{
+		pid: 137,
+		lpAddresses: {
+			 1: '0xc3d03e4f041fd4cd388c549ee2a29a9e5075882f',
+			100: '0xbc1a3f219f14e0fa86e3a301fba0cf52b32dc77e',
+		},
+		tokenAddresses: {
+			100: '0x44fA8E6f47987339850636F88629646662444217',
+		},
+		tokenDecimals: 18,
+		name: 'Dai Dan Tat',
+		symbol: 'DAI-ETH SUSHILP',
+		tokenSymbol: 'DAI',
+		poolType: 'sushi',
+		icon: '/egg-tart.png',
+		refUrl:
+			'https://www.aex.plus/page/m_regist.html#/?invite_code=765759&invite_type=10',
+	},
+	{
+		pid: 138,
+		lpAddresses: {
+			1: '0x58dc5a51fe44589beb22e8ce67720b5bc5378009',
+			100: '0x1a48e8aae834e3dad8471b507cab07b083040215',
+		},
+		tokenAddresses: {
+			100: '0x712b3d230F3C1c19db860d80619288b1F0BDd0Bd',
+		},
+		tokenDecimals: 18,
+		name: 'Curve Custard',
+		symbol: 'CRV-ETH SUSHILP',
+		tokenSymbol: 'CRV',
+		poolType: 'sushi',
+		icon: '/custard.png',
+		refUrl: 'https://www.okex.com/join/3/1914410',
+	},
+	{
+		pid: 139,
+		lpAddresses: {
+			1: '0xd75ea151a61d06868e31f8988d28dfe5e9df57b4',
+			100: '0x553815c5ADe7B70ceBc094FA1b4175519bE6CAF1',
+		},
+		tokenAddresses: {
+			100: '0xDF613aF6B44a31299E48131e9347F034347E2F00',
+		},
+		tokenDecimals: 18,
+		name: 'Aave Appetizer',
+		symbol: 'AAVE-ETH SUSHILP',
+		tokenSymbol: 'AAVE',
+		poolType: 'sushi',
+		icon: '/appetizer.png',
+		refUrl: 'https://app.aave.com/?referral=108',
+	},
+	{
+		pid: 140,
+		lpAddresses: {
+			1: '0xa1d7b2d891e3a1f9ef4bbc5be20630c2feb1c470',
+			100: '0x4c3887963bd62200f5304aadaa84dbd0bab1e3ad',
+		},
+		tokenAddresses: {
+			100: '0x3A00E08544d589E19a8e7D97D0294331341cdBF6',
+		},
+		tokenDecimals: 18,
+		name: 'Synthetix Snacks',
+		symbol: 'SNX-ETH SUSHILP',
+		tokenSymbol: 'SNX',
+		poolType: 'sushi',
+		icon: '/snack.png',
+		refUrl: 'https://ftx.com/trade/SNX/USD#a=createtrade',
+	},
+	{
+		pid: 141,
+		lpAddresses: {
+			1: '0x9bffa3ce3e56d0d26447a45771fec76bd4173022',
+			100: '0xDA7712b5959499629a9f6B4cAE2F22910FB894fD',
+		},
+		tokenAddresses: {
+			100: '0x7eF541E2a22058048904fE5744f9c7E4C57AF717',
+		},
+		tokenDecimals: 18,
+		name: 'Balancer Bento',
+		symbol: 'BAL-ETH SUSHILP',
+		tokenSymbol: 'BAL',
+		poolType: 'sushi',
+		icon: '/bento.png',
+		refUrl: 'https://ftx.com/trade/BAL-PERP#a=createtrade',
+	},
+	{
+		pid: 142,
+		lpAddresses: {
+			100: '0xa53c15D225558698d3903ABF1482e3ea0FeADA65',
+		},
+		tokenAddresses: {
+			100: '0x26DC03E492763068CCfE7C39B93A22442807C360',
+		},
+		tokenDecimals: 18,
+		name: 'Nexo Noodles',
+		symbol: 'NEXO-XDAI BAOLP',
+		tokenSymbol: 'NEXO',
+		icon: '/noodles.png',
+		refUrl: 'https://www.huobi.com/en-us/topic/invited/?invite_code=pfr33',
 	},
 ]

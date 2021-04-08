@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import Gif from '../../../images/baoview.gif'
+
 export const HeartIcon = styled(FontAwesomeIcon).attrs({
   icon: ['fa', 'heart']
 })`
@@ -25,4 +27,11 @@ export const AboutContent = styled.div`
 export const LineBreak = styled.span`
   display: block;
   margin: 10px 0px;
+`
+
+export const BaoGif = styled.img.attrs(props => ({
+  src: Gif
+}))`
+  height: 96px;
+  margin-bottom: -60px;
 `
