@@ -153,7 +153,7 @@ export default function FarmCard(props) {
                 stakedBalance.div(new BigNumber(10).pow(18)).div(tvl).times(100).toNumber().toFixed(6) + '%'}
             </span>
             <br/>
-            <b style={{textAlign: 'center', display: 'block'}}>Tokens in Pool</b>
+            <b style={{textAlign: 'center', display: 'block'}}>Tokens in LP Supply</b>
             <>
               {totalFarmValue === -1 || tvl === -1 || totalSupply === -1 ? 'Loading...' : (
                 <>

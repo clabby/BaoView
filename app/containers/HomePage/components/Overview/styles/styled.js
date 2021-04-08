@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { lighten } from 'polished'
 import { Colors } from '../../../../App/styles/colors'
 
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Badge } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const OverviewContainer = styled.div.attrs(props => ({
@@ -92,11 +92,21 @@ export const QuestionIcon = (props) => {
   )
 }
 
-export const OverviewHeading = () => {
+export const OverviewHeading = ({mainnet, xdai}) => {
   return (
     <>
       <h1>
         <FontAwesomeIcon icon={['fas', 'file-invoice-dollar']} /> Overview
+        <small style={{float: 'right', fontSize: '40%'}}>
+          <Badge variant={mainnet ? 'success' : 'danger'}>
+            <FontAwesomeIcon icon={['fas', 'wifi']} />{' '}
+            Mainnet: <FontAwesomeIcon icon={['fas', mainnet ? 'link' : 'times-circle']} />
+          </Badge>
+          <Badge variant={xdai ? 'success' : 'danger'} className="ml-2">
+            <FontAwesomeIcon icon={['fas', 'wifi']} />{' '}
+            xDai: <FontAwesomeIcon icon={['fas', xdai ? 'link' : 'times-circle']} />
+          </Badge>
+        </small>
       </h1>
       <hr/>
     </>

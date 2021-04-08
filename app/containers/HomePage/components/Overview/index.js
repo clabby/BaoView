@@ -17,13 +17,18 @@ import useAllEarnings from '../../../../hooks/useAllEarnings'
 import useLockedEarnings from '../../../../hooks/useLockedEarnings'
 import useLPTotalUSDValue from '../../../../hooks/useLPTotalUSDValue'
 
+import useBao from '../../../../hooks/useBao'
+import useMainnetWeb3 from '../../../../hooks/useMainnet'
+
 import { getDisplayBalance } from '../../../../lib/formatBalance'
 
 export default function Overview() {
   const earnings = useAllEarnings()
   const lockedEarnings = useLockedEarnings()
-
   const lpTotalUSDValue = useLPTotalUSDValue()
+
+  const bao = useBao()
+  const web3 = useMainnetWeb3()
 
   const [baoPrice, setBaoPrice] = useState(-1)
   const [ethPrice, setEthPrice] = useState(-1)
@@ -63,7 +68,10 @@ export default function Overview() {
 
   return (
     <OverviewContainer>
-    <OverviewHeading />
+      <OverviewHeading
+        mainnet={web3.currentProvider.connected}
+        xdai={bao.web3.currentProvider.isConnected()}
+      />
       <OverviewStats>
         <OverviewCol>
           Total Locked Bao
