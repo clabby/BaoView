@@ -2,23 +2,20 @@ import { useCallback, useEffect, useState, useMemo } from 'react'
 import { BigNumber } from 'bignumber.js'
 import _ from 'underscore'
 
+import useBao from './useBao'
+import useMainnetWeb3 from './useMainnet'
+
 import cgList from '../lib/cg-list.json'
 import erc20Abi from '../lib/bao/lib/abi/erc20.json'
-
-import useBao from './useBao'
-
-import Web3 from 'web3'
 import lpAbi from '../lib/bao/lib/abi/uni_v2_lp.json'
-
-import { INFURA_URI } from '../../env.json'
 
 const useFarmTotalValue = (farm, priceData) => {
   const bao = useBao()
+  const web3 = useMainnetWeb3()
   const [totalValue, setTotalValue] = useState(-1)
 
   const fetchLPValue = useCallback(async () => {
     if (priceData !== -1) {
-      const web3 = new Web3(new Web3.providers.HttpProvider(INFURA_URI))
       const lpContract = farm.poolType && farm.poolType === 'sushi' ?
         new web3.eth.Contract(lpAbi, farm.lpTokenAddressMainnet) :
         farm.lpContract
@@ -42,17 +39,13 @@ const useFarmTotalValue = (farm, priceData) => {
                         balance: reserves["_reserve0"] / (10 ** parseInt(decimals0)),
                         decimals: decimals0,
                         symbol: symbol0,
-                        id: symbol0.toLowerCase() === 'bao.cx' ?
-                          'bao-finance' : symbol0.toLowerCase() === 'wxdai' ? 'xdai' :
-                          _.findWhere(cgList, { symbol: symbol0.toLowerCase() }).id
+                        id: _.findWhere(cgList, { symbol: symbol0.toLowerCase() }).id
                       },
                       {
                         balance: reserves["_reserve1"] / (10 ** parseInt(decimals1)),
                         decimals: decimals1,
                         symbol: symbol1,
-                        id: symbol1.toLowerCase() === 'bao.cx' ?
-                          'bao-finance' : symbol1.toLowerCase() === 'wxdai' ? 'xdai' :
-                          _.findWhere(cgList, { symbol: symbol1.toLowerCase() }).id
+                        id: _.findWhere(cgList, { symbol: symbol1.toLowerCase() }).id
                       }
                     ]
 

@@ -6,20 +6,18 @@ import useAllStakedValue from './useAllStakedValue'
 import useAllStakedBalance from './useAllStakedBalance'
 
 import useBao from './useBao'
+import useMainnetWeb3 from './useMainnet'
 import usePriceData from './usePriceData'
+
 import { getFarms } from '../lib/bao/utils'
 
 import cgList from '../lib/cg-list.json'
 
-import Web3 from 'web3'
 import erc20Abi from '../lib/bao/lib/abi/erc20.json'
 import lpAbi from '../lib/bao/lib/abi/uni_v2_lp.json'
 
-import { INFURA_URI } from '../../env.json'
-
-const fetchPoolTotalValue = async (farm, priceData, cb) => {
+const fetchPoolTotalValue = async (web3, farm, priceData, cb) => {
   if (priceData !== -1) {
-    const web3 = new Web3(new Web3.providers.HttpProvider(INFURA_URI))
     const lpContract = farm.poolType && farm.poolType === 'sushi' ?
       new web3.eth.Contract(lpAbi, farm.lpTokenAddressMainnet) :
       farm.lpContract
@@ -42,17 +40,13 @@ const fetchPoolTotalValue = async (farm, priceData, cb) => {
                       balance: reserves["_reserve0"] / (10 ** parseInt(decimals0)),
                       decimals: decimals0,
                       symbol: symbol0,
-                      id: symbol0.toLowerCase() === 'bao.cx' ?
-                        'bao-finance' : symbol0.toLowerCase() === 'wxdai' ? 'xdai' :
-                        _.findWhere(cgList, { symbol: symbol0.toLowerCase() }).id
+                      id: _.findWhere(cgList, { symbol: symbol0.toLowerCase() }).id
                     },
                     {
                       balance: reserves["_reserve1"] / (10 ** parseInt(decimals1)),
                       decimals: decimals1,
                       symbol: symbol1,
-                      id: symbol1.toLowerCase() === 'bao.cx' ?
-                        'bao-finance' : symbol1.toLowerCase() === 'wxdai' ? 'xdai' :
-                        _.findWhere(cgList, { symbol: symbol1.toLowerCase() }).id
+                      id: _.findWhere(cgList, { symbol: symbol1.toLowerCase() }).id
                     }
                   ]
 
@@ -88,6 +82,7 @@ const useLPTotalUSDValue = () => {
   const stakedBalances = useAllStakedBalance()
 
   const bao = useBao()
+  const web3 = useMainnetWeb3()
   let farms = getFarms(bao)
   const priceData = usePriceData(farms)
 
@@ -106,7 +101,7 @@ const useLPTotalUSDValue = () => {
 
         stakedPools.forEach((farm, i) => {
           promises.push(new Promise((resolve, reject) => {
-            fetchPoolTotalValue(farm, priceData, (data) => {
+            fetchPoolTotalValue(web3, farm, priceData, (data) => {
               const stakedValue = _.findWhere(stakedValues, {pid: farm.pid})
               const totalSupply = new BigNumber(stakedValue.totalSupply).div(new BigNumber(10).pow(18))
               resolve((new BigNumber(stakedValue.staked.amount).div(new BigNumber(10).pow(18)))

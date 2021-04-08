@@ -32,6 +32,7 @@ export default function FarmCards() {
   const stakedPools = []
 
   const [searchQuery, setSearchQuery] = useState('')
+  const [activeTab, setActiveTab] = useState('currently-staked')
 
   farms.forEach((farm, i) => {
     if (stakedValue[i] && stakedBalances[i] > 0) {
@@ -102,7 +103,12 @@ export default function FarmCards() {
         </Form.Group>
       </Form>
       <center>
-        <Tabs defaultActiveKey="bao-lp" id="pool-tabs">
+        <Tabs
+          defaultActiveKey="currently-staked"
+          activeKey={activeTab}
+          id="pool-tabs"
+          onSelect={key => setActiveTab(key)}
+        >
           <Tab eventKey="bao-lp"
             title={(
               <>
@@ -114,7 +120,8 @@ export default function FarmCards() {
               </>
             )}
           >
-            <div className="row">{renderLPPools('BAOLP', searchQuery)}</div>
+            {activeTab === 'bao-lp' &&
+              <div className="row">{renderLPPools('BAOLP', searchQuery)}</div>}
           </Tab>
           <Tab eventKey="sushi-lp"
             title={(
@@ -127,7 +134,8 @@ export default function FarmCards() {
               </>
             )}
           >
-            <div className="row">{renderLPPools('SUSHILP', searchQuery)}</div>
+            {activeTab === 'sushi-lp' &&
+              <div className="row">{renderLPPools('SUSHILP', searchQuery)}</div>}
           </Tab>
           <Tab eventKey="currently-staked"
             title={(
@@ -136,7 +144,8 @@ export default function FarmCards() {
               </>
             )}
           >
-            <div className="row">{renderLPPools('STAKED', searchQuery)}</div>
+            {activeTab === 'currently-staked' &&
+              <div className="row">{renderLPPools('STAKED', searchQuery)}</div>}
           </Tab>
         </Tabs>
       </center>
