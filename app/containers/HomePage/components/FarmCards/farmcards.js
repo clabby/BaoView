@@ -140,7 +140,7 @@ export default function FarmCards() {
           <Tab eventKey="currently-staked"
             title={(
               <>
-                Currently Staked {stakedValue.length > 0 && <Badge variant="info">{stakedPools.length}</Badge>}
+                🧑‍🌾 Currently Staked {stakedValue.length > 0 && <Badge variant="info">{stakedPools.length}</Badge>}
               </>
             )}
           >

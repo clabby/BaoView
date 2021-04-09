@@ -247,11 +247,11 @@ export default function FarmCard(props) {
                 {roi.apy === -1
                   ? '...'
                   : `${roi.apw.toNumber().toFixed(2)}%`}
-                {' / '}
+                <span style={{color: '#b5b5b5', float: 'none'}}> / </span>
                 {roi.apm === -1
                   ? '...'
                   : `${roi.apm.toNumber().toFixed(2)}%`}
-                {' / '}
+                <span style={{color: '#b5b5b5', float: 'none'}}> / </span>
                 {roi.apw === -1
                   ? '...'
                   : `${roi.apy.toNumber().toFixed(2)}%`}

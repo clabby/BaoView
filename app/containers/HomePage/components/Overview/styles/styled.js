@@ -96,7 +96,7 @@ export const OverviewHeading = ({mainnet, xdai}) => {
   return (
     <>
       <h1>
-        <FontAwesomeIcon icon={['fas', 'file-invoice-dollar']} /> Overview
+        💸 Overview
         <small style={{float: 'right', fontSize: '40%'}}>
           <Badge variant={mainnet ? 'success' : 'danger'}>
             <FontAwesomeIcon icon={['fas', 'wifi']} />{' '}
