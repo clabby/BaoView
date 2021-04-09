@@ -18,7 +18,10 @@ import {
   Accordion,
   Spinner
 } from 'react-bootstrap'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import SushiIcon from '../../../../images/sushiswap.png'
+import BaoIcon from '../../../../images/favicon-32x32.png'
 
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle'
 import useStakedBalance from '../../../../hooks/useStakedBalance'
@@ -179,11 +182,31 @@ export default function FarmCard(props) {
     <div className="col-4">
       <Card style={{ width: '18rem' }}>
         <Card.Header>
-          <div variant="top" className={`${pool.icon.split('/')[1].split('.')[0]} pool-icon`} />
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip>{pool.name}</Tooltip>}
+          >
+            <div variant="top" className={`${pool.icon.split('/')[1].split('.')[0]} pool-icon`} />
+          </OverlayTrigger>
           <Card.Title>
             {pool.name}
             <br />
-            <small>{pool.lpToken}</small>
+            <small className="mt-2 mb-2">
+              {(pool.poolType && pool.poolType === 'sushi') ? (
+                <Badge style={{backgroundColor: '#ee57a3'}}>
+                  <img src={SushiIcon} style={{height: '1em'}}></img>
+                  {' '}
+                  SUSHI LP
+                </Badge>
+              ) : (
+                <Badge variant="warning">
+                  <img src={BaoIcon} style={{height: '1em'}}></img>
+                  {' '}
+                  BAO LP
+                </Badge>
+              )}
+            </small>
+            <small>{pool.lpToken.split(' ')[0]}</small>
             <Button variant="info" href={'/pool-metrics/' + pool.pid} className="mt-2">
               <FontAwesomeIcon icon={['fa', 'chart-line']} /> Pool Metrics
             </Button>

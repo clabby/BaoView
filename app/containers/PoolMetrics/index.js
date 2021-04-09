@@ -53,7 +53,7 @@ export default function PoolMetrics(_params) {
           <hr/>
           <b>NOTICE:</b>
           <br/>
-          The timeseries data collection program is miscalculating APY at the moment. Please refer to the cards on the homepage for a more precise ROI estimation. Apologies, a fix is on the way!
+          The timeseries data collection program is miscalculating APY at the moment for Bao LPs and not tracking Sushi LPs all together. Please refer to the cards on the homepage for a more precise ROI estimation. Apologies, a fix is on the way!
         </AlertInfo>
         {ethereum.status !== 'connected' ? (
           <h1>Please connect your wallet to view Pool Metrics.</h1>

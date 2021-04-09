@@ -90,6 +90,10 @@
   .card-title {
     font-size: 28px;
     margin-bottom: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inherit;
 
     small {
       font-size: 16px;
