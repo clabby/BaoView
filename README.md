@@ -1,6 +1,6 @@
 # Bao View
 
-![BaoViewPreview](https://i.imgur.com/qUVOnVd.png)
+![BaoViewPreview](https://i.imgur.com/9MN3ynX.png)
 
 Bao View is a web-facing React application that gives users both general analytics and a more in-depth view of their staked value in liquidity pools on [Bao Finance](https://bao.finance).
 
