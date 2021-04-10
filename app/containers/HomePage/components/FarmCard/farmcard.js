@@ -19,6 +19,10 @@ import {
   Spinner
 } from 'react-bootstrap'
 
+import {
+  QuestionIcon
+} from '../Overview/styles/styled'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SushiIcon from '../../../../images/sushiswap.png'
 import BaoIcon from '../../../../images/favicon-32x32.png'
@@ -236,6 +240,17 @@ export default function FarmCard(props) {
               {pendingBao === -1
                 ? <Loading />
                 : getBalanceNumber(pendingBao)}
+            </span>
+          </ListGroup.Item>
+          <ListGroup.Item>
+            Bao.cx / day{' '}
+            <QuestionIcon title={'Estimated Bao.cx per day based off of your staked LP and current APY for ' + pool.lpToken} />
+            <span>
+              {roi === -1 || lpValueUSD === -1 || baoPrice === -1
+                ? <Loading />
+                : getBalanceNumber(new BigNumber(lpValueUSD)
+                  .div(new BigNumber(baoPrice))
+                  .times(roi.apw.div(7).div(100)), 0)}
             </span>
           </ListGroup.Item>
           <PoolData pid={pool.pid} />
