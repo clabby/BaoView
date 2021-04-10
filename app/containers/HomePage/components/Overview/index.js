@@ -88,8 +88,7 @@ export default function Overview() {
               <Badge variant="secondary"><Loading /></Badge>
             ) : (
               <span>
-
-                {`${getDisplayBalance(lockedEarnings)} BaoCx`}
+                <b>{getDisplayBalance(lockedEarnings)} Bao.cx</b>
                 <br/>
                 <Badge variant="success">
                   $
@@ -128,7 +127,16 @@ export default function Overview() {
             {(sumEarning === -1 || baoPrice === -1) && (<Badge variant="secondary"><Loading /></Badge>)}
             {baoPrice !== -1 && sumEarning >= 0 && (
               <span>
-                {getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx
+                <b>{getDisplayBalance(new BigNumber(sumEarning), 0)} Bao.cx</b>
+                {' '}
+                <OverlayTrigger
+                  overlay={<Tooltip>Harvest with one click on xdai.farms</Tooltip>}
+                  placement="top"
+                >
+                  <a href="https://xdai.farm/#/chef">
+                    <FontAwesomeIcon icon={['fas', 'external-link-alt']} />
+                  </a>
+                </OverlayTrigger>
                 <br />
                 <Badge variant="success">
                   ${getDisplayBalance(new BigNumber(baoPrice * sumEarning), 0)} |{' '}
@@ -179,7 +187,7 @@ export default function Overview() {
       <OverviewContainer>
         <OverviewStats>
           <OverviewCol>
-            Total Locked <img src={BaoIcon} style={{height: '1em'}}></img> LP
+            All Locked <img src={BaoIcon} style={{height: '1em'}}></img> LP
             {' '}
             <QuestionIcon title="Total locked value in Bao LPs on Bao Finance (xDai only)" />
             <br />
@@ -188,14 +196,14 @@ export default function Overview() {
             </Badge>
           </OverviewCol>
           <OverviewCol>
-            Total Locked <QuestionIcon title="Total locked value in Bao LPs and Sushi LPs on Bao Finance (xDai only)" />
+            All Locked LP <QuestionIcon title="Total locked value in Bao LPs and Sushi LPs on Bao Finance (xDai only)" />
             <br />
             <Badge variant={totalLocked === -1 ? 'secondary' : 'info'}>
               {totalLocked === -1 ? <Loading /> : '$' + getDisplayBalance(new BigNumber(totalLocked.sushiLPTvlUsd + totalLocked.baoLPTvlUsd), 0)}
             </Badge>
           </OverviewCol>
           <OverviewCol>
-            Total Locked <img src={SushiIcon} style={{height: '1em'}}></img> LP
+            All Locked <img src={SushiIcon} style={{height: '1em'}}></img> LP
             {' '}
             <QuestionIcon title="Total locked value in Sushi LPs on Bao Finance (xDai only)" />
             <br />
