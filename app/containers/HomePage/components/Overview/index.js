@@ -22,6 +22,11 @@ import useMainnetWeb3 from '../../../../hooks/useMainnet'
 
 import { getDisplayBalance } from '../../../../lib/formatBalance'
 
+import useAllFarmTVL from '../../../../hooks/useAllFarmTVL'
+
+import SushiIcon from '../../../../images/sushiswap.png'
+import BaoIcon from '../../../../images/favicon-32x32.png'
+
 export default function Overview() {
   const earnings = useAllEarnings()
   const lockedEarnings = useLockedEarnings()
@@ -29,6 +34,8 @@ export default function Overview() {
 
   const bao = useBao()
   const web3 = useMainnetWeb3()
+
+  const totalLocked = useAllFarmTVL()
 
   const [baoPrice, setBaoPrice] = useState(-1)
   const [ethPrice, setEthPrice] = useState(-1)
@@ -67,106 +74,137 @@ export default function Overview() {
   }
 
   return (
-    <OverviewContainer>
-      <OverviewHeading
-        mainnet={web3.currentProvider.connected}
-        xdai={bao.web3.currentProvider.isConnected()}
-      />
-      <OverviewStats>
-        <OverviewCol>
-          Total Locked Bao
-          <br/>
-          {(lockedEarnings <= 0 || baoPrice === -1 || daiPrice === -1) ? (
-            <Badge variant="secondary"><Loading /></Badge>
-          ) : (
-            <span>
+    <>
+      <OverviewContainer>
+        <OverviewHeading
+          mainnet={web3.currentProvider.connected}
+          xdai={bao.web3.currentProvider.isConnected()}
+        />
+        <OverviewStats>
+          <OverviewCol>
+            Total Locked Bao
+            <br/>
+            {(lockedEarnings <= 0 || baoPrice === -1 || daiPrice === -1) ? (
+              <Badge variant="secondary"><Loading /></Badge>
+            ) : (
+              <span>
 
-              {`${getDisplayBalance(lockedEarnings)} BaoCx`}
-              <br/>
-              <Badge variant="success">
-                $
-                {getDisplayBalance(
-                  new BigNumber(
-                    baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)),
-                  ),
-                  0,
-                )}
-                {` | ${getDisplayBalance(
-                  new BigNumber(baoPrice)
-                    .times(lockedEarnings.div(new BigNumber(10).pow(18)))
-                    .div(new BigNumber(daiPrice)),
-                  0,
-                )} DAI`}
-              </Badge>
-            </span>
-          )}
-        </OverviewCol>
-        <OverviewCol>
-          Total Value of LP Staked
-          <br/>
-          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
-            {(lpTotalUSDValue === -1 || daiPrice === -1) ? <Loading /> : (
-              <>
-                ${getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
-                {' | '}
-                {getDisplayBalance(new BigNumber(lpTotalUSDValue).div(daiPrice), 0)} DAI
-              </>
+                {`${getDisplayBalance(lockedEarnings)} BaoCx`}
+                <br/>
+                <Badge variant="success">
+                  $
+                  {getDisplayBalance(
+                    new BigNumber(
+                      baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)),
+                    ),
+                    0,
+                  )}
+                  {` | ${getDisplayBalance(
+                    new BigNumber(baoPrice)
+                      .times(lockedEarnings.div(new BigNumber(10).pow(18)))
+                      .div(new BigNumber(daiPrice)),
+                    0,
+                  )} DAI`}
+                </Badge>
+              </span>
             )}
-          </Badge>
-        </OverviewCol>
-        <OverviewCol>
-          Pending Harvest
-          <br />
-          {(sumEarning === -1 || baoPrice === -1) && (<Badge variant="secondary"><Loading /></Badge>)}
-          {baoPrice !== -1 && sumEarning >= 0 && (
-            <span>
-              {getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx
-              <br />
-              <Badge variant="success">
-                ${getDisplayBalance(new BigNumber(baoPrice * sumEarning), 0)} |{' '}
-                {`${getDisplayBalance(
-                  new BigNumber(baoPrice * sumEarning).div(daiPrice),
-                  0,
-                )} DAI`}
-              </Badge>
-            </span>
-          )}
-        </OverviewCol>
-        <OverviewCol>
-          BAO Price
-          <br />
-          <TokenPrice price={baoPrice} priceChange={baoPriceChange} rocket />
-        </OverviewCol>
-        <OverviewCol>
-          Total Value{' '}
-          <QuestionIcon title="Locked BAO + Pending Harvest + Value of LP Staked" />
-          <br/>
-          <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
-            {(lpTotalUSDValue === -1 || baoPrice === -1 || lockedEarnings <= 0)
-            ? <Loading /> : (
-              <>
-                ${getDisplayBalance(
-                  new BigNumber(
-                    lpTotalUSDValue + (baoPrice * sumEarning) +
-                    (baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)))
-                  ), 0
-                )}{' | '}
-                {getDisplayBalance(
-                  new BigNumber(
-                    lpTotalUSDValue + (baoPrice * sumEarning) +
-                    (baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)))
-                  ).div(new BigNumber(daiPrice)), 0
-                )} DAI
-              </>
+          </OverviewCol>
+          <OverviewCol>
+            Total Value of LP Staked
+            <br/>
+            <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
+              {(lpTotalUSDValue === -1 || daiPrice === -1) ? <Loading /> : (
+                <>
+                  ${getDisplayBalance(new BigNumber(lpTotalUSDValue), 0)}
+                  {' | '}
+                  {getDisplayBalance(new BigNumber(lpTotalUSDValue).div(daiPrice), 0)} DAI
+                </>
+              )}
+            </Badge>
+          </OverviewCol>
+          <OverviewCol>
+            Pending Harvest
+            <br />
+            {(sumEarning === -1 || baoPrice === -1) && (<Badge variant="secondary"><Loading /></Badge>)}
+            {baoPrice !== -1 && sumEarning >= 0 && (
+              <span>
+                {getDisplayBalance(new BigNumber(sumEarning), 0)} BaoCx
+                <br />
+                <Badge variant="success">
+                  ${getDisplayBalance(new BigNumber(baoPrice * sumEarning), 0)} |{' '}
+                  {`${getDisplayBalance(
+                    new BigNumber(baoPrice * sumEarning).div(daiPrice),
+                    0,
+                  )} DAI`}
+                </Badge>
+              </span>
             )}
-          </Badge>
-        </OverviewCol>
-        <OverviewCol>
-          ETH Price
-          <br />
-          <TokenPrice price={ethPrice} priceChange={ethPriceChange} />
-        </OverviewCol>
-      </OverviewStats>
-    </OverviewContainer>
+          </OverviewCol>
+          <OverviewCol>
+            BAO Price
+            <br />
+            <TokenPrice price={baoPrice} priceChange={baoPriceChange} rocket />
+          </OverviewCol>
+          <OverviewCol>
+            Total Value{' '}
+            <QuestionIcon title="Locked BAO + Pending Harvest + Value of LP Staked" />
+            <br/>
+            <Badge variant={lpTotalUSDValue === -1 ? 'secondary' : 'success'}>
+              {(lpTotalUSDValue === -1 || baoPrice === -1 || lockedEarnings <= 0)
+              ? <Loading /> : (
+                <>
+                  ${getDisplayBalance(
+                    new BigNumber(
+                      lpTotalUSDValue + (baoPrice * sumEarning) +
+                      (baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)))
+                    ), 0
+                  )}{' | '}
+                  {getDisplayBalance(
+                    new BigNumber(
+                      lpTotalUSDValue + (baoPrice * sumEarning) +
+                      (baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)))
+                    ).div(new BigNumber(daiPrice)), 0
+                  )} DAI
+                </>
+              )}
+            </Badge>
+          </OverviewCol>
+          <OverviewCol>
+            ETH Price
+            <br />
+            <TokenPrice price={ethPrice} priceChange={ethPriceChange} />
+          </OverviewCol>
+        </OverviewStats>
+      </OverviewContainer>
+      <OverviewContainer>
+        <OverviewStats>
+          <OverviewCol>
+            Total Locked <img src={BaoIcon} style={{height: '1em'}}></img> LP
+            {' '}
+            <QuestionIcon title="Total locked value in Bao LPs on Bao Finance (xDai only)" />
+            <br />
+            <Badge variant={totalLocked === -1 ? 'secondary' : 'warning'} style={{color: '#000'}}>
+              {totalLocked === -1 ? <Loading /> : '$' + getDisplayBalance(new BigNumber(totalLocked.baoLPTvlUsd), 0)}
+            </Badge>
+          </OverviewCol>
+          <OverviewCol>
+            Total Locked <QuestionIcon title="Total locked value in Bao LPs and Sushi LPs on Bao Finance (xDai only)" />
+            <br />
+            <Badge variant={totalLocked === -1 ? 'secondary' : 'info'}>
+              {totalLocked === -1 ? <Loading /> : '$' + getDisplayBalance(new BigNumber(totalLocked.sushiLPTvlUsd + totalLocked.baoLPTvlUsd), 0)}
+            </Badge>
+          </OverviewCol>
+          <OverviewCol>
+            Total Locked <img src={SushiIcon} style={{height: '1em'}}></img> LP
+            {' '}
+            <QuestionIcon title="Total locked value in Sushi LPs on Bao Finance (xDai only)" />
+            <br />
+            <Badge style={{backgroundColor: (totalLocked === -1 ? '#6c757d' : '#ee57a3')}}>
+              {totalLocked === -1 ? <Loading /> : '$' + getDisplayBalance(new BigNumber(totalLocked.sushiLPTvlUsd), 0)}
+            </Badge>
+          </OverviewCol>
+        </OverviewStats>
+      </OverviewContainer>
+    </>
   );
 }

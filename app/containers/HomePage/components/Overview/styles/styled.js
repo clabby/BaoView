@@ -8,8 +8,7 @@ import { OverlayTrigger, Tooltip, Badge } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const OverviewContainer = styled.div.attrs(props => ({
-  className: 'mt-4 mb-4',
-  id: 'connected'
+  className: 'mt-4 mb-4'
 }))`
   background-color: ${lighten(0.1, Colors.background)};
   border: 3px solid ${lighten(0.2, Colors.background)};

@@ -24,3 +24,4 @@
 * Add mobile support
 * Implement support for Sushi LPs on xDai [ :white_check_mark: ]
 * Implement support for Mainnet LPs (Uni & Sushi)
+* Consolidate contract calls
