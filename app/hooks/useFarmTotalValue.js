@@ -33,7 +33,6 @@ const useFarmTotalValue = (farm, priceData) => {
               token0Contract.methods.decimals().call().then(decimals0 => {
                 token1Contract.methods.symbol().call().then(symbol1 => {
                   token1Contract.methods.decimals().call().then(decimals1 => {
-
                     const tokens = [
                       {
                         balance: reserves["_reserve0"] / (10 ** parseInt(decimals0)),
@@ -48,8 +47,6 @@ const useFarmTotalValue = (farm, priceData) => {
                         id: _.findWhere(cgList, { symbol: symbol1.toLowerCase() }).id
                       }
                     ]
-
-                    if (farm.pid === 136) console.log(tokens)
 
                     const total = priceData[tokens[0].id].usd * tokens[0].balance + priceData[tokens[1].id].usd * tokens[1].balance
 

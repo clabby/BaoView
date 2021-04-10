@@ -7,6 +7,20 @@ import erc20Abi from '../lib/bao/lib/abi/erc20.json'
 
 import useBao from './useBao'
 
+const specialCasePairs = {
+  'ftt': 'ftx token',
+  'yusd': 'yydai+yusdc+yusdt+ytusd'
+}
+
+// ftt and yusd have odd token symbols
+const specialCaseCheck = (tokens) => {
+  if (tokens[0].toLowerCase() === 'ftt') tokens[0] = specialCasePairs['ftt']
+  if (tokens[1].toLowerCase() === 'ftt') tokens[1] = specialCasePairs['ftt']
+
+  if (tokens[0].toLowerCase() === 'yusd') tokens[0] = specialCasePairs['yusd']
+  if (tokens[1].toLowerCase() === 'yusd') tokens[1] = specialCasePairs['yusd']
+}
+
 const usePriceData = (farms) => {
   const [priceData, setPriceData] = useState(-1)
 
@@ -15,6 +29,7 @@ const usePriceData = (farms) => {
 
     farms.forEach((farm) => {
       const tokens = farm.id.split(' ')[0].split('-')
+      specialCaseCheck(tokens)
       const a = _.findWhere(cgList, {symbol: tokens[0].toLowerCase()})
       const b = _.findWhere(cgList, {symbol: tokens[1].toLowerCase()})
 
