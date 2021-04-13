@@ -25,7 +25,7 @@ import { getDisplayBalance } from '../../../../lib/formatBalance'
 import useAllFarmTVL from '../../../../hooks/useAllFarmTVL'
 
 import SushiIcon from '../../../../images/sushiswap.png'
-import BaoIcon from '../../../../images/favicon-32x32.png'
+import BaoIcon from '../../../../images/baologo.png'
 
 export default function Overview() {
   const earnings = useAllEarnings()
@@ -130,7 +130,7 @@ export default function Overview() {
                 <b>{getDisplayBalance(new BigNumber(sumEarning), 0)} Bao.cx</b>
                 {' '}
                 <OverlayTrigger
-                  overlay={<Tooltip>Harvest with one click on xdai.farms</Tooltip>}
+                  overlay={<Tooltip>Harvest with one click on xdai.farm</Tooltip>}
                   placement="top"
                 >
                   <a href="https://xdai.farm/#/chef">

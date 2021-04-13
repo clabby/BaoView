@@ -3,7 +3,9 @@ import { isMobile } from 'react-device-detect';
 
 import {
   NotConnectedContainer,
-  NotConnectedContent
+  NotConnectedContent,
+  WelcomeTitle,
+  BaoViewLogo
 } from './styles/styled'
 
 export default function NotConnected() {
@@ -12,10 +14,10 @@ export default function NotConnected() {
       <NotConnectedContent>
         <h1 className="sunglasses">
           <span role="img" aria-label="BaoBoi">
-            😎🍱
+            <BaoViewLogo /> 🍱
           </span>
         </h1>
-        <h1>Welcome to Bao View!</h1>
+        <WelcomeTitle>Welcome to Bao View!</WelcomeTitle>
         <hr />
         {isMobile ? (
           <small>

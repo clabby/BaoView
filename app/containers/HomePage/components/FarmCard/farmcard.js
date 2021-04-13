@@ -25,7 +25,7 @@ import {
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SushiIcon from '../../../../images/sushiswap.png'
-import BaoIcon from '../../../../images/favicon-32x32.png'
+import BaoIcon from '../../../../images/baologo.png'
 
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle'
 import useStakedBalance from '../../../../hooks/useStakedBalance'

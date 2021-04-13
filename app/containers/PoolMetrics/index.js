@@ -2,7 +2,7 @@
  * Pool Metrics Page
  */
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import _ from 'underscore'
@@ -19,10 +19,12 @@ import { getFarms } from '../../lib/bao/utils'
 import {
   PoolMetricsContainer,
   PoolMetricsContent,
-  AlertInfo
+  AlertInfo,
+  PoolTitle,
+  PoolSubtitle
 } from './styles/styled'
 
-import YieldChad from '../../images/yieldchadbao.png'
+import '../HomePage/styles/poolicons.scss'
 
 export default function PoolMetrics(_params) {
   const params = _params.match.params
@@ -32,52 +34,67 @@ export default function PoolMetrics(_params) {
   const bao = useBao()
   const farms = getFarms(bao)
 
+  useEffect(() => {
+    if (ethereum && ethereum.status !== 'connected') ethereum.connect()
+  }, [])
+
   let farm
   if (farms.length > 0) farm = _.findWhere(farms, { pid: parseInt(pid) })
 
   return (
     <PoolMetricsContainer>
       <PoolMetricsContent>
-        <h2>Page Under Renovation 🚧</h2>
-        <br />
-        <img src={YieldChad} height="400px" style={{borderRadius: '30px'}} />
+        {ethereum.status !== 'connected' ? (
+          <h1>Connect your wallet to view Pool Metrics!</h1>
+        ) : farms.length === 0 ? (
+          <h1>Loading...</h1>
+        ) : farm === undefined ? (
+          window.location.href = '/404'
+        ) : (
+          <>
+            <Alert variant="warning">
+              <Badge variant="warning">DISCLAIMER</Badge>
+              <br />
+              The data displayed is collected by a college student.
+              <br />
+              This resource is for educational purposes only.
+              Please do not use this data for financial decisions as there may be discrepancies.
+            </Alert>
+            <AlertInfo>
+              <Badge variant="info">INFO</Badge>
+              <br />
+              <b>APY</b> is calculated using the following formula:
+              <br />
+              <b>((bao_price_usd * rewards_per_block * blocks_per_year) / (total_value_locked_usd)) * 100.0</b>
+              <hr />
+              <b>bao_price_usd</b> is provided by CoinGecko, <b>rewards_per_block</b> is received from the master farmer contract,{' '}
+              <b>blocks_per_year</b> is constant at <code>6311390</code> for xDai, and <b>total_value_locked_usd</b> is received from the LP contract.
+            </AlertInfo>
+            <h1 className="mt-4 mb-4">
+              <div className={'pool-icon ' + farm.icon.split('/')[1].split('.')[0]} />
+              <PoolTitle>
+                {farm.name}
+                <br />
+                <PoolSubtitle>
+                  <Badge variant="secondary">
+                    {farm.id}
+                  </Badge>
+                </PoolSubtitle>
+                <br/>
+                <PoolSubtitle>
+                  Pool Metrics{' '}
+                  <FontAwesomeIcon icon={['fas', 'chart-line']} />
+                </PoolSubtitle>
+              </PoolTitle>
+            </h1>
+            <CandleStickChart title="Pool APY (%)" pid={pid} />
+            <hr />
+            <CandleStickChart title="Total Value Locked (USD)" pid={pid} />
+            <hr />
+            <CandleStickChart title="Bao.cx yield per day, per $1000 staked" pid={pid} />
+          </>
+        )}
       </PoolMetricsContent>
     </PoolMetricsContainer>
   )
-  /*
-  <Alert variant="warning">
-    <Badge variant="warning">DISCLAIMER</Badge>
-    <br/>
-    The data displayed is collected by a college student.
-    <br/>
-    This resource is for educational purposes only.
-    Please do not use this data for financial decisions as there may be discrepancies.
-  </Alert>
-  <AlertInfo>
-    <Badge variant="info">INFO</Badge>
-    <br/>
-    Total Pool Value is provided by BlockScout, while APY is calculated using the following formula:
-    <br/>
-    <b>((bao_price_usd * bao_per_block * blocks_per_year * pool_weight) / (total_pool_value_usd)) * 100.0</b>
-    <hr/>
-    <b>NOTICE:</b>
-    <br/>
-    The timeseries data collection program is miscalculating APY at the moment for Bao LPs and not tracking Sushi LPs all together. Please refer to the cards on the homepage for a more precise ROI estimation. Apologies, a fix is on the way!
-  </AlertInfo>
-  {ethereum.status !== 'connected' ? (
-    <h1>Please connect your wallet to view Pool Metrics.</h1>
-  ) : farms.length === 0 ? (
-    <h1>Loading...</h1>
-  ) : farm === undefined ? (
-    window.location.href = '/404'
-  ) : (
-    <div>
-      <h1>{farm.name} Pool Metrics</h1>
-      <hr />
-      <CandleStickChart title="Pool APY (%)" pid={pid} />
-      <hr />
-      <CandleStickChart title="Total Pool Value (USD)" pid={pid} />
-    </div>
-  )}
-  */
 }
