@@ -10,26 +10,24 @@ export default function Overview(props) {
   const { price } = props;
   const { priceChange } = props;
 
-  const Loading = () => {
-    return (
-      <Spinner animation="border" size="sm" />
-    )
-  }
+  const Loading = () => <Spinner animation="border" size="sm" />;
 
   return (
     <OverlayTrigger
       placement="top"
       overlay={
         <Tooltip>
-          {priceChange === 'secondary'
-            ? <Loading />
-            : `${(parseFloat(priceChange) >= 0 ? 'Up ' : 'Down ') +
-                +(parseFloat(priceChange)).toFixed(3)}% in the last 24h`
-          }
+          {priceChange === 'secondary' ? (
+            <Loading />
+          ) : (
+            `${(parseFloat(priceChange) >= 0 ? 'Up ' : 'Down ') +
+              parseFloat(priceChange).toFixed(3)}% in the last 24h`
+          )}
         </Tooltip>
       }
     >
       <Badge
+        /* eslint-disable */
         variant={
           priceChange === 'secondary'
             ? priceChange
@@ -45,9 +43,11 @@ export default function Overview(props) {
         ) : (
           ''
         )}
-        {price === -1
-          ? <Loading />
-          : `$${getDisplayBalance(new BigNumber(price), 0)}`}
+        {price === -1 ? (
+          <Loading />
+        ) : (
+          `$${getDisplayBalance(new BigNumber(price), 0)}`
+        )}
       </Badge>
     </OverlayTrigger>
   );

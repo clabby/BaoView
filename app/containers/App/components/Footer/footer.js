@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, Nav, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Nav, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {
-  FooterContainer,
-  HeartIcon
-} from './styles/styled';
+import { FooterContainer, HeartIcon } from './styles/styled';
 
 export default function Footer() {
   function CopyOnClick(props) {
@@ -46,8 +43,7 @@ export default function Footer() {
       <Nav className="justify-content-center" activeKey="/home">
         <Nav.Item>
           <Nav.Link eventKey="link-gh" href="#">
-            Buit with{' '}
-            <HeartIcon />
+            Built with <HeartIcon />
             {' by '}
             <CopyOnClick discord="vex#9406" tag="vex" />
           </Nav.Link>
@@ -69,9 +65,4 @@ export default function Footer() {
       </Nav>
     </FooterContainer>
   );
-
-  /*
-  Unused GitHub link
-
-  */
 }

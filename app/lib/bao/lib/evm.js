@@ -106,18 +106,18 @@ export class EVM {
   }
 
   // Helper function
-  assertCertainError(error, expected_error_msg) {
+  assertCertainError(error, expectedErrorMsg) {
     // This complication is so that the actual error will appear in truffle test output
     const { message } = error;
-    const matchedIndex = message.search(expected_error_msg);
+    const matchedIndex = message.search(expectedErrorMsg);
     let matchedString = message;
     if (matchedIndex === 0) {
       matchedString = message.substring(
         matchedIndex,
-        matchedIndex + expected_error_msg.length,
+        matchedIndex + expectedErrorMsg.length,
       );
     }
-    expect(matchedString).toEqual(expected_error_msg);
+    expect(matchedString).toEqual(expectedErrorMsg);
   }
 
   // For solidity function calls that violate require()

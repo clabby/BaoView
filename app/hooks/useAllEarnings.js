@@ -1,35 +1,34 @@
-import { useCallback, useEffect, useState, useMemo } from 'react'
+import { useCallback, useState, useMemo } from 'react';
 
-import BigNumber from 'bignumber.js'
-import { useWallet } from 'use-wallet'
+import { useWallet } from 'use-wallet';
 
-import { getEarned, getMasterChefContract, getFarms } from '../lib/bao/utils'
-import useBao from './useBao'
-import useBlock from './useBlock'
+import { getEarned, getMasterChefContract, getFarms } from '../lib/bao/utils';
+import useBao from './useBao';
+import useBlock from './useBlock';
 
 const useAllEarnings = () => {
-  const [balances, setBalance] = useState([])
-  const ethereum = useWallet()
-  const { account } = ethereum
-  const bao = useBao()
-  const farms = getFarms(bao)
-  const block = useBlock()
-  const masterChefContract = getMasterChefContract(bao)
+  const [earnings, setEarnings] = useState([]);
+  const ethereum = useWallet();
+  const { account } = ethereum;
+  const bao = useBao();
+  const farms = getFarms(bao);
+  const block = useBlock();
+  const masterChefContract = getMasterChefContract(bao);
 
-  const fetchAllBalances = useCallback(async () => {
-    const balances = await Promise.all(
+  const fetchAllEarnings = useCallback(async () => {
+    const fetchedEarnings = await Promise.all(
       farms.map(({ pid }) => getEarned(masterChefContract, pid, account)),
-    )
-    setBalance(balances)
-  }, [account, masterChefContract, bao])
+    );
+    setEarnings(fetchedEarnings);
+  }, [account, masterChefContract, bao]);
 
   useMemo(() => {
     if (account && masterChefContract && bao) {
-      fetchAllBalances()
+      fetchAllEarnings();
     }
-  }, [account, masterChefContract, block, setBalance, bao])
+  }, [account, masterChefContract, block, setEarnings, bao]);
 
-  return balances
-}
+  return earnings;
+};
 
-export default useAllEarnings
+export default useAllEarnings;

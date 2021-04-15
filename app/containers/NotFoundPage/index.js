@@ -5,12 +5,9 @@
  *
  */
 
-import React from 'react'
+import React from 'react';
 
-import {
-  NotFoundContainer,
-  NotFoundContent
-} from './styles/styled'
+import { NotFoundContainer, NotFoundContent } from './styles/styled';
 
 export default function NotFound() {
   return (

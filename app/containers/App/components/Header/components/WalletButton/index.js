@@ -1,18 +1,17 @@
 import React from 'react';
 import useWallet from 'use-wallet';
 
-import { Button, ButtonGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { ButtonGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Identicon from '../Identicon/Loadable';
 
-import { WButton } from './styles/styled'
+import { WButton } from './styles/styled';
 
-function shortenWallet(wallet) {
-  return `${wallet.substring(0, 6)}.....${wallet.substring(
+const shortenWallet = wallet =>
+  `${wallet.substring(0, 6)}.....${wallet.substring(
     wallet.length - 4,
     wallet.length,
   )}`;
-}
 
 export default function WalletButton() {
   const wallet = useWallet();
@@ -41,6 +40,7 @@ export default function WalletButton() {
       </WButton>
     );
   }
+
   if (wallet.status === 'connected') {
     return (
       <ButtonGroup>
@@ -51,9 +51,7 @@ export default function WalletButton() {
           <WButton>
             <span>
               <Identicon style={{ display: 'inline' }} />
-              <span className="ml-2">
-                {shortenWallet(wallet.account)}
-              </span>
+              <span className="ml-2">{shortenWallet(wallet.account)}</span>
             </span>
           </WButton>
         </OverlayTrigger>
@@ -68,6 +66,7 @@ export default function WalletButton() {
       </ButtonGroup>
     );
   }
+
   return (
     <WButton onClick={() => wallet.connect()}>
       <FontAwesomeIcon icon={['fa', 'plug']} />

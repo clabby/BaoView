@@ -1,11 +1,10 @@
-import React from 'react'
+import styled from 'styled-components';
+import { darken } from 'polished';
 
-import styled from 'styled-components'
-import { darken } from 'polished'
-import { Colors } from '../../../styles/colors'
+import { Container } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { Container } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Colors } from '../../../styles/colors';
 
 export const FooterContainer = styled(Container)`
   margin-top: 150px;
@@ -35,10 +34,10 @@ export const FooterContainer = styled(Container)`
       align-items: flex-end;
     }
   }
-`
+`;
 
 export const HeartIcon = styled(FontAwesomeIcon).attrs({
-  icon: ['fa', 'heart']
+  icon: ['fa', 'heart'],
 })`
-  color: #d25b55
-`
+  color: #d25b55;
+`;

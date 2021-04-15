@@ -1,24 +1,10 @@
 import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
-import { supportedPools } from './lib/constants';
-
-import erc20Abi from './lib/abi/erc20.json';
-
-import _ from 'underscore';
-
-import { getBalanceNumber } from '../formatBalance';
 
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
   DECIMAL_PLACES: 80,
 });
-
-const GAS_LIMIT = {
-  STAKING: {
-    DEFAULT: 200000,
-    SNX: 850000,
-  },
-};
 
 export const getMasterChefAddress = bao => bao && bao.masterChefAddress;
 
@@ -38,6 +24,7 @@ export const getBaoPriceContract = bao =>
 
 export const getMasterChefContract = bao =>
   bao && bao.contracts && bao.contracts.masterChef;
+
 export const getBaoContract = bao => bao && bao.contracts && bao.contracts.bao;
 
 export const getFarms = bao =>
@@ -101,7 +88,7 @@ export const getTotalLPWethValue = async (
   tokenContract,
   tokenDecimals,
   pid,
-  account
+  account,
 ) => {
   const [
     tokenAmountWholeLP,
@@ -109,19 +96,14 @@ export const getTotalLPWethValue = async (
     totalSupply,
     lpContractWeth,
     poolWeight,
-    farms,
     staked,
-    reserves,
-    token0,
-    token1
   ] = await Promise.all([
     tokenContract.methods.balanceOf(lpContract.options.address).call(),
     lpContract.methods.balanceOf(masterChefContract.options.address).call(),
     lpContract.methods.totalSupply().call(),
     wethContract.methods.balanceOf(lpContract.options.address).call(),
     getPoolWeight(masterChefContract, pid),
-    getFarms(bao),
-    masterChefContract.methods.userInfo(pid, account).call()
+    masterChefContract.methods.userInfo(pid, account).call(),
   ]);
 
   // Return p1 * w1 * 2
@@ -135,16 +117,16 @@ export const getTotalLPWethValue = async (
 
   const wethAmount = new BigNumber(lpContractWeth)
     .times(portionLp)
-  .div(new BigNumber(10).pow(18));
+    .div(new BigNumber(10).pow(18));
 
   return {
     tokenAmount,
     wethAmount,
-    pid: pid,
-    totalSupply: totalSupply,
+    pid,
+    totalSupply,
     totalWethValue: totalLpWethValue.div(new BigNumber(10).pow(18)),
     tokenPriceInWeth: wethAmount.div(tokenAmount),
-    staked: staked,
+    staked,
     poolWeight,
   };
 };
@@ -165,6 +147,14 @@ export const getStaked = async (masterChefContract, pid, account) => {
   }
 };
 
+export const getUserInfo = async (masterChefContract, pid, account) =>
+  new Promise(async resolve => {
+    const userInfo = await masterChefContract.methods
+      .userInfo(pid, account)
+      .call();
+    resolve(userInfo);
+  });
+
 export const getWethPrice = async bao => {
   const amount = await bao.contracts.wethPrice.methods.latestAnswer().call();
   return new BigNumber(amount);
@@ -182,18 +172,9 @@ export const getBaoSupply = async bao =>
   new BigNumber(await bao.contracts.bao.methods.totalSupply().call());
 
 export const getReferrals = async (masterChefContract, account) =>
-  await masterChefContract.methods.getGlobalRefAmount(account).call();
-
-export const redeem = async (masterChefContract, account) => {
-  const now = new Date().getTime() / 1000;
-  if (now >= 1597172400) {
-    return masterChefContract.methods
-      .exit()
-      .send({ from: account })
-      .on('transactionHash', tx => {
-        console.log(tx);
-        return tx.transactionHash;
-      });
-  }
-  alert('pool not active');
-};
+  new Promise(async resolve => {
+    const refAmount = await masterChefContract.methods
+      .getGlobalRefAmount(account)
+      .call();
+    resolve(refAmount);
+  });

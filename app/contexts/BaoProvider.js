@@ -2,14 +2,14 @@ import React, { createContext, useEffect, useState } from 'react';
 
 import { useWallet } from 'use-wallet';
 
-import { Bao } from '../lib/bao';
 import Web3 from 'web3';
+import { Bao } from '../lib/bao';
 
-import { INFURA_URI } from '../../env.json'
+import { INFURA_URI } from '../../env.json';
 
 export const Context = createContext({
   bao: undefined,
-  mainnet: undefined
+  mainnet: undefined,
 });
 
 const BaoProvider = ({ children }) => {
@@ -34,12 +34,14 @@ const BaoProvider = ({ children }) => {
         ethereumNodeTimeout: 10000,
       });
       setBao(baoLib);
-      setMainnet(new Web3(new Web3.providers.HttpProvider(INFURA_URI)))
+      setMainnet(new Web3(new Web3.providers.HttpProvider(INFURA_URI)));
       window.baosauce = baoLib;
     }
   }, [ethereum]);
 
-  return <Context.Provider value={{ bao, mainnet }}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={{ bao, mainnet }}>{children}</Context.Provider>
+  );
 };
 
 export default BaoProvider;

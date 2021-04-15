@@ -1,31 +1,26 @@
-import { useCallback, useEffect, useState, useMemo } from 'react'
-import { provider } from 'web3-core'
+import { useCallback, useState, useMemo } from 'react';
 
-import BigNumber from 'bignumber.js'
-import { useWallet } from 'use-wallet'
-import { Contract } from 'web3-eth-contract'
+import { useWallet } from 'use-wallet';
 
 import {
   getMasterChefContract,
   getWethContract,
   getFarms,
   getTotalLPWethValue,
-} from '../lib/bao/utils'
-import useBao from './useBao'
-import useBlock from './useBlock'
+} from '../lib/bao/utils';
+import useBao from './useBao';
 
 const useAllStakedValue = () => {
-  const [balances, setBalance] = useState([])
-  const ethereum = useWallet()
-  const { account } = ethereum
-  const bao = useBao()
-  const farms = getFarms(bao)
-  const masterChefContract = getMasterChefContract(bao)
-  const wethContract = getWethContract(bao)
-  const block = useBlock()
+  const [allStakedValue, setAllStakedValue] = useState([]);
+  const ethereum = useWallet();
+  const { account } = ethereum;
+  const bao = useBao();
+  const farms = getFarms(bao);
+  const masterChefContract = getMasterChefContract(bao);
+  const wethContract = getWethContract(bao);
 
   const fetchAllStakedValue = useCallback(async () => {
-    const balances = await Promise.all(
+    const stakedValue = await Promise.all(
       farms.map(({ pid, lpContract, tokenContract, tokenDecimals }) =>
         getTotalLPWethValue(
           bao,
@@ -35,21 +30,20 @@ const useAllStakedValue = () => {
           tokenContract,
           tokenDecimals,
           pid,
-          account
+          account,
         ),
       ),
-    )
-
-    setBalance(balances)
-  }, [account, masterChefContract, bao])
+    );
+    setAllStakedValue(stakedValue);
+  }, [account, masterChefContract, bao]);
 
   useMemo(() => {
     if (account && masterChefContract && bao) {
-      fetchAllStakedValue()
+      fetchAllStakedValue();
     }
-  }, [account, masterChefContract, setBalance, bao])
+  }, [account, masterChefContract, setAllStakedValue, bao]);
 
-  return balances
-}
+  return allStakedValue;
+};
 
-export default useAllStakedValue
+export default useAllStakedValue;

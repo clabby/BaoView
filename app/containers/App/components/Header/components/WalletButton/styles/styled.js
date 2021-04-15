@@ -1,10 +1,8 @@
-import React from 'react'
+import styled from 'styled-components';
+import { lighten, darken } from 'polished';
+import { Button } from 'react-bootstrap';
 
-import styled from 'styled-components'
-import { lighten, darken } from 'polished'
-import { Colors } from '../../../../../styles/colors'
-
-import { Button } from 'react-bootstrap'
+import { Colors } from '../../../../../styles/colors';
 
 export const WButton = styled(Button)`
   background-color: transparent;
@@ -18,7 +16,9 @@ export const WButton = styled(Button)`
     }
   }
 
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     background-color: ${lighten(0.1, Colors.background)} !important;
     border-color: ${lighten(0.1, Colors.background)} !important;
   }
@@ -27,4 +27,4 @@ export const WButton = styled(Button)`
     background-color: ${darken(0.05, Colors.error)} !important;
     border-color: ${darken(0.05, Colors.error)} !important;
   }
-`
+`;

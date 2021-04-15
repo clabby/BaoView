@@ -1,9 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-export const ConnectedContainer = styled.div.attrs(props => ({
+export const ConnectedContainer = styled.div.attrs(() => ({
   className: 'mt-4',
-  id: 'connected'
+  id: 'connected',
 }))`
   font-size: 18px;
-`
+`;

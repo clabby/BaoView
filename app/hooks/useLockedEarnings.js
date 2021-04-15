@@ -1,33 +1,30 @@
-import { useCallback, useEffect, useState } from 'react'
-import { provider } from 'web3-core'
+import { useCallback, useEffect, useState } from 'react';
 
-import BigNumber from 'bignumber.js'
-import { useWallet } from 'use-wallet'
+import BigNumber from 'bignumber.js';
+import { useWallet } from 'use-wallet';
 
-import { getLockedEarned, getBaoContract } from '../lib/bao/utils'
-import useBao from './useBao'
-import useBlock from './useBlock'
+import { getLockedEarned, getBaoContract } from '../lib/bao/utils';
+import useBao from './useBao';
 
 const useLockedEarnings = () => {
-  const [balance, setBalance] = useState(new BigNumber(-1))
-  const ethereum = useWallet()
-  const { account } = ethereum
-  const bao = useBao()
-  const baoContract = getBaoContract(bao)
-  const block = useBlock()
+  const [earnings, setEarnings] = useState(new BigNumber(-1));
+  const ethereum = useWallet();
+  const { account } = ethereum;
+  const bao = useBao();
+  const baoContract = getBaoContract(bao);
 
-  const fetchBalance = useCallback(async () => {
-    const balance = await getLockedEarned(baoContract, account)
-    setBalance(new BigNumber(balance))
-  }, [account, baoContract, bao])
+  const fetchEarnings = useCallback(async () => {
+    const fetchedEarnings = await getLockedEarned(baoContract, account);
+    setEarnings(new BigNumber(fetchedEarnings));
+  }, [account, baoContract, bao]);
 
   useEffect(() => {
     if (account && baoContract && bao) {
-      fetchBalance()
+      fetchEarnings();
     }
-  }, [account, baoContract, setBalance, bao])
+  }, [account, baoContract, setEarnings, bao]);
 
-  return balance
-}
+  return earnings;
+};
 
-export default useLockedEarnings
+export default useLockedEarnings;

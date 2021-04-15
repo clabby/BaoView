@@ -1,24 +1,22 @@
-import React from 'react'
+import { Navbar } from 'react-bootstrap';
 
-import styled from 'styled-components'
-import { lighten } from 'polished'
-import { Colors } from '../../../styles/colors'
-
-import { Navbar, NavDropdown } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styled from 'styled-components';
+import { lighten } from 'polished';
+import { Colors } from '../../../styles/colors';
 
 export const HeaderBar = styled(Navbar).attrs({
   bg: 'dark',
   expand: 'lg',
   id: 'header',
-  className: 'mt-4'
+  className: 'mt-4',
 })`
   background-color: ${Colors.background} !important;
   border: none;
   border-radius: 0;
   background: ${Colors.background};
 
-  .nav-item, a.nav-link {
+  .nav-item,
+  a.nav-link {
     color: ${Colors.textColor} !important;
 
     &:hover {
@@ -42,13 +40,13 @@ export const HeaderBar = styled(Navbar).attrs({
       border-top: 1px solid ${lighten(0.2, Colors.background)};
     }
   }
-`
+`;
 
 export const HeaderLogo = styled.img`
   height: 35px;
-`
+`;
 
 export const CommunityToolsHeader = styled.span`
   text-align: center;
-  display: block
-`
+  display: block;
+`;

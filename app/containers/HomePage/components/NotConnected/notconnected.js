@@ -5,8 +5,8 @@ import {
   NotConnectedContainer,
   NotConnectedContent,
   WelcomeTitle,
-  BaoViewLogo
-} from './styles/styled'
+  BaoViewLogo,
+} from './styles/styled';
 
 export default function NotConnected() {
   return (
@@ -20,9 +20,7 @@ export default function NotConnected() {
         <WelcomeTitle>Welcome to Bao View!</WelcomeTitle>
         <hr />
         {isMobile ? (
-          <small>
-            Please connect on a desktop device to begin.
-          </small>
+          <small>Please connect on a desktop device to begin.</small>
         ) : (
           <small>
             Connect your{' '}

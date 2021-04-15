@@ -41,7 +41,7 @@ import {
   faStar,
   faCalendarAlt,
   faCodeBranch,
-  faExternalLinkAlt
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -71,7 +71,7 @@ library.add(
   faStar,
   faCalendarAlt,
   faCodeBranch,
-  faExternalLinkAlt
+  faExternalLinkAlt,
 );
 
 export default function App() {
