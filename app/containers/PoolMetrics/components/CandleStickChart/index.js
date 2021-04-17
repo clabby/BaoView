@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   ChartContainer,
   InlineDiv,
-  CalendarButton,
+  GreyButton,
   LabelButton,
 } from './styles/styled';
 
@@ -23,6 +23,7 @@ export default function App(props) {
   const now = new Date();
   const [startDate, setStartDate] = useState(now - 1000 * 60 * 60 * 48);
   const [endDate, setEndDate] = useState(now);
+  const [timeFrame, setTimeFrame] = useState('1h');
 
   /* eslint-disable */
   const poolType =
@@ -90,7 +91,10 @@ export default function App(props) {
     const startDateStr = new Date(startDate).toISOString();
     const endDateStr = new Date(endDate).toISOString();
 
-    fetch(`${API_LINK + props.pid}&start=${startDateStr}&end=${endDateStr}`)
+    fetch(
+      `${API_LINK +
+        props.pid}&start=${startDateStr}&end=${endDateStr}&timeframe=${timeFrame}`,
+    )
       .then(response => response.json())
       .then(res => {
         const candleData = [];
@@ -123,7 +127,7 @@ export default function App(props) {
 
         return setSeriesData(newSeriesData);
       });
-  }, [startDate, endDate]);
+  }, [startDate, endDate, timeFrame]);
 
   const CustomDateInput = forwardRef(
     // eslint-disable-next-line react/prop-types
@@ -134,9 +138,9 @@ export default function App(props) {
             Start Date
           </LabelButton>
         )}
-        <CalendarButton variant="outline-success" onClick={onClick} ref={ref}>
+        <GreyButton variant="outline-success" onClick={onClick} ref={ref}>
           <FontAwesomeIcon icon={['fas', 'calendar-alt']} /> {value}
-        </CalendarButton>
+        </GreyButton>
         {type === 'end' && (
           <LabelButton style={{ borderLeft: 'none' }} onClick={onClick}>
             End Date
@@ -170,7 +174,7 @@ export default function App(props) {
         </InlineDiv>
         <InlineDiv className="ml-2">
           <Badge variant="warning">
-            {seriesData.length} 1h candles displaying
+            {seriesData.length} {timeFrame} candles displaying
           </Badge>
         </InlineDiv>
         <InlineDiv className="ml-2">
@@ -189,6 +193,24 @@ export default function App(props) {
             customInput={<CustomDateInput type="end" />}
           />
         </InlineDiv>
+        <br />
+        <ButtonGroup>
+          <GreyButton
+            variant="outline-warning"
+            onClick={() => setTimeFrame('1h')}
+          >
+            1h
+          </GreyButton>
+          <GreyButton
+            variant="outline-success"
+            onClick={() => setTimeFrame('4h')}
+          >
+            4h
+          </GreyButton>
+          <GreyButton variant="outline-info" onClick={() => setTimeFrame('1d')}>
+            1d
+          </GreyButton>
+        </ButtonGroup>
       </center>
     </ChartContainer>
   );

@@ -136,7 +136,7 @@ export default function FarmCard(props) {
             Current Unstake Fee{' '}
             <QuestionIcon
               title={
-                'Current Unstake fee based off of the amount time of since your ' +
+                'Current Unstake fee based off of the amount of time since your ' +
                 'first deposit or your last withdraw. For more information, see the ' +
                 '"Fees, Penalties and Funds" section of the Bao Finance docs.'
               }

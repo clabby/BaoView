@@ -21,7 +21,7 @@ export const InlineDiv = styled.div`
   display: inline-block;
 `;
 
-export const CalendarButton = styled(Button)`
+export const GreyButton = styled(Button)`
   border: 3px solid ${lighten(0.1, Colors.background)};
   color: ${Colors.textColor};
 

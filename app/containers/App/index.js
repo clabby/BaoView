@@ -42,6 +42,7 @@ import {
   faCalendarAlt,
   faCodeBranch,
   faExternalLinkAlt,
+  faThumbtack,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -72,6 +73,7 @@ library.add(
   faCalendarAlt,
   faCodeBranch,
   faExternalLinkAlt,
+  faThumbtack,
 );
 
 export default function App() {
