@@ -15,7 +15,7 @@ export const AboutContainer = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70vh;
+  height: 100%;
 `;
 
 export const AboutContent = styled.div`
@@ -25,12 +25,12 @@ export const AboutContent = styled.div`
 
 export const LineBreak = styled.span`
   display: block;
-  margin: 10px 0px;
+  margin: 10px 0;
 `;
 
 export const BaoGif = styled.img.attrs(() => ({
   src: Gif,
 }))`
   height: 96px;
-  margin-bottom: -60px;
+  margin-bottom: -65px;
 `;
