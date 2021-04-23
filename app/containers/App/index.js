@@ -16,65 +16,13 @@ import PoolMetrics from 'containers/PoolMetrics/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { Container } from 'react-bootstrap';
+import Footer from './components/Footer/Loadable';
+import Header from './components/Header/Loadable';
 
 // Import styles
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/fontawesome';
 import './styles/overrides.scss';
-
-// Set up font awesome library and import icons
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faTractor,
-  faTimesCircle,
-  faPlug,
-  faChartLine,
-  faHeart,
-  faFileAlt,
-  faLink,
-  faFileInvoiceDollar,
-  faRocket,
-  faLongArrowAltUp,
-  faLongArrowAltDown,
-  faQuestionCircle,
-  faVideo,
-  faWifi,
-  faStar,
-  faCalendarAlt,
-  faCodeBranch,
-  faExternalLinkAlt,
-  faThumbtack,
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faGithub,
-  faTwitter,
-  faDiscord,
-} from '@fortawesome/free-brands-svg-icons';
-import Footer from './components/Footer/Loadable';
-import Header from './components/Header/Loadable';
-library.add(
-  faTractor,
-  faTimesCircle,
-  faPlug,
-  faChartLine,
-  faHeart,
-  faGithub,
-  faTwitter,
-  faDiscord,
-  faFileAlt,
-  faLink,
-  faFileInvoiceDollar,
-  faRocket,
-  faLongArrowAltUp,
-  faLongArrowAltDown,
-  faQuestionCircle,
-  faVideo,
-  faWifi,
-  faStar,
-  faCalendarAlt,
-  faCodeBranch,
-  faExternalLinkAlt,
-  faThumbtack,
-);
 
 export default function App() {
   return (

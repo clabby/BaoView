@@ -78,8 +78,7 @@ export default function Header() {
                 <FontAwesomeIcon icon={['fas', 'star']} /> Bao Board
               </NavDropdown.Item>
               <NavDropdown.Item href="https://xdai.farm/">
-                <FontAwesomeIcon icon={['fas', 'star']} />
-                xdai.farm ( BaoSwap{' '}
+                <FontAwesomeIcon icon={['fas', 'star']} /> xdai.farm ( BaoSwap{' '}
                 <FontAwesomeIcon icon={['fas', 'code-branch']} /> )
               </NavDropdown.Item>
             </NavDropdown>
