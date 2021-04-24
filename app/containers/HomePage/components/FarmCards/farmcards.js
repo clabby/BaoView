@@ -134,12 +134,12 @@ export default function FarmCards() {
             />
             <InputGroup.Append>
               <Button
-                variant="outline-success"
+                variant="outline-secondary"
                 onClick={() =>
                   setListType(listType === 'cards' ? 'list' : 'cards')
                 }
               >
-                Display Type:{' '}
+                Display Mode:{' '}
                 <Badge variant={listType === 'cards' ? 'warning' : 'info'}>
                   {listType === 'cards' ? 'Cards' : 'Simple List'}
                 </Badge>

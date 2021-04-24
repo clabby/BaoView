@@ -13,6 +13,12 @@ export const LeftBadge = styled(Badge)`
 
 export const StarBadge = styled(LeftBadge)`
   font-size: 1rem !important;
+  vertical-align: top;
+`;
+
+export const LPImage = styled.img`
+  width: 1.125rem;
+  vertical-align: bottom;
 `;
 
 export const PoolIcon = styled.span`
