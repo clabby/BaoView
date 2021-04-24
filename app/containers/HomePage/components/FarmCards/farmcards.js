@@ -6,7 +6,16 @@ import _ from 'underscore';
 import '../../styles/homepage.scss';
 import '../../styles/poolicons.scss';
 
-import { Tabs, Tab, Form, Badge, Spinner } from 'react-bootstrap';
+import {
+  Tabs,
+  Tab,
+  Form,
+  Badge,
+  Spinner,
+  ListGroup,
+  Button,
+  InputGroup,
+} from 'react-bootstrap';
 
 import useAllStakedValue from '../../../../hooks/useAllStakedValue';
 import useAllStakedBalance from '../../../../hooks/useAllStakedBalance';
@@ -15,6 +24,7 @@ import useBao from '../../../../hooks/useBao';
 import { getFarms } from '../../../../lib/bao/utils';
 
 import FarmCard from '../FarmCard/Loadable';
+import FarmListItem from '../FarmListItem/Loadable';
 
 export default function FarmCards() {
   const stakedValue = useAllStakedValue();
@@ -33,6 +43,7 @@ export default function FarmCards() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('currently-staked');
+  const [listType, setListType] = useState('cards');
 
   farms.forEach((farm, i) => {
     if (stakedValue[i] && stakedBalances[i] > 0) stakedPools.push(farm.pid);
@@ -59,17 +70,31 @@ export default function FarmCards() {
           (type === 'SUSHILP' && pool.poolType && pool.poolType === 'sushi') ||
           (type === 'STAKED' && stakedPools.includes(pool.pid))
         )
-          poolElements.push(
-            <FarmCard
-              key={pool.pid}
-              pool={pool}
-              stakedValue={
-                stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]
-              }
-              priceData={priceData}
-              baoPrice={baoPrice}
-            />,
-          );
+          if (listType === 'cards') {
+            poolElements.push(
+              <FarmCard
+                key={pool.pid}
+                pool={pool}
+                stakedValue={
+                  stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]
+                }
+                priceData={priceData}
+                baoPrice={baoPrice}
+              />,
+            );
+          } else {
+            poolElements.push(
+              <FarmListItem
+                key={pool.pid}
+                farm={pool}
+                stakedValue={
+                  stakedValue[farms.findIndex(({ pid }) => pid === pool.pid)]
+                }
+                priceData={priceData}
+                baoPrice={baoPrice}
+              />,
+            );
+          }
       });
 
       if (poolElements.length === 0) poolElements[0] = 'empty';
@@ -83,8 +108,12 @@ export default function FarmCards() {
       <div className="col-12">
         <h1 style={{ textAlign: 'center' }}>No Pools Found</h1>
       </div>
-    ) : (
+    ) : listType === 'cards' ? (
       poolElements
+    ) : (
+      <div className="col-12">
+        <ListGroup>{poolElements}</ListGroup>
+      </div>
     );
   }
 
@@ -97,11 +126,26 @@ export default function FarmCards() {
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Search Pools</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter Pool Name"
-            onChange={handleSearchInputChange}
-          />
+          <InputGroup>
+            <Form.Control
+              type="email"
+              placeholder="Enter Pool Name"
+              onChange={handleSearchInputChange}
+            />
+            <InputGroup.Append>
+              <Button
+                variant="outline-success"
+                onClick={() =>
+                  setListType(listType === 'cards' ? 'list' : 'cards')
+                }
+              >
+                Display Type:{' '}
+                <Badge variant={listType === 'cards' ? 'warning' : 'info'}>
+                  {listType === 'cards' ? 'Cards' : 'Simple List'}
+                </Badge>
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
         </Form.Group>
       </Form>
       <center>
