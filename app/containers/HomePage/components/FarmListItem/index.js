@@ -1,7 +1,13 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 
-import { Badge, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import {
+  Badge,
+  Button,
+  OverlayTrigger,
+  Spinner,
+  Tooltip,
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import useFarmTotalValue from '../../../../hooks/useFarmTotalValue';
@@ -43,6 +49,8 @@ export default function FarmListItem({
         ),
     tvl === -1 || farmTvl === -1,
   );
+
+  const Loading = () => <Spinner animation="border" size="sm" variant="info" />;
 
   return (
     <PaddedListItem>
@@ -88,7 +96,7 @@ export default function FarmListItem({
         <>
           {' - '}
           {pendingBao === -1 ? (
-            'Loading...'
+            <Loading />
           ) : (
             <OverlayTrigger
               placement="top"
@@ -101,7 +109,7 @@ export default function FarmListItem({
           )}
           {' - '}
           {farmTvl === -1 ? (
-            'Loading...'
+            <Loading />
           ) : (
             <OverlayTrigger
               placement="top"
@@ -133,7 +141,7 @@ export default function FarmListItem({
           style={{ float: 'right' }}
         >
           {tvl === -1 || farmTvl === -1
-            ? 'Loading...'
+            ? <Loading />
             : `$${getBalanceNumber(
               new BigNumber(farmTvl.total).times(
                 tvl.div(decimate(new BigNumber(totalSupply))),
@@ -141,7 +149,7 @@ export default function FarmListItem({
               0,
             )} Locked`}
           {' - '}
-          {roi.apy ? `${getBalanceNumber(roi.apy, 0)}% APY` : 'Loading...'}{' '}
+          {roi.apy ? `${getBalanceNumber(roi.apy, 0)}% APY` : <Loading />}{' '}
           <FontAwesomeIcon icon={['fas', 'external-link-alt']} />
         </Button>
       </OverlayTrigger>
