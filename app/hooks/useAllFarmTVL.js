@@ -10,6 +10,8 @@ import useBao from './useBao';
 import useMainnetWeb3 from './useMainnet';
 import usePriceData from './usePriceData';
 
+import { decimate } from '../lib/formatBalance';
+
 import erc20Abi from '../lib/bao/lib/abi/erc20.json';
 import lpAbi from '../lib/bao/lib/abi/uni_v2_lp.json';
 import cgList from '../lib/cg-list.json';
@@ -68,7 +70,7 @@ const fetchTotalLocked = (farm, priceData, bao, web3) =>
       const tvlRaw = await farm.lpContract.methods
         .balanceOf(bao.masterChefAddress)
         .call();
-      const tvl = new BigNumber(tvlRaw).div(new BigNumber(10).pow(18));
+      const tvl = decimate(new BigNumber(tvlRaw));
 
       if (farm.poolType && farm.poolType === 'sushi') {
         const lpContractXdai = new bao.web3.eth.Contract(
@@ -80,11 +82,9 @@ const fetchTotalLocked = (farm, priceData, bao, web3) =>
           lpContractXdai.methods.totalSupply().call(),
           lpContract.methods.totalSupply().call(),
         ]);
-        const totalSupply = new BigNumber(totalSupplyRaw).div(
-          new BigNumber(10).pow(18),
-        );
-        const totalSupplyMainnet = new BigNumber(totalSupplyMainnetRaw).div(
-          new BigNumber(10).pow(18),
+        const totalSupply = decimate(new BigNumber(totalSupplyRaw));
+        const totalSupplyMainnet = decimate(
+          new BigNumber(totalSupplyMainnetRaw),
         );
 
         const adjTotal = total * totalSupply.div(totalSupplyMainnet).toNumber();
@@ -100,9 +100,7 @@ const fetchTotalLocked = (farm, priceData, bao, web3) =>
         });
       } else {
         const totalSupplyRaw = await lpContract.methods.totalSupply().call();
-        const totalSupply = new BigNumber(totalSupplyRaw).div(
-          new BigNumber(10).pow(18),
-        );
+        const totalSupply = decimate(new BigNumber(totalSupplyRaw));
 
         resolve({
           pid: farm.pid,

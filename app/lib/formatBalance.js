@@ -10,7 +10,7 @@ export const getBalanceNumber = (balance, decimals = 18) => {
 };
 
 export const getDisplayBalance = (balance, decimals = 18) => {
-  const displayBalance = balance.dividedBy(new BigNumber(10).pow(decimals));
+  const displayBalance = decimate(balance, decimals);
   if (displayBalance.lt(1)) {
     return displayBalance.toPrecision(4);
   }
@@ -18,4 +18,7 @@ export const getDisplayBalance = (balance, decimals = 18) => {
 };
 
 export const getFullDisplayBalance = (balance, decimals = 18) =>
-  balance.dividedBy(new BigNumber(10).pow(decimals)).toFixed();
+  decimate(balance, decimals).toFixed();
+
+export const decimate = (bigNumber, decimals = 18) =>
+  bigNumber.div(new BigNumber(10).pow(decimals));

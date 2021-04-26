@@ -5,6 +5,8 @@ import _ from 'underscore';
 import useBao from './useBao';
 import useMainnetWeb3 from './useMainnet';
 
+import { decimate } from '../lib/formatBalance';
+
 import cgList from '../lib/cg-list.json';
 import erc20Abi from '../lib/bao/lib/abi/erc20.json';
 import lpAbi from '../lib/bao/lib/abi/uni_v2_lp.json';
@@ -74,11 +76,9 @@ const useFarmTotalValue = (farm, priceData) => {
           lpContract.methods.totalSupply().call(),
         ]);
 
-        const totalSupply = new BigNumber(totalSupplyRaw).div(
-          new BigNumber(10).pow(18),
-        );
-        const totalSupplyMainnet = new BigNumber(totalSupplyMainnetRaw).div(
-          new BigNumber(10).pow(18),
+        const totalSupply = decimate(new BigNumber(totalSupplyRaw));
+        const totalSupplyMainnet = decimate(
+          new BigNumber(totalSupplyMainnetRaw),
         );
 
         setTotalValue({

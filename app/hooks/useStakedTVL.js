@@ -9,6 +9,8 @@ import { getMasterChefContract, getFarms } from '../lib/bao/utils';
 import useBao from './useBao';
 import useBlock from './useBlock';
 
+import { decimate } from '../lib/formatBalance';
+
 const useStakedTVL = pid => {
   const [staked, setStaked] = useState(-1);
   const ethereum = useWallet();
@@ -21,9 +23,11 @@ const useStakedTVL = pid => {
   const fetchStaked = useCallback(async () => {
     const farm = _.findWhere(farms, { pid });
 
-    const amountStaked = new BigNumber(
-      await farm.lpContract.methods.balanceOf(bao.masterChefAddress).call(),
-    ).div(new BigNumber(10).pow(18));
+    const amountStaked = decimate(
+      new BigNumber(
+        await farm.lpContract.methods.balanceOf(bao.masterChefAddress).call(),
+      ),
+    );
 
     setStaked(amountStaked);
   }, [account, masterChefContract, bao]);

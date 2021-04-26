@@ -28,7 +28,7 @@ import useStakedBalance from '../../../../hooks/useStakedBalance';
 import useEarnings from '../../../../hooks/useEarnings';
 import useUserInfo from '../../../../hooks/useUserInfo';
 import useFarmTotalValue from '../../../../hooks/useFarmTotalValue';
-import { getBalanceNumber } from '../../../../lib/formatBalance';
+import { getBalanceNumber, decimate } from '../../../../lib/formatBalance';
 
 import useROI from '../../../../hooks/useROI';
 
@@ -58,12 +58,9 @@ export default function FarmCard(props) {
   let lpValueUSD = -1;
 
   if (stakedValue && stakedBalance && totalFarmValue.total >= 0) {
-    totalSupply = new BigNumber(stakedValue.totalSupply).div(
-      new BigNumber(10).pow(18),
-    );
+    totalSupply = decimate(new BigNumber(stakedValue.totalSupply));
     poolValue = new BigNumber(totalFarmValue.total);
-    lpValueUSD = stakedBalance
-      .div(new BigNumber(10).pow(18))
+    lpValueUSD = decimate(stakedBalance)
       .div(totalSupply)
       .times(poolValue);
   }
@@ -255,8 +252,7 @@ export default function FarmCard(props) {
               {/* eslint-disable */}
               {tvl === -1
                 ? 'Loading...'
-                : `${stakedBalance
-                      .div(new BigNumber(10).pow(18))
+                : `${decimate(stakedBalance)
                       .div(tvl)
                       .times(100)
                       .toNumber()

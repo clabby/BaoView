@@ -9,7 +9,7 @@ import useROI from '../../../../hooks/useROI';
 import useStakedTVL from '../../../../hooks/useStakedTVL';
 import useEarnings from '../../../../hooks/useEarnings';
 import useStakedBalance from '../../../../hooks/useStakedBalance';
-import { getBalanceNumber } from '../../../../lib/formatBalance';
+import { getBalanceNumber, decimate } from '../../../../lib/formatBalance';
 
 import {
   LeftBadge,
@@ -39,7 +39,7 @@ export default function FarmListItem({
     tvl === -1 || farmTvl === -1
       ? -1
       : new BigNumber(farmTvl.total).times(
-          tvl.div(new BigNumber(totalSupply).div(new BigNumber(10).pow(18))),
+          tvl.div(decimate(new BigNumber(totalSupply))),
         ),
     tvl === -1 || farmTvl === -1,
   );
@@ -136,9 +136,7 @@ export default function FarmListItem({
             ? 'Loading...'
             : `$${getBalanceNumber(
               new BigNumber(farmTvl.total).times(
-                tvl.div(
-                  new BigNumber(totalSupply).div(new BigNumber(10).pow(18)),
-                ),
+                tvl.div(decimate(new BigNumber(totalSupply))),
               ),
               0,
             )} Locked`}

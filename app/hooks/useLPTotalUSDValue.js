@@ -9,6 +9,7 @@ import useMainnetWeb3 from './useMainnet';
 import usePriceData from './usePriceData';
 
 import { getFarms } from '../lib/bao/utils';
+import { decimate } from '../lib/formatBalance';
 
 import cgList from '../lib/cg-list.json';
 
@@ -77,11 +78,9 @@ const fetchPoolTotalValue = async (bao, web3, farm, priceData) => {
           lpContract.methods.totalSupply().call(),
         ]);
 
-        const totalSupply = new BigNumber(totalSupplyRaw).div(
-          new BigNumber(10).pow(18),
-        );
-        const totalSupplyMainnet = new BigNumber(totalSupplyMainnetRaw).div(
-          new BigNumber(10).pow(18),
+        const totalSupply = decimate(new BigNumber(totalSupplyRaw));
+        const totalSupplyMainnet = decimate(
+          new BigNumber(totalSupplyMainnetRaw),
         );
 
         resolve(total * totalSupply.div(totalSupplyMainnet).toNumber());
@@ -121,12 +120,11 @@ const useLPTotalUSDValue = () => {
                   const stakedValue = _.findWhere(stakedValues, {
                     pid: farm.pid,
                   });
-                  const totalSupply = new BigNumber(
-                    stakedValue.totalSupply,
-                  ).div(new BigNumber(10).pow(18));
+                  const totalSupply = decimate(
+                    new BigNumber(stakedValue.totalSupply),
+                  );
                   resolve(
-                    new BigNumber(stakedValue.staked.amount)
-                      .div(new BigNumber(10).pow(18))
+                    decimate(new BigNumber(stakedValue.staked.amount))
                       .div(totalSupply)
                       .times(new BigNumber(data))
                       .toNumber(),

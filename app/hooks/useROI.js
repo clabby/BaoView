@@ -5,6 +5,8 @@ import { getMasterChefContract } from '../lib/bao/utils';
 
 import useBao from './useBao';
 
+import { decimate } from '../lib/formatBalance';
+
 const BLOCKS_PER_YEAR = new BigNumber(6311390);
 const BLOCKS_PER_MONTH = new BigNumber(525600);
 const BLOCKS_PER_WEEK = new BigNumber(120960);
@@ -17,9 +19,11 @@ const useROI = (pid, baoPrice, tvlUsd, isLoading) => {
     if (tvlUsd === -1) return;
 
     const masterChef = getMasterChefContract(bao);
-    const rewardPerBlock = new BigNumber(
-      await masterChef.methods.getNewRewardPerBlock(pid + 1).call(),
-    ).div(new BigNumber(10).pow(18));
+    const rewardPerBlock = decimate(
+      new BigNumber(
+        await masterChef.methods.getNewRewardPerBlock(pid + 1).call(),
+      ),
+    );
 
     setRoi({
       apy: baoPrice

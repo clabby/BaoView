@@ -21,7 +21,7 @@ import useLPTotalUSDValue from '../../../../hooks/useLPTotalUSDValue';
 import useBao from '../../../../hooks/useBao';
 import useMainnetWeb3 from '../../../../hooks/useMainnet';
 
-import { getDisplayBalance } from '../../../../lib/formatBalance';
+import { getDisplayBalance, decimate } from '../../../../lib/formatBalance';
 
 import useAllFarmTVL from '../../../../hooks/useAllFarmTVL';
 
@@ -62,9 +62,7 @@ export default function Overview() {
 
   let sumEarning = -1;
   _.each(earnings, earning => {
-    sumEarning += new BigNumber(earning)
-      .div(new BigNumber(10).pow(18))
-      .toNumber();
+    sumEarning += decimate(new BigNumber(earning)).toNumber();
   });
 
   const Loading = () => <Spinner animation="border" size="sm" />;
@@ -92,13 +90,13 @@ export default function Overview() {
                   $
                   {getDisplayBalance(
                     new BigNumber(
-                      baoPrice * lockedEarnings.div(new BigNumber(10).pow(18)),
+                      baoPrice * decimate(lockedEarnings),
                     ),
                     0,
                   )}
                   {` | ${getDisplayBalance(
                     new BigNumber(baoPrice)
-                      .times(lockedEarnings.div(new BigNumber(10).pow(18)))
+                      .times(decimate(lockedEarnings))
                       .div(new BigNumber(daiPrice)),
                     0,
                   )} DAI`}
@@ -178,8 +176,7 @@ export default function Overview() {
                     new BigNumber(
                       lpTotalUSDValue +
                         baoPrice * sumEarning +
-                        baoPrice *
-                          lockedEarnings.div(new BigNumber(10).pow(18)),
+                        baoPrice * decimate(lockedEarnings),
                     ),
                     0,
                   )}
@@ -188,8 +185,7 @@ export default function Overview() {
                     new BigNumber(
                       lpTotalUSDValue +
                         baoPrice * sumEarning +
-                        baoPrice *
-                          lockedEarnings.div(new BigNumber(10).pow(18)),
+                        baoPrice * decimate(lockedEarnings),
                     ).div(new BigNumber(daiPrice)),
                     0,
                   )}{' '}
