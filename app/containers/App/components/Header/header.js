@@ -9,7 +9,13 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import {
+  Nav,
+  NavDropdown,
+  Navbar,
+  OverlayTrigger,
+  Tooltip,
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import WalletButton from './components/WalletButton/Loadable';
 
@@ -82,6 +88,9 @@ export default function Header() {
                 <FontAwesomeIcon icon={['fas', 'code-branch']} /> )
               </NavDropdown.Item>
             </NavDropdown>
+            <OverlayTrigger placement="bottom" overlay={<Tooltip>Panda Stats</Tooltip>}>
+              <Nav.Link href="/panda">🐼</Nav.Link>
+            </OverlayTrigger>
           </Nav>
           <WalletButton />
         </Navbar.Collapse>

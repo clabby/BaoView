@@ -16,6 +16,8 @@ See CONTRIBUTING.md for more information.
 
 This project is released under the GNU General Public License v3.0. See LICENSE.md for more information.
 
-![BaoViewPreview](https://i.imgur.com/xv3Ic1q.png)
-![BaoViewPreview2](https://i.imgur.com/9v6Q2v5.png)
-![BaoViewPreview3](https://i.imgur.com/Uy8foJ0.png)
+![BaoViewPreview](https://i.imgur.com/skSd7bg.png)
+![BaoViewPreview2](https://i.imgur.com/re5R0Th.png)
+![BaoViewPreview3](https://i.imgur.com/rVMiU5l.png)
+![BaoViewPreview4](https://i.imgur.com/R6CtDc1.png)
+![BaoViewPreview5](https://i.imgur.com/c4YCx3i.png)

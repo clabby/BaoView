@@ -12,6 +12,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import AboutPage from 'containers/AboutPage/Loadable';
+import PandaPage from 'containers/PandaPage/Loadable';
 import PoolMetrics from 'containers/PoolMetrics/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -32,6 +33,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/about" component={AboutPage} />
+          <Route exact path="/panda" component={PandaPage} />
           <Route path="/pool-metrics/:pid" component={PoolMetrics} />
           <Route component={NotFoundPage} />
         </Switch>
