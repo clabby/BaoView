@@ -19,10 +19,10 @@ const MASTER_CHEF_ADDRESS = '0x9942cb4c6180820E6211183ab29831641F58577A';
 // BSC has an approx 3s block time
 // 365 * 24 * 60 * (60 / 3) = 10512000
 // (365 / 12) * 24 * 60 * (60 / 3) = 876000
-// (365 / 52) * 24 * 60 * (60 / 3) = 20214
+// (365 / 52) * 24 * 60 * (60 / 3) = 202154
 const BLOCKS_PER_YEAR = new BigNumber(10512000);
 const BLOCKS_PER_MONTH = new BigNumber(876000);
-const BLOCKS_PER_WEEK = new BigNumber(20214);
+const BLOCKS_PER_WEEK = new BigNumber(202154);
 
 const getOraclePrice = async (tokenSymbol, priceOracles) => {
   const [tokenPrice, tokenDecimals] = await Promise.all([

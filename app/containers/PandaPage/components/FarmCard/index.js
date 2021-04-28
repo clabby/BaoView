@@ -30,7 +30,7 @@ export default function FarmCard({
   );
 
   return (
-    <div className="col-3">
+    <div className="col-4">
       <DarkCard className="mb-2">
         <DarkCardHeader>
           {(pool.pid === 5 || pool.pid === 6) && (
@@ -60,20 +60,57 @@ export default function FarmCard({
         </DarkCardHeader>
         <ListGroup variant="flush">
           <DarkListGroupItem>
-            APY:{' '}
-            <Badge pill variant="secondary" style={{ float: 'right' }}>
+            TVL:{' '}
+            <Badge pill variant="info" style={{ float: 'right' }}>
+              {pandaStats ? (
+                `$${getBalanceNumber(new BigNumber(pandaStats.lockedUsd), 0)}`
+              ) : (
+                <Spinner animation="grow" size="sm" />
+              )}
+            </Badge>
+          </DarkListGroupItem>
+          <DarkListGroupItem style={{ textAlign: 'center' }}>
+            PNDA per day, per $1000 staked
+            <br />
+            <Badge pill variant="success">
+              {pandaStats ? (
+                `${getBalanceNumber(
+                  new BigNumber(
+                    (1000 / pndaPrice) *
+                      pandaStats.roi.wpy
+                        .div(7)
+                        .div(100)
+                        .toNumber(),
+                  ),
+                  0,
+                )} PNDA`
+              ) : (
+                <Spinner animation="grow" size="sm" />
+              )}
+            </Badge>
+          </DarkListGroupItem>
+          <DarkListGroupItem style={{ textAlign: 'center' }}>
+            ROI (year / month / week)
+            <br />
+            <Badge pill variant="secondary">
               {pandaStats ? (
                 `${getBalanceNumber(pandaStats.roi.apy, 0)}%`
               ) : (
                 <Spinner animation="grow" size="sm" />
               )}
             </Badge>
-          </DarkListGroupItem>
-          <DarkListGroupItem>
-            TVL:{' '}
-            <Badge pill variant="info" style={{ float: 'right' }}>
+            {' / '}
+            <Badge pill variant="secondary">
               {pandaStats ? (
-                `$${getBalanceNumber(new BigNumber(pandaStats.lockedUsd), 0)}`
+                `${getBalanceNumber(pandaStats.roi.mpy, 0)}%`
+              ) : (
+                <Spinner animation="grow" size="sm" />
+              )}
+            </Badge>
+            {' / '}
+            <Badge pill variant="secondary">
+              {pandaStats ? (
+                `${getBalanceNumber(pandaStats.roi.wpy, 0)}%`
               ) : (
                 <Spinner animation="grow" size="sm" />
               )}
