@@ -18,6 +18,7 @@ This project is released under the GNU General Public License v3.0. See LICENSE.
 
 ![BaoViewPreview](https://i.imgur.com/skSd7bg.png)
 ![BaoViewPreview2](https://i.imgur.com/re5R0Th.png)
-![BaoViewPreview3](https://i.imgur.com/rVMiU5l.png)
-![BaoViewPreview4](https://i.imgur.com/R6CtDc1.png)
-![BaoViewPreview5](https://i.imgur.com/c4YCx3i.png)
+![BaoViewPreview3](https://i.imgur.com/YEqvJeD.png)
+![BaoViewPreview4](https://i.imgur.com/rVMiU5l.png)
+![BaoViewPreview5](https://i.imgur.com/R6CtDc1.png)
+![BaoViewPreview6](https://i.imgur.com/c4YCx3i.png)
