@@ -88,9 +88,7 @@ export default function Header() {
                 <FontAwesomeIcon icon={['fas', 'code-branch']} /> )
               </NavDropdown.Item>
             </NavDropdown>
-            <OverlayTrigger placement="bottom" overlay={<Tooltip>Panda Stats</Tooltip>}>
-              <Nav.Link href="/panda">🐼</Nav.Link>
-            </OverlayTrigger>
+            <Nav.Link href="/panda">🐼 Panda</Nav.Link>
           </Nav>
           <WalletButton />
         </Navbar.Collapse>

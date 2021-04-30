@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import _ from 'lodash';
 import BigNumber from 'bignumber.js';
+import ethereumRegex from 'ethereum-regex';
 
 /*
  * ABIs
@@ -118,10 +119,7 @@ const getPandaStats = async (
       .toFixed(2);
 
     const lockedUsd = tvl * (lockedPercentage / 100);
-    const decimatedReward = decimate(
-      new BigNumber(reward),
-      17 /* pnda decimals - 1 */,
-    );
+    const decimatedReward = decimate(new BigNumber(reward), 16);
 
     const roi = {
       apy: new BigNumber(pndaPrice)
@@ -138,7 +136,7 @@ const getPandaStats = async (
         .div(lockedUsd),
     };
 
-    return { lockedUsd, roi };
+    return { lockedUsd, roi, totalLocked };
   }
 
   const token = oracleToken ? 1 : 0;
@@ -196,4 +194,36 @@ const usePndaPrice = (web3, masterChefContract, priceOracles) => {
   return pndaPrice;
 };
 
-export { usePandaStats, usePndaPrice };
+const usePandaUserStats = (
+  pid,
+  web3,
+  masterChefContract,
+  priceOracles,
+  address,
+) => {
+  const [userStats, setUserStats] = useState(undefined);
+
+  const fetchPandaUserStats = useCallback(async () => {
+    if (address.length <= 0 || !ethereumRegex({ exact: true }).test(address))
+      return;
+
+    const userInfo = await masterChefContract.methods
+      .userInfo(pid, address)
+      .call();
+    const pendingReward = await masterChefContract.methods
+      .pendingReward(pid, address)
+      .call();
+    setUserStats({
+      lpStaked: decimate(new BigNumber(userInfo.amount), 18),
+      pendingReward: decimate(new BigNumber(pendingReward), 18),
+    });
+  }, [address]);
+
+  useMemo(() => {
+    fetchPandaUserStats();
+  }, [address]);
+
+  return userStats;
+};
+
+export { usePandaStats, usePndaPrice, usePandaUserStats };

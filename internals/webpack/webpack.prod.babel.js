@@ -104,6 +104,10 @@ module.exports = require('./webpack.base.babel')({
         additional: ['*.chunk.js'],
       },
 
+      ServiceWorker: {
+        events: true,
+      },
+
       // Removes warning for about `additional` section usage
       safeToUseOptionalCaches: true,
     }),

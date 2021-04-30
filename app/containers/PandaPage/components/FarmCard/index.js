@@ -1,13 +1,22 @@
 import React from 'react';
 import { BigNumber } from 'bignumber.js';
 
-import { Badge, ListGroup, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
+import {
+  Badge,
+  ListGroup,
+  OverlayTrigger,
+  Spinner,
+  Tooltip,
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DarkCard, DarkCardHeader, DarkListGroupItem } from './styles/styled';
 
-import { usePandaStats } from '../../../../hooks/panda/usePandaStats';
+import {
+  usePandaStats,
+  usePandaUserStats,
+} from '../../../../hooks/panda/usePandaStats';
 
-import { getBalanceNumber } from '../../../../lib/formatBalance';
+import { decimate, getBalanceNumber } from '../../../../lib/formatBalance';
 
 // Images
 import PandaLogo from '../../../../images/pandalogo.png';
@@ -19,6 +28,7 @@ export default function FarmCard({
   masterChefContract,
   priceOracles,
   pndaPrice,
+  activeWallet,
 }) {
   const poolType = pool.poolType && pool.poolType === 'CAKE';
   const pandaStats = usePandaStats(
@@ -28,6 +38,33 @@ export default function FarmCard({
     priceOracles,
     pndaPrice,
   );
+
+  const pandaUserStats = usePandaUserStats(
+    pool.pid,
+    web3,
+    masterChefContract,
+    null,
+    activeWallet,
+  );
+
+  const PndaPerDay = props =>
+    `${getBalanceNumber(
+      new BigNumber(
+        ((pandaUserStats && pandaUserStats.lpStaked > 0 && pandaStats
+          ? new BigNumber(pandaStats.lockedUsd).times(
+            new BigNumber(pandaUserStats.lpStaked).div(
+              decimate(new BigNumber(pandaStats.totalLocked)),
+            ),
+          ).toNumber()
+          : 1000) /
+          pndaPrice) *
+        pandaStats.roi.wpy
+          .div(7)
+          .div(100)
+          .toNumber(),
+      ).times(props.ratio),
+      0,
+    )} Locked`;
 
   return (
     <div className="col-4">
@@ -69,21 +106,76 @@ export default function FarmCard({
               )}
             </Badge>
           </DarkListGroupItem>
+          {activeWallet.length > 0 && (
+            <>
+              <DarkListGroupItem>
+                LP Staked:{' '}
+                <Badge pill variant="info" style={{ float: 'right' }}>
+                  {pandaUserStats ? (
+                    `${getBalanceNumber(pandaUserStats.lpStaked, 0)} LP`
+                  ) : (
+                    <Spinner animation="grow" size="sm" />
+                  )}
+                </Badge>
+              </DarkListGroupItem>
+              <DarkListGroupItem>
+                LP Staked (USD):{' '}
+                <Badge pill variant="info" style={{ float: 'right' }}>
+                  {pandaUserStats && pandaStats ? (
+                    `$${getBalanceNumber(
+                      new BigNumber(pandaStats.lockedUsd).times(
+                        new BigNumber(pandaUserStats.lpStaked).div(
+                          decimate(new BigNumber(pandaStats.totalLocked)),
+                        ),
+                      ),
+                      0,
+                    )}`
+                  ) : (
+                    <Spinner animation="grow" size="sm" />
+                  )}
+                </Badge>
+              </DarkListGroupItem>
+              <DarkListGroupItem>
+                Pending PNDA:{' '}
+                <Badge pill variant="info" style={{ float: 'right' }}>
+                  {pandaUserStats ? (
+                    `${getBalanceNumber(
+                      new BigNumber(pandaUserStats.pendingReward),
+                      0,
+                    )} PNDA`
+                  ) : (
+                    <Spinner animation="grow" size="sm" />
+                  )}
+                </Badge>
+              </DarkListGroupItem>
+            </>
+          )}
           <DarkListGroupItem style={{ textAlign: 'center' }}>
-            PNDA per day, per $1000 staked
+            {pandaUserStats && pandaUserStats.lpStaked > 0 && pandaStats ? (
+              <>
+                PNDA per day{' '}
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip>
+                      PNDA per day based off of the value of your staked LP.
+                    </Tooltip>
+                  }
+                  placement="top"
+                >
+                  <FontAwesomeIcon icon={['fas', 'question-circle']} />
+                </OverlayTrigger>
+              </>
+            ) : (
+              'PNDA per day, per $1000 staked'
+            )}
             <br />
             <Badge pill variant="success">
               {pandaStats ? (
-                `${getBalanceNumber(
-                  new BigNumber(
-                    (1000 / pndaPrice) *
-                      pandaStats.roi.wpy
-                        .div(7)
-                        .div(100)
-                        .toNumber(),
-                  ),
-                  0,
-                )} PNDA`
+                <>
+                  <PndaPerDay ratio={0.95} />
+                  {' - '}
+                  <PndaPerDay ratio={0.05} />
+                </>
               ) : (
                 <Spinner animation="grow" size="sm" />
               )}

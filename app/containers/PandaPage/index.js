@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import Web3 from 'web3';
 import _ from 'lodash';
+import ethereumRegex from 'ethereum-regex';
 
 import {
   Alert,
@@ -46,6 +47,7 @@ export default function PandaPage() {
   const poolElements = [];
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeWallet, setActiveWallet] = useState('');
 
   let pools = supportedPools;
   if (searchQuery.length > 0) {
@@ -66,6 +68,7 @@ export default function PandaPage() {
         masterChefContract={masterChefContract}
         priceOracles={priceOracles}
         pndaPrice={pndaPrice}
+        activeWallet={activeWallet}
       />,
     );
   });
@@ -102,6 +105,21 @@ export default function PandaPage() {
       <hr />
       <Form>
         <Form.Group controlId="formBasicEmail">
+          <Form.Label>
+            Active Wallet:{' '}
+            <Badge variant="info" pill style={{ verticalAlign: 'center' }}>
+              {activeWallet.length > 0 ? activeWallet : 'None'}
+            </Badge>
+          </Form.Label>
+          <DarkInput
+            type="text"
+            placeholder="Enter Wallet Address for personalized data (Connect button coming soon!)"
+            onChange={event => {
+              if (ethereumRegex({ exact: true }).test(event.target.value))
+                setActiveWallet(event.target.value);
+            }}
+          />
+          <hr />
           <Form.Label>Search Pools</Form.Label>
           <DarkInput
             type="email"

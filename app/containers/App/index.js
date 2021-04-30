@@ -9,6 +9,7 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import runtime from 'offline-plugin/runtime';
 
 import HomePage from 'containers/HomePage/Loadable';
 import AboutPage from 'containers/AboutPage/Loadable';
@@ -24,6 +25,27 @@ import Header from './components/Header/Loadable';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/fontawesome';
 import './styles/overrides.scss';
+
+runtime.install({
+  onUpdating: () => {
+    console.log('SW Event:', 'onUpdating');
+  },
+  onUpdateReady: async () => {
+    console.log('SW Event:', 'onUpdateReady');
+    // Tells to new SW to take control immediately
+    await runtime.applyUpdate();
+    window.location.reload();
+  },
+  onUpdated: () => {
+    console.log('SW Event:', 'onUpdated');
+    // Reload the webpage to load into the new version
+    window.location.reload();
+  },
+
+  onUpdateFailed: () => {
+    console.log('SW Event:', 'onUpdateFailed');
+  },
+});
 
 export default function App() {
   return (
