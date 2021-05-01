@@ -76,6 +76,8 @@
     "connected-react-router": "6.4.0",
     "cross-env": "5.2.0",
     "ethereum-regex": "^1.1.13",
+    "ethers": "^5.1.4",
+    "ethers-multicall": "^0.1.6",
     "fontfaceobserver": "2.1.0",
     "fs": "0.0.1-security",
     "history": "4.9.0",

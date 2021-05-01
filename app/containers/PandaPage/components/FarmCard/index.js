@@ -64,7 +64,7 @@ export default function FarmCard({
           .toNumber(),
       ).times(props.ratio),
       0,
-    )} Locked`;
+    )} ${props.ratio === 0.95 ? 'Locked' : 'Unlocked'}`;
 
   return (
     <div className="col-4">

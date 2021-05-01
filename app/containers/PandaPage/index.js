@@ -7,15 +7,7 @@ import Web3 from 'web3';
 import _ from 'lodash';
 import ethereumRegex from 'ethereum-regex';
 
-import {
-  Alert,
-  Badge,
-  Container,
-  Form,
-  OverlayTrigger,
-  Spinner,
-  Tooltip,
-} from 'react-bootstrap';
+import { Alert, Badge, Container, Form } from 'react-bootstrap';
 
 import { DarkInput } from './styles/styled';
 
@@ -23,6 +15,7 @@ import '../HomePage/styles/poolicons.scss';
 
 import supportedPools from '../../lib/panda/supportedPools';
 import FarmCard from './components/FarmCard';
+import Overview from './components/Overview';
 import masterChefAbi from '../../lib/bao/lib/abi/masterchef.json';
 import getPriceOracles from '../../lib/panda/oracles';
 
@@ -75,32 +68,21 @@ export default function PandaPage() {
 
   return (
     <Container className="mt-4">
-      <Alert variant="success" style={{textAlign: 'center'}}>
+      <Alert variant="success" style={{ textAlign: 'center' }}>
         <Badge variant="success">INFO</Badge>
         <br />
         More data coming soon! One sided pools are currently not working.
       </Alert>
+      <Overview
+        web3={web3}
+        supportedPools={supportedPools}
+        pndaPrice={pndaPrice}
+      />
       <h1>
         <span role="img" aria-label="Panda">
           🐼
         </span>{' '}
-        Panda Pools{' '}
-        <OverlayTrigger
-          placement="top"
-          overlay={<Tooltip>Prices from BSC ChainLink Oracles</Tooltip>}
-        >
-          <Badge
-            variant="success"
-            style={{ fontSize: '16px', verticalAlign: 'middle' }}
-          >
-            PNDA Price:{' '}
-            {pndaPrice ? (
-              `$${pndaPrice.toFixed(6)}`
-            ) : (
-              <Spinner animation="grow" size="sm" />
-            )}
-          </Badge>
-        </OverlayTrigger>
+        Panda Pools
       </h1>
       <hr />
       <Form>
