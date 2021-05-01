@@ -184,29 +184,25 @@ export default function FarmCard({
           <DarkListGroupItem style={{ textAlign: 'center' }}>
             ROI (year / month / week)
             <br />
-            <Badge pill variant="secondary">
-              {pandaStats ? (
-                `${getBalanceNumber(pandaStats.roi.apy, 0)}%`
-              ) : (
+            {pandaStats ? (
+              <>
+                <Badge pill variant="secondary">
+                  {getBalanceNumber(pandaStats.roi.apy, 0)}%
+                </Badge>
+                {' / '}
+                <Badge pill variant="secondary">
+                  {getBalanceNumber(pandaStats.roi.mpy, 0)}%
+                </Badge>
+                {' / '}
+                <Badge pill variant="secondary">
+                  {getBalanceNumber(pandaStats.roi.wpy, 0)}%
+                </Badge>
+              </>
+            ) : (
+              <Badge pill variant="secondary">
                 <Spinner animation="grow" size="sm" />
-              )}
-            </Badge>
-            {' / '}
-            <Badge pill variant="secondary">
-              {pandaStats ? (
-                `${getBalanceNumber(pandaStats.roi.mpy, 0)}%`
-              ) : (
-                <Spinner animation="grow" size="sm" />
-              )}
-            </Badge>
-            {' / '}
-            <Badge pill variant="secondary">
-              {pandaStats ? (
-                `${getBalanceNumber(pandaStats.roi.wpy, 0)}%`
-              ) : (
-                <Spinner animation="grow" size="sm" />
-              )}
-            </Badge>
+              </Badge>
+            )}
           </DarkListGroupItem>
         </ListGroup>
       </DarkCard>

@@ -21,6 +21,7 @@ export default function Overview({ web3, pndaPrice }) {
 
       const [tokenSupply, tokenDecimals] = await Promise.all([
         pndaContract.methods.totalSupply().call(),
+        pndaContract.methods.decimals().call(),
       ]);
 
       setTotalSupply(decimate(new BigNumber(tokenSupply), tokenDecimals));
