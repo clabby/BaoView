@@ -56,6 +56,7 @@ export default function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/panda" component={PandaPage} />
+          <Route path="/panda/:wallet" component={PandaPage} />
           <Route path="/pool-metrics/:pid" component={PoolMetrics} />
           <Route component={NotFoundPage} />
         </Switch>

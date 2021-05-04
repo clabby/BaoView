@@ -2,7 +2,8 @@
  * Pool Metrics Page
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Web3 from 'web3';
 import _ from 'lodash';
 import ethereumRegex from 'ethereum-regex';
@@ -45,12 +46,19 @@ export default function PandaPage() {
   const priceOracles = getPriceOracles(web3);
   const pndaPrice = usePndaPrice(web3, masterChefContract, priceOracles);
 
-  const poolElements = [];
-
   const [searchQuery, setSearchQuery] = useState('');
   const [activeWallet, setActiveWallet] = useState('');
   const [displayType, setDisplayType] = useState('cards');
 
+  const setWallet = wallet => {
+    if (wallet && ethereumRegex({ exact: true }).test(wallet))
+      setActiveWallet(wallet);
+  };
+
+  const { wallet } = useParams();
+  useEffect(() => setWallet(wallet), [wallet]);
+
+  const poolElements = [];
   let pools = supportedPools;
   if (searchQuery.length > 0) {
     pools = _.filter(
@@ -119,10 +127,7 @@ export default function PandaPage() {
               <DarkInput
                 type="text"
                 placeholder="Enter Wallet Address for personalized data (Connect button coming soon!)"
-                onChange={event => {
-                  if (ethereumRegex({ exact: true }).test(event.target.value))
-                    setActiveWallet(event.target.value);
-                }}
+                onChange={event => setWallet(event.target.value)}
               />
               <hr />
             </>
