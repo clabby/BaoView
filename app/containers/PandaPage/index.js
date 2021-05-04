@@ -20,7 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { DarkInput, DarkTable } from './styles/styled';
 
-import '../HomePage/styles/poolicons.scss';
+import './styles/poolicons.scss';
 
 import supportedPools from '../../lib/panda/supportedPools';
 import FarmCard from './components/FarmCard';
