@@ -163,6 +163,44 @@ export default function FarmCard({
                   )}
                 </Badge>
               </DarkListGroupItem>
+              <DarkListGroupItem>
+                Current Withdraw Fee{' '}
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip>
+                      <Badge variant="danger">NOTICE</Badge>
+                      <br />
+                      This date is an estimation, and it grows more inaccurate{' '}
+                      as time passes due to block times not being consistent.{' '}
+                      For the best results, please keep track of when you stake{' '}
+                      and unstake your liquidity.
+                      <br />
+                      <b>
+                        Last Fee Reset (Either first deposit or last{' '}
+                        withdrawal):
+                      </b>
+                      <br />
+                      {pandaUserStats &&
+                        pandaUserStats.lastInteraction.toString()}
+                    </Tooltip>
+                  }
+                >
+                  <FontAwesomeIcon icon={['fas', 'question-circle']} />
+                </OverlayTrigger>
+                {': '}
+                <Badge pill variant="info" style={{ float: 'right' }}>
+                  {pandaUserStats ? (
+                    pandaUserStats.lpStaked > 0 ? (
+                      `${(pandaUserStats.withdrawPenalty * 100).toFixed(2)}%`
+                    ) : (
+                      '0.00%'
+                    )
+                  ) : (
+                    <Loading />
+                  )}
+                </Badge>
+              </DarkListGroupItem>
             </>
           )}
           <DarkListGroupItem style={{ textAlign: 'center' }}>

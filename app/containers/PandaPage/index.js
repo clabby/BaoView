@@ -16,6 +16,7 @@ import {
   Form,
   InputGroup,
 } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { DarkInput, DarkTable } from './styles/styled';
 
@@ -97,10 +98,14 @@ export default function PandaPage() {
 
   return (
     <Container className="mt-4">
-      <Alert variant="success" style={{ textAlign: 'center' }}>
-        <Badge variant="success">INFO</Badge>
+      <Alert variant="warning" style={{ textAlign: 'center' }}>
+        <Badge variant="warning">
+          <FontAwesomeIcon icon={['fas', 'exclamation-triangle']} />
+        </Badge>
         <br />
-        More data coming soon! One sided pools are currently not working.
+        This page is a work in progress. More features are on the way!
+        <br />
+        One sided pools are currently not working.
       </Alert>
       <Overview
         web3={web3}

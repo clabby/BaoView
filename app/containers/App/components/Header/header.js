@@ -87,6 +87,10 @@ export default function Header() {
                 <FontAwesomeIcon icon={['fas', 'star']} /> xdai.farm ( BaoSwap{' '}
                 <FontAwesomeIcon icon={['fas', 'code-branch']} /> )
               </NavDropdown.Item>
+              <NavDropdown.Item href="https://pnda.farm/">
+                <FontAwesomeIcon icon={['fas', 'star']} /> pnda.farm ( PandaSwap{' '}
+                <FontAwesomeIcon icon={['fas', 'code-branch']} /> )
+              </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/panda">🐼 Panda</Nav.Link>
           </Nav>

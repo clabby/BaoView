@@ -25,6 +25,24 @@ const BLOCKS_PER_YEAR = new BigNumber(10512000);
 const BLOCKS_PER_MONTH = new BigNumber(876000);
 const BLOCKS_PER_WEEK = new BigNumber(202154);
 
+const getWithdrawalPenalty = blocksSince => {
+  return blocksSince <= 0
+    ? 0.99
+    : blocksSince <= 1200
+      ? 0.5
+      : blocksSince <= 28800
+        ? 0.25
+        : blocksSince <= 86400
+          ? 0.12
+          : blocksSince <= 144000
+            ? 0.08
+            : blocksSince <= 403200
+              ? 0.04
+              : blocksSince <= 806400
+                ? 0.02
+                : 0.001;
+};
+
 const getOraclePrice = async (tokenSymbol, priceOracles) => {
   const [tokenPrice, tokenDecimals] = await Promise.all([
     priceOracles[tokenSymbol].contract.methods.latestAnswer().call(),
@@ -207,15 +225,28 @@ const usePandaUserStats = (
     if (address.length <= 0 || !ethereumRegex({ exact: true }).test(address))
       return;
 
-    const userInfo = await masterChefContract.methods
-      .userInfo(pid, address)
-      .call();
-    const pendingReward = await masterChefContract.methods
-      .pendingReward(pid, address)
-      .call();
+    const [userInfo, pendingReward, currentBlock] = await Promise.all([
+      masterChefContract.methods.userInfo(pid, address).call(),
+      masterChefContract.methods.pendingReward(pid, address).call(),
+      web3.eth.getBlockNumber(),
+    ]);
+
+    const blockDiff =
+      currentBlock -
+      new BigNumber(
+        parseFloat(userInfo.firstDepositBlock) >
+        parseFloat(userInfo.lastWithdrawBlock)
+          ? userInfo.firstDepositBlock
+          : userInfo.lastWithdrawBlock,
+      ).toNumber();
+    const penalty = getWithdrawalPenalty(blockDiff);
+    const lastInteraction = new Date(new Date() - 1000 * (blockDiff * 3));
+
     setUserStats({
       lpStaked: decimate(new BigNumber(userInfo.amount), 18),
       pendingReward: decimate(new BigNumber(pendingReward), 18),
+      withdrawPenalty: penalty,
+      lastInteraction,
     });
   }, [address]);
 
