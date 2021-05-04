@@ -132,7 +132,12 @@ export default function PandaPage() {
               <DarkInput
                 type="text"
                 placeholder="Enter Wallet Address for personalized data (Connect button coming soon!)"
-                onChange={event => setWallet(event.target.value)}
+                onChange={event => {
+                  if (ethereumRegex({ exact: true }).test(event.target.value))
+                    window.location.href = `https://baoview.xyz/panda/${
+                      event.target.value
+                    }`;
+                }}
               />
               <hr />
             </>
