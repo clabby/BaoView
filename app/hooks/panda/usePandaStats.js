@@ -136,7 +136,7 @@ const getPandaStats = async (
         .div(lockedUsd),
     };
 
-    return { lockedUsd, roi, totalLocked };
+    return { pid, lockedUsd, roi, totalLocked };
   }
 
   const token = oracleToken ? 1 : 0;

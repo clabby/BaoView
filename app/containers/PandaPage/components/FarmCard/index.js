@@ -66,6 +66,8 @@ export default function FarmCard({
       0,
     )} ${props.ratio === 0.95 ? 'Locked' : 'Unlocked'}`;
 
+  const Loading = () => <Spinner animation="grow" size="sm" />;
+
   return (
     <div className="col-4">
       <DarkCard className="mb-2">
@@ -102,7 +104,7 @@ export default function FarmCard({
               {pandaStats ? (
                 `$${getBalanceNumber(new BigNumber(pandaStats.lockedUsd), 0)}`
               ) : (
-                <Spinner animation="grow" size="sm" />
+                <Loading />
               )}
             </Badge>
           </DarkListGroupItem>
@@ -114,7 +116,7 @@ export default function FarmCard({
                   {pandaUserStats ? (
                     `${getBalanceNumber(pandaUserStats.lpStaked, 0)} LP`
                   ) : (
-                    <Spinner animation="grow" size="sm" />
+                    <Loading />
                   )}
                 </Badge>
               </DarkListGroupItem>
@@ -131,12 +133,25 @@ export default function FarmCard({
                       0,
                     )}`
                   ) : (
-                    <Spinner animation="grow" size="sm" />
+                    <Loading />
                   )}
                 </Badge>
               </DarkListGroupItem>
               <DarkListGroupItem>
-                Pending PNDA:{' '}
+                Pending PNDA{' '}
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    <Tooltip>
+                      Harvest with one click on https://pnda.farm/
+                    </Tooltip>
+                  }
+                >
+                  <a href="https://pnda.farm/#/farm" target="_blank">
+                    <FontAwesomeIcon icon={['fas', 'external-link-alt']} />
+                  </a>
+                </OverlayTrigger>
+                {': '}
                 <Badge pill variant="info" style={{ float: 'right' }}>
                   {pandaUserStats ? (
                     `${getBalanceNumber(
@@ -144,7 +159,7 @@ export default function FarmCard({
                       0,
                     )} PNDA`
                   ) : (
-                    <Spinner animation="grow" size="sm" />
+                    <Loading />
                   )}
                 </Badge>
               </DarkListGroupItem>
@@ -177,7 +192,7 @@ export default function FarmCard({
                   <PndaPerDay ratio={0.05} />
                 </>
               ) : (
-                <Spinner animation="grow" size="sm" />
+                <Loading />
               )}
             </Badge>
           </DarkListGroupItem>
@@ -200,7 +215,7 @@ export default function FarmCard({
               </>
             ) : (
               <Badge pill variant="secondary">
-                <Spinner animation="grow" size="sm" />
+                <Loading />
               </Badge>
             )}
           </DarkListGroupItem>

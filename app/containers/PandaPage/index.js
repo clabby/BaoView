@@ -7,14 +7,22 @@ import Web3 from 'web3';
 import _ from 'lodash';
 import ethereumRegex from 'ethereum-regex';
 
-import { Alert, Badge, Container, Form } from 'react-bootstrap';
+import {
+  Alert,
+  Badge,
+  Button,
+  Container,
+  Form,
+  InputGroup,
+} from 'react-bootstrap';
 
-import { DarkInput } from './styles/styled';
+import { DarkInput, DarkTable } from './styles/styled';
 
 import '../HomePage/styles/poolicons.scss';
 
 import supportedPools from '../../lib/panda/supportedPools';
 import FarmCard from './components/FarmCard';
+import FarmTableRow from './components/FarmTableRow';
 import Overview from './components/Overview';
 import masterChefAbi from '../../lib/bao/lib/abi/masterchef.json';
 import getPriceOracles from '../../lib/panda/oracles';
@@ -41,6 +49,7 @@ export default function PandaPage() {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [activeWallet, setActiveWallet] = useState('');
+  const [displayType, setDisplayType] = useState('cards');
 
   let pools = supportedPools;
   if (searchQuery.length > 0) {
@@ -53,17 +62,29 @@ export default function PandaPage() {
   }
 
   _.each(pools, pool => {
-    poolElements.push(
-      <FarmCard
-        pool={pool}
-        key={pool.pid}
-        web3={web3}
-        masterChefContract={masterChefContract}
-        priceOracles={priceOracles}
-        pndaPrice={pndaPrice}
-        activeWallet={activeWallet}
-      />,
-    );
+    if (displayType === 'cards')
+      poolElements.push(
+        <FarmCard
+          pool={pool}
+          key={pool.pid}
+          web3={web3}
+          masterChefContract={masterChefContract}
+          priceOracles={priceOracles}
+          pndaPrice={pndaPrice}
+          activeWallet={activeWallet}
+        />,
+      );
+    else
+      poolElements.push(
+        <FarmTableRow
+          pool={pool}
+          key={pool.pid}
+          web3={web3}
+          masterChefContract={masterChefContract}
+          priceOracles={priceOracles}
+          pndaPrice={pndaPrice}
+        />,
+      );
   });
 
   return (
@@ -87,32 +108,68 @@ export default function PandaPage() {
       <hr />
       <Form>
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>
-            Active Wallet:{' '}
-            <Badge variant="info" pill style={{ verticalAlign: 'center' }}>
-              {activeWallet.length > 0 ? activeWallet : 'None'}
-            </Badge>
-          </Form.Label>
-          <DarkInput
-            type="text"
-            placeholder="Enter Wallet Address for personalized data (Connect button coming soon!)"
-            onChange={event => {
-              if (ethereumRegex({ exact: true }).test(event.target.value))
-                setActiveWallet(event.target.value);
-            }}
-          />
-          <hr />
+          {displayType === 'cards' && (
+            <>
+              <Form.Label>
+                Active Wallet:{' '}
+                <Badge variant="info" pill style={{ verticalAlign: 'center' }}>
+                  {activeWallet.length > 0 ? activeWallet : 'None'}
+                </Badge>
+              </Form.Label>
+              <DarkInput
+                type="text"
+                placeholder="Enter Wallet Address for personalized data (Connect button coming soon!)"
+                onChange={event => {
+                  if (ethereumRegex({ exact: true }).test(event.target.value))
+                    setActiveWallet(event.target.value);
+                }}
+              />
+              <hr />
+            </>
+          )}
           <Form.Label>Search Pools</Form.Label>
-          <DarkInput
-            type="email"
-            placeholder="Enter Pool Name"
-            onChange={event => {
-              setSearchQuery(event.target.value);
-            }}
-          />
+          <InputGroup>
+            <DarkInput
+              type="email"
+              placeholder="Enter Pool Name"
+              onChange={event => {
+                setSearchQuery(event.target.value);
+              }}
+            />
+            <InputGroup.Append>
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  setDisplayType(displayType === 'cards' ? 'list' : 'cards');
+                }}
+              >
+                Display Mode:{' '}
+                {displayType === 'cards' ? (
+                  <Badge variant="warning">Cards</Badge>
+                ) : (
+                  <Badge variant="info">Simple List</Badge>
+                )}
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
         </Form.Group>
       </Form>
-      <div className="row">{poolElements}</div>
+      {displayType === 'cards' ? (
+        <div className="row">{poolElements}</div>
+      ) : (
+        <DarkTable striped variant="dark" responsive="sm">
+          <thead>
+            <tr>
+              <th>LP Type</th>
+              <th>LP Token</th>
+              <th>TVL</th>
+              <th>APY</th>
+              <th>Reward Per $1000 Staked</th>
+            </tr>
+          </thead>
+          <tbody>{poolElements}</tbody>
+        </DarkTable>
+      )}
     </Container>
   );
 }
