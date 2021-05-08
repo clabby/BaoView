@@ -4,6 +4,8 @@ import { BigNumber } from 'bignumber.js';
 
 import { Row, Badge, Spinner, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import BarChart from './components/BarChart';
 import { OverviewContainer, OverviewStat } from './styles/styled';
 
 import erc20Abi from '../../../../lib/bao/lib/abi/erc20.json';
@@ -11,6 +13,12 @@ import { decimate, getBalanceNumber } from '../../../../lib/formatBalance';
 
 export default function Overview({ web3, pndaPrice }) {
   const [totalSupply, setTotalSupply] = useState(undefined);
+  const [sevenDayData, setSevenDayData] = useState(undefined);
+
+  const sevenDayTvl = sevenDayData && sevenDayData.sevenDayTvl;
+  const sevenDayRhinoBurn = sevenDayData && sevenDayData.sevenDayRhinoBurn;
+  const sevenDayRhinoOneToOne =
+    sevenDayData && sevenDayData.sevenDayRhinoOneToOne;
 
   useEffect(() => {
     const effectFunc = async () => {
@@ -25,6 +33,10 @@ export default function Overview({ web3, pndaPrice }) {
       ]);
 
       setTotalSupply(decimate(new BigNumber(tokenSupply), tokenDecimals));
+
+      fetch('https://api.baoview.xyz/api/v1/panda-metrics')
+        .then(response => response.json())
+        .then(res => setSevenDayData(res));
     };
     effectFunc();
   }, []);
@@ -33,7 +45,7 @@ export default function Overview({ web3, pndaPrice }) {
 
   return (
     <OverviewContainer>
-      <Row>
+      <Row className="row-cols-3">
         <OverviewStat>
           PNDA Total Supply
           <br />
@@ -71,6 +83,56 @@ export default function Overview({ web3, pndaPrice }) {
           <Badge variant="success">
             {pndaPrice ? `$${pndaPrice.toFixed(6)}` : <Loading />}
           </Badge>
+        </OverviewStat>
+      </Row>
+      <hr />
+      <center>
+        <h4 style={{ marginBottom: 0 }}>
+          <Badge variant="info">
+            <FontAwesomeIcon icon={['fas', 'chart-line']} /> 7d Stats
+          </Badge>
+        </h4>
+      </center>
+      <br />
+      <Row className="row-cols-3">
+        <OverviewStat className="mt-2">
+          <center>
+            {sevenDayTvl ? (
+              <BarChart
+                data={sevenDayTvl}
+                title="Total Value Locked (USD)"
+                formatNumber={num => `$${num}`}
+              />
+            ) : (
+              <Spinner animation="grow" />
+            )}
+          </center>
+        </OverviewStat>
+        <OverviewStat className="mt-2">
+          <center>
+            {sevenDayRhinoBurn ? (
+              <BarChart
+                data={sevenDayRhinoBurn}
+                title="Rhino Burned"
+                formatNumber={num => `${num} RHINO`}
+              />
+            ) : (
+              <Spinner animation="grow" />
+            )}
+          </center>
+        </OverviewStat>
+        <OverviewStat className="mt-2">
+          <center>
+            {sevenDayRhinoOneToOne ? (
+              <BarChart
+                data={sevenDayRhinoOneToOne}
+                title="Rhino 1:1 Contract Balance"
+                formatNumber={num => `${num} RHINO`}
+              />
+            ) : (
+              <Spinner animation="grow" />
+            )}
+          </center>
         </OverviewStat>
       </Row>
     </OverviewContainer>
