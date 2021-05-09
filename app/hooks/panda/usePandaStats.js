@@ -83,6 +83,41 @@ const getPandaStats = async (
   const lpAddress = pool.lpAddresses[56];
   const lpContract = new web3.eth.Contract(lpAbi, lpAddress);
 
+  // Special case: Single asset LP
+  if (pool.pid === 5 || pool.pid === 6) {
+    const [token0, stakedLPRaw, reward] = await Promise.all([
+      lpContract.methods.symbol().call(),
+      lpContract.methods.balanceOf(MASTER_CHEF_ADDRESS).call(),
+      masterChefContract.methods.getNewRewardPerBlock(pool.pid + 1).call(),
+    ]);
+
+    const stakedLP = decimate(new BigNumber(stakedLPRaw));
+    const [rawTokenPrice, tokenDecimals] = await getOraclePrice(
+      token0,
+      priceOracles,
+    );
+    const tokenPrice = decimate(new BigNumber(rawTokenPrice), tokenDecimals);
+    const lockedUsd = tokenPrice.times(stakedLP).toNumber();
+
+    const decimatedReward = decimate(new BigNumber(reward), 16);
+    const roi = {
+      apy: new BigNumber(pndaPrice)
+        .times(decimatedReward)
+        .times(BLOCKS_PER_YEAR)
+        .div(lockedUsd),
+      mpy: new BigNumber(pndaPrice)
+        .times(decimatedReward)
+        .times(BLOCKS_PER_MONTH)
+        .div(lockedUsd),
+      wpy: new BigNumber(pndaPrice)
+        .times(decimatedReward)
+        .times(BLOCKS_PER_WEEK)
+        .div(lockedUsd),
+    };
+
+    return { pid, lockedUsd, roi, totalLocked: stakedLPRaw };
+  }
+
   // Get token addresses from LP Contract
   const [token0, token1] = await Promise.all([
     lpContract.methods.token0().call(),

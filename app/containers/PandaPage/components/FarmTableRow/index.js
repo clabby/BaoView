@@ -49,15 +49,6 @@ export default function FarmTableRow({
         </OverlayTrigger>
       </td>
       <td>
-        {(pool.pid === 5 || pool.pid === 6) && (
-          <>
-            <OverlayTrigger overlay={<Tooltip>Broken</Tooltip>}>
-              <Badge pill variant="warning">
-                <FontAwesomeIcon icon={['fas', 'exclamation-triangle']} />
-              </Badge>
-            </OverlayTrigger>{' '}
-          </>
-        )}
         <OverlayTrigger
           placement="top"
           overlay={

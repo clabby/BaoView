@@ -75,15 +75,6 @@ export default function FarmCard({
           <div
             className={`${pool.icon.split('/')[1].split('.')[0]} pool-icon`}
           />
-          {(pool.pid === 5 || pool.pid === 6) && (
-            <>
-              <OverlayTrigger overlay={<Tooltip>Broken</Tooltip>}>
-                <Badge pill variant="warning">
-                  <FontAwesomeIcon icon={['fas', 'exclamation-triangle']} />
-                </Badge>
-              </OverlayTrigger>{' '}
-            </>
-          )}
           {pool.name}
           <br />
           <small>{pool.symbol.split(' ')[0]}</small>

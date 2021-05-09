@@ -104,8 +104,6 @@ export default function PandaPage() {
         </Badge>
         <br />
         This page is a work in progress. More features are on the way!
-        <br />
-        One sided pools are currently not working.
       </Alert>
       <Overview
         web3={web3}
