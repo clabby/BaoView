@@ -4,17 +4,18 @@ import BigNumber from 'bignumber.js';
 import { Group } from '@visx/group';
 import { Bar } from '@visx/shape';
 import { scaleLinear, scaleBand } from '@visx/scale';
-import { ParentSize } from '@visx/responsive';
-import { darken } from 'polished';
+import { lighten } from 'polished';
 
 import { Badge } from 'react-bootstrap';
 import { ChartContainer } from './styles/styled';
 
 import { getBalanceNumber } from '../../../../../../lib/formatBalance';
 
-export default function BarChart({ data, title, formatNumber }) {
-  const width = 300; // TODO - make dynamic
-  const height = 200;
+import { Colors } from '../../../../../App/styles/colors';
+
+export default function BarChart({ data, title, formatNumber, parent }) {
+  const width = parent.width - 25; // account for padding
+  const height = 175;
   const margin = { top: 0, bottom: 0, left: 0, right: 0 };
 
   // Bounds
@@ -66,44 +67,39 @@ export default function BarChart({ data, title, formatNumber }) {
   );
 
   return (
-    <ParentSize>
-      {parent => (
-        <ChartContainer>
-          <Badge variant={hover ? 'info' : 'secondary'} className="mb-4">
-            {title}
-            <br />
-            <br />
-            {getBadgeText(hover || data[data.length - 1])}
-          </Badge>
-          <svg width={parent.width} height="175px">
-            {data.map((d, i) => {
-              const barHeight = yMax - yPoint(d);
-              return (
-                <Group key={`bar-${i}`}>
-                  <Bar
-                    x={xPoint(d)}
-                    y={yMax - barHeight}
-                    height={barHeight}
-                    width={xScale.bandwidth()}
-                    fill="#12a3b8"
-                    onMouseOver={event => {
-                      setHover(d);
-                      event.target.setAttribute(
-                        'fill',
-                        darken(0.05, '#12a3b8'),
-                      );
-                    }}
-                    onMouseOut={event => {
-                      setHover(undefined);
-                      event.target.setAttribute('fill', '#12a3b8');
-                    }}
-                  />
-                </Group>
-              );
-            })}
-          </svg>
-        </ChartContainer>
-      )}
-    </ParentSize>
+    <ChartContainer>
+      <b>{title}</b>
+      <br />
+      <Badge variant={hover ? 'info' : 'secondary'} className="mb-4 mt-2">
+        {getBadgeText(hover || data[data.length - 1])}
+      </Badge>
+      <svg width={parent.width} height="175px">
+        {data.map((d, i) => {
+          const barHeight = yMax - yPoint(d);
+          return (
+            <Group key={`bar-${i}`}>
+              <Bar
+                x={xPoint(d)}
+                y={yMax - barHeight}
+                height={barHeight}
+                width={xScale.bandwidth()}
+                fill={lighten(0.3, Colors.background)}
+                onMouseOver={event => {
+                  setHover(d);
+                  event.target.setAttribute('fill', '#17a2b8');
+                }}
+                onMouseOut={event => {
+                  setHover(undefined);
+                  event.target.setAttribute(
+                    'fill',
+                    lighten(0.3, Colors.background),
+                  );
+                }}
+              />
+            </Group>
+          );
+        })}
+      </svg>
+    </ChartContainer>
   );
 }

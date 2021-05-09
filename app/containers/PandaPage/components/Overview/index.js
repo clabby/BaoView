@@ -5,6 +5,7 @@ import { BigNumber } from 'bignumber.js';
 import { Row, Badge, Spinner, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { ParentSize } from '@visx/responsive';
 import BarChart from './components/BarChart';
 import { OverviewContainer, OverviewStat } from './styles/styled';
 
@@ -87,50 +88,79 @@ export default function Overview({ web3, pndaPrice }) {
       </Row>
       <hr />
       <center>
-        <h4 style={{ marginBottom: 0 }}>
+        <h5 style={{ marginBottom: 0 }}>
           <Badge variant="info">
-            <FontAwesomeIcon icon={['fas', 'chart-line']} /> 7d Stats
-          </Badge>
-        </h4>
+            <FontAwesomeIcon icon={['fas', 'chart-line']} /> 7d Stats{' '}
+          </Badge>{' '}
+          <OverlayTrigger
+            placement="right"
+            overlay={
+              <Tooltip>
+                <b>Why is there less than 7 days of data being displayed?</b>
+                <br />
+                This section is a work in progress, and data collection began on{' '}
+                May 7, 2021. These charts will be populated with 7 days worth of{' '}
+                data from May 14, 2021 onwards.
+              </Tooltip>
+            }
+          >
+            <FontAwesomeIcon icon={['fas', 'question-circle']} style={{ verticalAlign: 'middle' }} />
+          </OverlayTrigger>
+        </h5>
       </center>
       <br />
       <Row className="row-cols-3">
         <OverviewStat className="mt-2">
           <center>
             {sevenDayTvl ? (
-              <BarChart
-                data={sevenDayTvl}
-                title="Total Value Locked (USD)"
-                formatNumber={num => `$${num}`}
-              />
+              <ParentSize>
+                {parent => (
+                  <BarChart
+                    data={sevenDayTvl}
+                    title="Total Value Locked (USD)"
+                    formatNumber={num => `$${num}`}
+                    parent={parent}
+                  />
+                )}
+              </ParentSize>
             ) : (
-              <Spinner animation="grow" />
+              <Spinner animation="grow" variant="info" />
             )}
           </center>
         </OverviewStat>
         <OverviewStat className="mt-2">
           <center>
             {sevenDayRhinoBurn ? (
-              <BarChart
-                data={sevenDayRhinoBurn}
-                title="Rhino Burned"
-                formatNumber={num => `${num} RHINO`}
-              />
+              <ParentSize>
+                {parent => (
+                  <BarChart
+                    data={sevenDayRhinoBurn}
+                    title="Rhino Burned"
+                    formatNumber={num => `${num} RHINO`}
+                    parent={parent}
+                  />
+                )}
+              </ParentSize>
             ) : (
-              <Spinner animation="grow" />
+              <Spinner animation="grow" variant="info" />
             )}
           </center>
         </OverviewStat>
         <OverviewStat className="mt-2">
           <center>
             {sevenDayRhinoOneToOne ? (
-              <BarChart
-                data={sevenDayRhinoOneToOne}
-                title="Rhino 1:1 Contract Balance"
-                formatNumber={num => `${num} RHINO`}
-              />
+              <ParentSize>
+                {parent => (
+                  <BarChart
+                    data={sevenDayRhinoOneToOne}
+                    title="Rhino 1:1 Contract Balance"
+                    formatNumber={num => `${num} RHINO`}
+                    parent={parent}
+                  />
+                )}
+              </ParentSize>
             ) : (
-              <Spinner animation="grow" />
+              <Spinner animation="grow" variant="info" />
             )}
           </center>
         </OverviewStat>
