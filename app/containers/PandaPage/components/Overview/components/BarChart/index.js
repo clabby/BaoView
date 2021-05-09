@@ -36,7 +36,7 @@ export default function BarChart({ data, title, formatNumber, parent }) {
   const yScale = scaleLinear({
     range: [yMax, 0],
     round: true,
-    domain: [0, Math.max(...data.map(y))],
+    domain: [Math.min(...data.map(y)) * 0.85, Math.max(...data.map(y))],
   });
 
   // Compose together the scale and accessor functions to get point functions
