@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 
-import { FormControl, Table } from 'react-bootstrap';
+import { FormControl, Table, Tabs } from 'react-bootstrap';
 import { Colors } from '../../App/styles/colors';
 
 export const DarkInput = styled(FormControl)`
@@ -26,5 +26,27 @@ export const DarkTable = styled(Table)`
 
   td {
     text-align: center;
+  }
+`;
+
+export const DarkTabs = styled(Tabs)`
+  border-bottom: none;
+  margin-bottom: 20px;
+
+  .nav-item {
+    color: ${Colors.textColor};
+    border-radius: 5px;
+    background-color: ${Colors.background};
+
+    &:hover {
+      border-color: ${lighten(0.1, Colors.background)};
+      background-color: ${lighten(0.1, Colors.background)};
+    }
+
+    &.active {
+      color: ${Colors.textColor};
+      border-color: ${lighten(0.2, Colors.background)};
+      background-color: ${lighten(0.2, Colors.background)};
+    }
   }
 `;

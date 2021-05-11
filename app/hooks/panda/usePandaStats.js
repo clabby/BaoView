@@ -247,8 +247,40 @@ const usePndaPrice = (web3, masterChefContract, priceOracles) => {
   return pndaPrice;
 };
 
-const usePandaUserStats = (
-  pid,
+const useAllPandaStats = (
+  web3,
+  masterChefContract,
+  priceOracles,
+  pndaPrice,
+) => {
+  const [pandaStats, setPandaStats] = useState(undefined);
+
+  const getStats = useCallback(async () => {
+    if (!pndaPrice) return;
+
+    const fetched = await Promise.all(
+      _.map(supportedPools, pool =>
+        getPandaStats(
+          pool.pid,
+          web3,
+          masterChefContract,
+          priceOracles,
+          pndaPrice,
+        ),
+      ),
+    );
+
+    setPandaStats(fetched);
+  }, [pndaPrice]);
+
+  useMemo(() => {
+    getStats();
+  }, [pndaPrice]);
+
+  return pandaStats;
+};
+
+const useAllPandaUserStats = (
   web3,
   masterChefContract,
   priceOracles,
@@ -260,29 +292,42 @@ const usePandaUserStats = (
     if (address.length <= 0 || !ethereumRegex({ exact: true }).test(address))
       return;
 
-    const [userInfo, pendingReward, currentBlock] = await Promise.all([
-      masterChefContract.methods.userInfo(pid, address).call(),
-      masterChefContract.methods.pendingReward(pid, address).call(),
-      web3.eth.getBlockNumber(),
-    ]);
+    const results = await Promise.all(
+      _.map(
+        supportedPools,
+        pool =>
+          new Promise(async resolve => {
+            const [userInfo, pendingReward, currentBlock] = await Promise.all([
+              masterChefContract.methods.userInfo(pool.pid, address).call(),
+              masterChefContract.methods.pendingReward(pool.pid, address).call(),
+              web3.eth.getBlockNumber(),
+            ]);
 
-    const blockDiff =
-      currentBlock -
-      new BigNumber(
-        parseFloat(userInfo.firstDepositBlock) >
-        parseFloat(userInfo.lastWithdrawBlock)
-          ? userInfo.firstDepositBlock
-          : userInfo.lastWithdrawBlock,
-      ).toNumber();
-    const penalty = getWithdrawalPenalty(blockDiff);
-    const lastInteraction = new Date(new Date() - 1000 * (blockDiff * 3));
+            const blockDiff =
+              currentBlock -
+              new BigNumber(
+                parseFloat(userInfo.firstDepositBlock) >
+                parseFloat(userInfo.lastWithdrawBlock)
+                  ? userInfo.firstDepositBlock
+                  : userInfo.lastWithdrawBlock,
+              ).toNumber();
+            const penalty = getWithdrawalPenalty(blockDiff);
+            const lastInteraction = new Date(
+              new Date() - 1000 * (blockDiff * 3),
+            );
 
-    setUserStats({
-      lpStaked: decimate(new BigNumber(userInfo.amount), 18),
-      pendingReward: decimate(new BigNumber(pendingReward), 18),
-      withdrawPenalty: penalty,
-      lastInteraction,
-    });
+            resolve({
+              pid: pool.pid,
+              lpStaked: decimate(new BigNumber(userInfo.amount), 18),
+              pendingReward: decimate(new BigNumber(pendingReward), 18),
+              withdrawPenalty: penalty,
+              lastInteraction,
+            });
+          }),
+      ),
+    );
+
+    setUserStats(results);
   }, [address]);
 
   useMemo(() => {
@@ -292,4 +337,4 @@ const usePandaUserStats = (
   return userStats;
 };
 
-export { usePandaStats, usePndaPrice, usePandaUserStats };
+export { usePandaStats, useAllPandaStats, usePndaPrice, useAllPandaUserStats };

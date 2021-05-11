@@ -1,5 +1,5 @@
 /**
- * Pool Metrics Page
+ * Panda Stats Page
  */
 
 import React, { useEffect, useState } from 'react';
@@ -15,11 +15,11 @@ import {
   Container,
   Form,
   InputGroup,
+  Tab,
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { DarkInput, DarkTable } from './styles/styled';
-
+import { DarkInput, DarkTable, DarkTabs } from './styles/styled';
 import './styles/poolicons.scss';
 
 import supportedPools from '../../lib/panda/supportedPools';
@@ -29,9 +29,18 @@ import Overview from './components/Overview';
 import masterChefAbi from '../../lib/bao/lib/abi/masterchef.json';
 import getPriceOracles from '../../lib/panda/oracles';
 
-import { usePndaPrice } from '../../hooks/panda/usePandaStats';
+import {
+  useAllPandaStats,
+  useAllPandaUserStats,
+  usePndaPrice,
+} from '../../hooks/panda/usePandaStats';
 
 export default function PandaPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeWallet, setActiveWallet] = useState('');
+  const [displayType, setDisplayType] = useState('cards');
+  const [activeTab, setActiveTab] = useState('PANDA');
+
   /*
    * Set up Web3
    */
@@ -47,9 +56,18 @@ export default function PandaPage() {
   const priceOracles = getPriceOracles(web3);
   const pndaPrice = usePndaPrice(web3, masterChefContract, priceOracles);
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeWallet, setActiveWallet] = useState('');
-  const [displayType, setDisplayType] = useState('cards');
+  const pandaStats = useAllPandaStats(
+    web3,
+    masterChefContract,
+    priceOracles,
+    pndaPrice,
+  );
+  const pandaUserStats = useAllPandaUserStats(
+    web3,
+    masterChefContract,
+    priceOracles,
+    activeWallet,
+  );
 
   const setWallet = wallet => {
     if (wallet && ethereumRegex({ exact: true }).test(wallet))
@@ -61,6 +79,20 @@ export default function PandaPage() {
 
   const poolElements = [];
   let pools = supportedPools;
+
+  // Filter by tab
+  pools = _.filter(
+    pools,
+    pool =>
+      (activeTab === 'STAKED' &&
+        activeWallet &&
+        pandaUserStats &&
+        _.find(pandaUserStats, { pid: pool.pid }).lpStaked.toNumber() > 0) ||
+      (activeTab === 'PANDA' && !pool.poolType) ||
+      (activeTab === 'CAKE' && pool.poolType),
+  );
+
+  // Filter by search query (if query is present)
   if (searchQuery.length > 0) {
     pools = _.filter(
       pools,
@@ -76,9 +108,8 @@ export default function PandaPage() {
         <FarmCard
           pool={pool}
           key={pool.pid}
-          web3={web3}
-          masterChefContract={masterChefContract}
-          priceOracles={priceOracles}
+          pandaStats={_.find(pandaStats, { pid: pool.pid })}
+          pandaUserStats={_.find(pandaUserStats, { pid: pool.pid })}
           pndaPrice={pndaPrice}
           activeWallet={activeWallet}
         />,
@@ -88,9 +119,8 @@ export default function PandaPage() {
         <FarmTableRow
           pool={pool}
           key={pool.pid}
-          web3={web3}
-          masterChefContract={masterChefContract}
-          priceOracles={priceOracles}
+          pandaStats={_.find(pandaStats, { pid: pool.pid })}
+          pandaUserStats={_.find(pandaUserStats, { pid: pool.pid })}
           pndaPrice={pndaPrice}
         />,
       );
@@ -167,6 +197,59 @@ export default function PandaPage() {
           </InputGroup>
         </Form.Group>
       </Form>
+      <DarkTabs
+        defaultActiveKey="PANDA"
+        activeKey={activeTab}
+        id="pool-tabs"
+        onSelect={key => setActiveTab(key)}
+      >
+        <Tab
+          eventKey="PANDA"
+          title={
+            <>
+              All Panda LP{' '}
+              {supportedPools.length >= 0 && (
+                <Badge variant="success">
+                  {_.filter(supportedPools, pool => !pool.poolType).length}
+                </Badge>
+              )}
+            </>
+          }
+        />
+        <Tab
+          eventKey="CAKE"
+          tabClassName="ml-2"
+          title={
+            <>
+              All Cake LP{' '}
+              {supportedPools.length >= 0 && (
+                <Badge variant="warning">
+                  {_.filter(supportedPools, { poolType: 'CAKE' }).length}
+                </Badge>
+              )}
+            </>
+          }
+        />
+        <Tab
+          eventKey="STAKED"
+          tabClassName="ml-2"
+          title={
+            <>
+              🧑‍🌾 Currently Staked{' '}
+              {pools.length > 0 && (
+                <Badge variant="info">
+                  {
+                    _.filter(
+                      pandaUserStats,
+                      pool => pool.lpStaked.toNumber() > 0,
+                    ).length
+                  }
+                </Badge>
+              )}
+            </>
+          }
+        />
+      </DarkTabs>
       {displayType === 'cards' ? (
         <div className="row">{poolElements}</div>
       ) : (

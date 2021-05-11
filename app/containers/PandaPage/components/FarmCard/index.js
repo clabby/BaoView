@@ -11,11 +11,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DarkCard, DarkCardHeader, DarkListGroupItem } from './styles/styled';
 
-import {
-  usePandaStats,
-  usePandaUserStats,
-} from '../../../../hooks/panda/usePandaStats';
-
 import { decimate, getBalanceNumber } from '../../../../lib/formatBalance';
 
 // Images
@@ -24,28 +19,12 @@ import PancakeLogo from '../../../../images/pancakelogo.png';
 
 export default function FarmCard({
   pool,
-  web3,
-  masterChefContract,
-  priceOracles,
+  pandaStats,
+  pandaUserStats,
   pndaPrice,
   activeWallet,
 }) {
   const poolType = pool.poolType && pool.poolType === 'CAKE';
-  const pandaStats = usePandaStats(
-    pool.pid,
-    web3,
-    masterChefContract,
-    priceOracles,
-    pndaPrice,
-  );
-
-  const pandaUserStats = usePandaUserStats(
-    pool.pid,
-    web3,
-    masterChefContract,
-    null,
-    activeWallet,
-  );
 
   const PndaPerDay = props =>
     `${getBalanceNumber(

@@ -4,30 +4,14 @@ import { BigNumber } from 'bignumber.js';
 import { Badge, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { usePandaStats } from '../../../../hooks/panda/usePandaStats';
-
 import { getBalanceNumber } from '../../../../lib/formatBalance';
 
 // Images
 import PandaLogo from '../../../../images/pandalogo.png';
 import PancakeLogo from '../../../../images/pancakelogo.png';
 
-export default function FarmTableRow({
-  pool,
-  web3,
-  masterChefContract,
-  priceOracles,
-  pndaPrice,
-}) {
+export default function FarmTableRow({ pool, pandaStats, pndaPrice }) {
   const poolType = pool.poolType && pool.poolType === 'CAKE';
-  const pandaStats = usePandaStats(
-    pool.pid,
-    web3,
-    masterChefContract,
-    priceOracles,
-    pndaPrice,
-  );
-
   const Loading = () => <Spinner animation="grow" size="sm" />;
 
   return (
