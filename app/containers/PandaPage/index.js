@@ -40,6 +40,7 @@ export default function PandaPage() {
   const [activeWallet, setActiveWallet] = useState('');
   const [displayType, setDisplayType] = useState('cards');
   const [activeTab, setActiveTab] = useState('PANDA');
+  const [sortType, setSortType] = useState(undefined);
 
   /*
    * Set up Web3
@@ -100,6 +101,22 @@ export default function PandaPage() {
         pool.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pool.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
+  }
+
+  // Sorts
+  if (pandaStats && sortType) {
+    if (_.includes(sortType, 'APY')) {
+      pools = _.sortBy(pools, pool =>
+        _.find(pandaStats, { pid: pool.pid }).roi.apy.toNumber(),
+      );
+      if (sortType === 'APY-DESC') pools = _.reverse(pools);
+    } else if (_.includes(sortType, 'TVL')) {
+      pools = _.sortBy(
+        pools,
+        pool => _.find(pandaStats, { pid: pool.pid }).lockedUsd,
+      );
+      if (sortType === 'TVL-DESC') pools = _.reverse(pools);
+    }
   }
 
   _.each(pools, pool => {
@@ -191,6 +208,53 @@ export default function PandaPage() {
                   <Badge variant="warning">Cards</Badge>
                 ) : (
                   <Badge variant="info">Simple List</Badge>
+                )}
+              </Button>
+            </InputGroup.Append>
+            <InputGroup.Append>
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  switch (sortType) {
+                    case 'TVL-ASC':
+                      setSortType(undefined);
+                      break;
+                    case 'APY-DESC':
+                      setSortType('APY-ASC');
+                      break;
+                    case 'APY-ASC':
+                      setSortType('TVL-DESC');
+                      break;
+                    case 'TVL-DESC':
+                      setSortType('TVL-ASC');
+                      break;
+                    default:
+                      setSortType('APY-DESC');
+                      break;
+                  }
+                }}
+              >
+                Sort By:{' '}
+                {!sortType ? (
+                  <Badge variant="secondary">Default</Badge>
+                ) : sortType === 'APY-DESC' ? (
+                  <Badge variant="primary">
+                    APY{' '}
+                    <FontAwesomeIcon icon={['fas', 'long-arrow-alt-down']} />
+                  </Badge>
+                ) : sortType === 'APY-ASC' ? (
+                  <Badge variant="primary">
+                    APY <FontAwesomeIcon icon={['fas', 'long-arrow-alt-up']} />
+                  </Badge>
+                ) : sortType === 'TVL-DESC' ? (
+                  <Badge variant="danger">
+                    TVL{' '}
+                    <FontAwesomeIcon icon={['fas', 'long-arrow-alt-down']} />
+                  </Badge>
+                ) : (
+                  <Badge variant="danger">
+                    TVL <FontAwesomeIcon icon={['fas', 'long-arrow-alt-up']} />
+                  </Badge>
                 )}
               </Button>
             </InputGroup.Append>
