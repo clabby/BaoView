@@ -237,23 +237,29 @@ export default function PandaPage() {
                 Sort By:{' '}
                 {!sortType ? (
                   <Badge variant="secondary">Default</Badge>
-                ) : sortType === 'APY-DESC' ? (
+                ) : _.includes(sortType, 'APY') ? (
                   <Badge variant="primary">
                     APY{' '}
-                    <FontAwesomeIcon icon={['fas', 'long-arrow-alt-down']} />
-                  </Badge>
-                ) : sortType === 'APY-ASC' ? (
-                  <Badge variant="primary">
-                    APY <FontAwesomeIcon icon={['fas', 'long-arrow-alt-up']} />
-                  </Badge>
-                ) : sortType === 'TVL-DESC' ? (
-                  <Badge variant="danger">
-                    TVL{' '}
-                    <FontAwesomeIcon icon={['fas', 'long-arrow-alt-down']} />
+                    <FontAwesomeIcon
+                      icon={[
+                        'fas',
+                        `long-arrow-alt-${
+                          sortType === 'APY-DESC' ? 'down' : 'up'
+                        }`,
+                      ]}
+                    />
                   </Badge>
                 ) : (
                   <Badge variant="danger">
-                    TVL <FontAwesomeIcon icon={['fas', 'long-arrow-alt-up']} />
+                    TVL{' '}
+                    <FontAwesomeIcon
+                      icon={[
+                        'fas',
+                        `long-arrow-alt-${
+                          sortType === 'TVL-DESC' ? 'down' : 'up'
+                        }`,
+                      ]}
+                    />
                   </Badge>
                 )}
               </Button>
