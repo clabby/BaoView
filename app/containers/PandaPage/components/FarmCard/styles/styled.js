@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 
-import { Card, ListGroupItem } from 'react-bootstrap';
+import { Button, Card, ListGroupItem } from 'react-bootstrap';
 
 import { Colors } from '../../../../App/styles/colors';
 
@@ -21,4 +21,16 @@ export const DarkCardHeader = styled(Card.Header)`
 
 export const DarkListGroupItem = styled(ListGroupItem)`
   background-color: ${lighten(0.1, Colors.background)};
+`;
+
+export const PoolDataToggleButton = styled(Button)`
+  transition: 200ms;
+  color: ${Colors.textColor};
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    box-shadow: none;
+    color: #17a2b8;
+  }
 `;

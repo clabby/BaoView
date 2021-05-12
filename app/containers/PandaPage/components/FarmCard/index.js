@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BigNumber } from 'bignumber.js';
 
 import {
+  Accordion,
   Badge,
   ListGroup,
   OverlayTrigger,
   Spinner,
   Tooltip,
 } from 'react-bootstrap';
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DarkCard, DarkCardHeader, DarkListGroupItem } from './styles/styled';
+import {
+  DarkCard,
+  DarkCardHeader,
+  DarkListGroupItem,
+  PoolDataToggleButton,
+} from './styles/styled';
 
 import { decimate, getBalanceNumber } from '../../../../lib/formatBalance';
 
@@ -46,6 +54,29 @@ export default function FarmCard({
     )} ${props.ratio === 0.95 ? 'Locked' : 'Unlocked'}`;
 
   const Loading = () => <Spinner animation="grow" size="sm" />;
+
+  const PoolDataToggle = ({ children, eventKey }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    const toggleAccordion = useAccordionToggle(eventKey, () =>
+      setExpanded(!expanded),
+    );
+
+    return (
+      <center>
+        <PoolDataToggleButton
+          type="button"
+          onClick={toggleAccordion}
+          variant="link"
+        >
+          {children}{' '}
+          <FontAwesomeIcon
+            icon={['fas', `long-arrow-alt-${expanded ? 'up' : 'down'}`]}
+          />
+        </PoolDataToggleButton>
+      </center>
+    );
+  };
 
   return (
     <div className="col-4">
@@ -229,6 +260,79 @@ export default function FarmCard({
                 <Loading />
               </Badge>
             )}
+          </DarkListGroupItem>
+          <DarkListGroupItem>
+            <Accordion>
+              <PoolDataToggle eventKey={pool.pid}>More Info</PoolDataToggle>
+              <Accordion.Collapse eventKey={pool.pid}>
+                {pandaStats ? (
+                  <>
+                    <center>
+                      <b>Pool Info</b>
+                    </center>
+                    LP in Supply
+                    <span style={{ float: 'right' }}>
+                      {getBalanceNumber(new BigNumber(pandaStats.totalSupply))}
+                    </span>
+                    <br />
+                    LP Staked
+                    <span style={{ float: 'right' }}>
+                      {getBalanceNumber(new BigNumber(pandaStats.totalLocked))}
+                    </span>
+                    <br /> % Staked
+                    <span style={{ float: 'right' }}>
+                      {getBalanceNumber(
+                        new BigNumber(pandaStats.lockedPercentage),
+                        0,
+                      )}
+                      %
+                    </span>
+                    <br />
+                    <br />
+                    <center>
+                      <b>Oracle Info</b>
+                    </center>
+                    LINK Oracle Contract
+                    <span style={{ float: 'right' }}>
+                      <a
+                        href={`https://bscscan.com/address/${
+                          pandaStats.oracleContractAddress
+                        }`}
+                        target="_blank"
+                      >
+                        {pandaStats.oracleToken}{' '}
+                        <FontAwesomeIcon icon={['fas', 'external-link-alt']} />
+                      </a>
+                    </span>
+                    <br />
+                    Oracle Token Price
+                    <span style={{ float: 'right' }}>
+                      $
+                      {pandaStats.oracleTokenPrice &&
+                        getBalanceNumber(pandaStats.oracleTokenPrice, 0)}
+                    </span>
+                    <br />
+                    <br />
+                    <center>
+                      <b>Tokens in LP Supply</b>
+                    </center>
+                    {pandaStats.token0Symbol}
+                    <span style={{ float: 'right' }}>
+                      {pandaStats.token0Balance &&
+                        getBalanceNumber(pandaStats.token0Balance, 0)}
+                    </span>
+                    <br />
+                    {pandaStats.token1Symbol}
+                    <span style={{ float: 'right' }}>
+                      {pandaStats.token1Balance &&
+                        getBalanceNumber(pandaStats.token1Balance, 0)}
+                    </span>
+                  </>
+                ) : (
+                  <Loading />
+                )}
+              </Accordion.Collapse>
+            </Accordion>
           </DarkListGroupItem>
         </ListGroup>
       </DarkCard>

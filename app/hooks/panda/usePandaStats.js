@@ -189,7 +189,24 @@ const getPandaStats = async (
         .div(lockedUsd),
     };
 
-    return { pid, lockedUsd, roi, totalLocked };
+    return {
+      pid,
+      lockedUsd,
+      roi,
+      totalLocked,
+      totalSupply,
+      lockedPercentage,
+      token0Symbol,
+      token1Symbol,
+      token0Balance: decimate(new BigNumber(reserves[0]), token0Decimals),
+      token1Balance: decimate(new BigNumber(reserves[1]), token0Decimals),
+      oracleContractAddress:
+        priceOracles[oracleToken ? token0Symbol : token1Symbol].address,
+      oracleToken: oracleToken ? token0Symbol : token1Symbol,
+      oracleTokenPrice:
+        oracleTokenPrice &&
+        decimate(new BigNumber(oracleTokenPrice), oracleTokenDecimals),
+    };
   }
 
   const token = oracleToken ? 1 : 0;
