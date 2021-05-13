@@ -92,20 +92,6 @@ export default function Overview({ web3, pndaPrice }) {
           <Badge variant="info">
             <FontAwesomeIcon icon={['fas', 'chart-line']} /> 7d Stats{' '}
           </Badge>{' '}
-          <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip>
-                <b>Why is there less than 7 days of data being displayed?</b>
-                <br />
-                This section is a work in progress, and data collection began on{' '}
-                May 7, 2021. These charts will be populated with 7 days worth of{' '}
-                data from May 14, 2021 onwards.
-              </Tooltip>
-            }
-          >
-            <FontAwesomeIcon icon={['fas', 'question-circle']} style={{ verticalAlign: 'middle' }} />
-          </OverlayTrigger>
         </h5>
       </center>
       <br />
