@@ -34,3 +34,7 @@ export const PoolDataToggleButton = styled(Button)`
     color: #17a2b8;
   }
 `;
+
+export const RightSpan = styled.span`
+  float: right;
+`;

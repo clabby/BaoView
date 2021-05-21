@@ -191,10 +191,12 @@ const getPandaStats = async (
 
     return {
       pid,
+      lpContractAddress: lpAddress,
       lockedUsd,
       roi,
       totalLocked,
       totalSupply,
+      totalSupplyUSD: tvl,
       lockedPercentage,
       token0Symbol,
       token1Symbol,

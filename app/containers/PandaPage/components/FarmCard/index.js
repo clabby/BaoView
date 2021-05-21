@@ -17,6 +17,7 @@ import {
   DarkCardHeader,
   DarkListGroupItem,
   PoolDataToggleButton,
+  RightSpan,
 } from './styles/styled';
 
 import { decimate, getBalanceNumber } from '../../../../lib/formatBalance';
@@ -263,37 +264,60 @@ export default function FarmCard({
           </DarkListGroupItem>
           <DarkListGroupItem>
             <Accordion>
-              <PoolDataToggle eventKey={pool.pid}>More Info</PoolDataToggle>
-              <Accordion.Collapse eventKey={pool.pid}>
+              <PoolDataToggle eventKey={pool.symbol}>More Info</PoolDataToggle>
+              <Accordion.Collapse eventKey={pool.symbol}>
                 {pandaStats ? (
                   <>
                     <center>
                       <b>Pool Info</b>
                     </center>
+                    LP Contract
+                    <RightSpan>
+                      <a
+                        href={`https://bscscan.com/address/${
+                          pandaStats.lpContractAddress
+                        }`}
+                        target="_blank"
+                      >
+                        {`${pandaStats.token0Symbol}-${
+                          pandaStats.token1Symbol
+                        }`}{' '}
+                        <FontAwesomeIcon icon={['fas', 'external-link-alt']} />
+                      </a>
+                    </RightSpan>
+                    <br />
+                    Total LP Supply Value
+                    <RightSpan>
+                      {`$${getBalanceNumber(
+                        new BigNumber(pandaStats.totalSupplyUSD),
+                        0,
+                      )}`}
+                    </RightSpan>
+                    <br />
                     LP in Supply
-                    <span style={{ float: 'right' }}>
+                    <RightSpan>
                       {getBalanceNumber(new BigNumber(pandaStats.totalSupply))}
-                    </span>
+                    </RightSpan>
                     <br />
                     LP Staked
-                    <span style={{ float: 'right' }}>
+                    <RightSpan>
                       {getBalanceNumber(new BigNumber(pandaStats.totalLocked))}
-                    </span>
+                    </RightSpan>
                     <br /> % Staked
-                    <span style={{ float: 'right' }}>
+                    <RightSpan>
                       {getBalanceNumber(
                         new BigNumber(pandaStats.lockedPercentage),
                         0,
                       )}
                       %
-                    </span>
+                    </RightSpan>
                     <br />
                     <br />
                     <center>
                       <b>Oracle Info</b>
                     </center>
                     LINK Oracle Contract
-                    <span style={{ float: 'right' }}>
+                    <RightSpan>
                       <a
                         href={`https://bscscan.com/address/${
                           pandaStats.oracleContractAddress
@@ -303,30 +327,30 @@ export default function FarmCard({
                         {pandaStats.oracleToken}{' '}
                         <FontAwesomeIcon icon={['fas', 'external-link-alt']} />
                       </a>
-                    </span>
+                    </RightSpan>
                     <br />
                     Oracle Token Price
-                    <span style={{ float: 'right' }}>
+                    <RightSpan>
                       $
                       {pandaStats.oracleTokenPrice &&
                         getBalanceNumber(pandaStats.oracleTokenPrice, 0)}
-                    </span>
+                    </RightSpan>
                     <br />
                     <br />
                     <center>
                       <b>Tokens in LP Supply</b>
                     </center>
                     {pandaStats.token0Symbol}
-                    <span style={{ float: 'right' }}>
+                    <RightSpan>
                       {pandaStats.token0Balance &&
                         getBalanceNumber(pandaStats.token0Balance, 0)}
-                    </span>
+                    </RightSpan>
                     <br />
                     {pandaStats.token1Symbol}
-                    <span style={{ float: 'right' }}>
+                    <RightSpan>
                       {pandaStats.token1Balance &&
                         getBalanceNumber(pandaStats.token1Balance, 0)}
-                    </span>
+                    </RightSpan>
                   </>
                 ) : (
                   <Loading />
