@@ -79,6 +79,17 @@ export default function FarmCard({
     );
   };
 
+  const calcTokenShare = tokenBalance =>
+    tokenBalance &&
+    getBalanceNumber(
+      pandaUserStats.lpStaked
+        .div(decimate(new BigNumber(pandaStats.totalLocked)))
+        .times(
+          new BigNumber(tokenBalance).times(pandaStats.lockedPercentage / 100),
+        ),
+      0,
+    );
+
   return (
     <div className="col-4">
       <DarkCard className="mb-2">
@@ -351,6 +362,35 @@ export default function FarmCard({
                       {pandaStats.token1Balance &&
                         getBalanceNumber(pandaStats.token1Balance, 0)}
                     </RightSpan>
+                    {activeWallet.length > 0 && (
+                      <>
+                        <br />
+                        <br />
+                        <center>
+                          <b>Your Stake</b>
+                        </center>
+                        Share of Staked LP
+                        <RightSpan>
+                          {pandaUserStats.lpStaked
+                            .div(
+                              decimate(new BigNumber(pandaStats.totalLocked)),
+                            )
+                            .toNumber()
+                            .toFixed(6)}
+                          %
+                        </RightSpan>
+                        <br />
+                        {pandaStats.token0Symbol}
+                        <RightSpan>
+                          {calcTokenShare(pandaStats.token0Balance)}
+                        </RightSpan>
+                        <br />
+                        {pandaStats.token1Symbol}
+                        <RightSpan>
+                          {calcTokenShare(pandaStats.token1Balance)}
+                        </RightSpan>
+                      </>
+                    )}
                   </>
                 ) : (
                   <Loading />
