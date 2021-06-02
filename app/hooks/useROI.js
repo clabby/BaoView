@@ -7,9 +7,9 @@ import useBao from './useBao';
 
 import { decimate } from '../lib/formatBalance';
 
-const BLOCKS_PER_YEAR = new BigNumber(6311390);
-const BLOCKS_PER_MONTH = new BigNumber(525600);
-const BLOCKS_PER_WEEK = new BigNumber(120960);
+const BLOCKS_PER_YEAR = new BigNumber(0); // 6311390
+const BLOCKS_PER_MONTH = new BigNumber(0); // 525600
+const BLOCKS_PER_WEEK = new BigNumber(0); // 120960
 
 const useROI = (pid, baoPrice, tvlUsd, isLoading) => {
   const [roi, setRoi] = useState(-1);

@@ -20,7 +20,8 @@ import {
   faCodeBranch,
   faExternalLinkAlt,
   faThumbtack,
-  faExclamationTriangle
+  faExclamationTriangle,
+  faGavel,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
@@ -50,5 +51,6 @@ library.add(
   faCodeBranch,
   faExternalLinkAlt,
   faThumbtack,
-  faExclamationTriangle
+  faExclamationTriangle,
+  faGavel,
 );

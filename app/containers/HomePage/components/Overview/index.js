@@ -60,7 +60,7 @@ export default function Overview() {
       });
   }, []);
 
-  let sumEarning = -1;
+  let sumEarning = 0;
   _.each(earnings, earning => {
     sumEarning += decimate(new BigNumber(earning)).toNumber();
   });
@@ -89,9 +89,7 @@ export default function Overview() {
                 <Badge variant="success">
                   $
                   {getDisplayBalance(
-                    new BigNumber(
-                      baoPrice * decimate(lockedEarnings),
-                    ),
+                    new BigNumber(baoPrice * decimate(lockedEarnings)),
                     0,
                   )}
                   {` | ${getDisplayBalance(
