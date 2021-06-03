@@ -201,7 +201,7 @@ const getPandaStats = async (
       token0Symbol,
       token1Symbol,
       token0Balance: decimate(new BigNumber(reserves[0]), token0Decimals),
-      token1Balance: decimate(new BigNumber(reserves[1]), token0Decimals),
+      token1Balance: decimate(new BigNumber(reserves[1]), token1Decimals),
       oracleContractAddress:
         priceOracles[oracleToken ? token0Symbol : token1Symbol].address,
       oracleToken: oracleToken ? token0Symbol : token1Symbol,

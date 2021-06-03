@@ -79,16 +79,14 @@ export default function FarmCard({
     );
   };
 
-  const calcTokenShare = tokenBalance =>
+  const getTokenShare = tokenBalance =>
     tokenBalance &&
-    getBalanceNumber(
-      pandaUserStats.lpStaked
-        .div(decimate(new BigNumber(pandaStats.totalLocked)))
-        .times(
-          new BigNumber(tokenBalance).times(pandaStats.lockedPercentage / 100),
-        ),
-      0,
-    );
+    pandaUserStats.lpStaked
+      .div(decimate(new BigNumber(pandaStats.totalLocked)))
+      .times(
+        new BigNumber(tokenBalance).times(pandaStats.lockedPercentage / 100),
+      )
+      .toFixed(8);
 
   return (
     <div className="col-4">
@@ -375,6 +373,7 @@ export default function FarmCard({
                             .div(
                               decimate(new BigNumber(pandaStats.totalLocked)),
                             )
+                            .times(100)
                             .toNumber()
                             .toFixed(6)}
                           %
@@ -382,12 +381,12 @@ export default function FarmCard({
                         <br />
                         {pandaStats.token0Symbol}
                         <RightSpan>
-                          {calcTokenShare(pandaStats.token0Balance)}
+                          {getTokenShare(pandaStats.token0Balance)}
                         </RightSpan>
                         <br />
                         {pandaStats.token1Symbol}
                         <RightSpan>
-                          {calcTokenShare(pandaStats.token1Balance)}
+                          {getTokenShare(pandaStats.token1Balance)}
                         </RightSpan>
                       </>
                     )}
