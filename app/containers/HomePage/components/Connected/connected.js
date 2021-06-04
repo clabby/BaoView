@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FarmCards from '../FarmCards/Loadable';
 import Overview from '../Overview/Loadable';
 
-import { ConnectedContainer } from './styles/styled';
+import { ConnectedContainer, DangerLink } from './styles/styled';
 import '../../styles/homepage.scss';
 
 export default function Connected() {
@@ -18,18 +18,16 @@ export default function Connected() {
           <FontAwesomeIcon icon={['fas', 'exclamation-triangle']} /> Notice
         </b>
         <br />
-        Farming on xDai has concluded for the time being. LPs are no longer{' '}
-        receiving BAO rewards.
-        <br />
-        See the active{' '}
-        <a
-          href="https://snapshot.org/#/baovotes.eth/proposal/QmRYVHrX5AgmuX64mWGb94GMZpZiWNeMm5vZQKyYx4QvqM"
-          style={{ color: '#721c24', fontWeight: 'bold' }}
-        >
-          <FontAwesomeIcon icon={['fas', 'gavel']} /> Governance Vote
-        </a>
-        {', '}
-        ending on June 2, 2021 at 11:59 P.M. EST, for more information.
+        Bao.cx distribution has hit its soft cap of 1T. Minting of new Bao.cx{' '}
+        has ended, meaning farming rewards are no longer accumulating. Visit the{' '}
+        Bao Finance{' '}
+        <DangerLink href="https://gov.bao.finance/">forums</DangerLink>,{' '}
+        <DangerLink href="https://snapshot.page/#/baovotes.eth">
+          Snapshot
+        </DangerLink>{' '}
+        or the{' '}
+        <DangerLink href="https://discord.gg/BW3P62vJXT">Discord</DangerLink>{' '}
+        information.
       </Alert>
       <Alert variant="warning">
         <b>
