@@ -5,7 +5,7 @@ import { useWallet } from 'use-wallet';
 import Web3 from 'web3';
 import { Bao } from '../lib/bao';
 
-import { INFURA_URI } from '../../env.json';
+import { INFURA_URI } from '../../env';
 
 export const Context = createContext({
   bao: undefined,

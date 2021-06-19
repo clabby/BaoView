@@ -12,4 +12,4 @@ npm-debug.log
 .idea
 
 # Secret
-env.json
+env.js
