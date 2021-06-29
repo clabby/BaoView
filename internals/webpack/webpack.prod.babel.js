@@ -119,27 +119,6 @@ module.exports = require('./webpack.base.babel')({
       minRatio: 0.8,
     }),
 
-    new WebpackPwaManifest({
-      name: 'BaoView',
-      short_name: 'BaoView',
-      description: 'BaoView',
-      background_color: '#0d1117',
-      theme_color: '#7fb1ce',
-      inject: true,
-      ios: true,
-      icons: [
-        {
-          src: path.resolve('app/images/bao.png'),
-          sizes: [72, 96, 128, 144, 192, 384, 512],
-        },
-        {
-          src: path.resolve('app/images/bao.png'),
-          sizes: [120, 152, 167, 180],
-          ios: true,
-        },
-      ],
-    }),
-
     new HashedModuleIdsPlugin({
       hashFunction: 'sha256',
       hashDigest: 'hex',
